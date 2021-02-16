@@ -1,4 +1,6 @@
 set subsum(set s, int target, int cur_sum, set ans) {
+    int val;
+    read(val); 
     if(target == cur_sum) return ans;
     else if (s == EMPTY) return EMPTY;
     else {

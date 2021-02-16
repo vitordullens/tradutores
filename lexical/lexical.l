@@ -13,9 +13,9 @@ ID  [a-zA-Z_][_a-z0-9A-Z]*
 
 BASIC_TYPE int|float
 
-SET set
+SET_TYPE set
 
-ELEM elem
+ELEM_TYPE elem
 
 EMPTY EMPTY
 
@@ -23,9 +23,9 @@ BASIC_OP  if|else|for|return
 
 ARITMETIC_OP  "+"|"-"|"*"|"/"
 
-RELATIONAL_OP >|<|">="|"<="|"!="
+RELATIONAL_OP >|<|">="|"<="|"!="|"=="
 
-LOGIC_OP !|&&|"||"
+LOGIC_OP "!"|"&&"|"||"
 
 SET_OP  add|remove|forall|is_set|exists
 
@@ -37,7 +37,8 @@ OUTPUT write|writeln
 
 COMMENT "//".*
 
-STRING "'"
+STRING \"[^\"]*\"|'[^']*'
+
 
 %%
 
@@ -63,12 +64,12 @@ STRING "'"
   column += yyleng;
 }
 
-{SET} {
-  printf("SET: %s\n", yytext);
+{SET_TYPE} {
+  printf("Set type: %s\n", yytext);
   column += yyleng;
 }
-{ELEM} {
-  printf("ELEM: %s\n", yytext);
+{ELEM_TYPE} {
+  printf("Elem type: %s\n", yytext);
   column += yyleng;
 }
 
@@ -118,23 +119,12 @@ STRING "'"
 }
 
 {ID} {
-    if(yyleng >= 33) {
-        printf("ERROR: Exceed the max number of chars in variable (33): %s - line: %d - column: %d\n", yytext, line, column);
-        errors++;
-    }
-    else{
-      printf("Identifier: %s\n", yytext);
-    }
+    printf("Identifier: %s\n", yytext);
     column += yyleng;
 }
 
 "=" {
   printf("Assingnment: %s\n", yytext);
-  column += yyleng;
-}
-
-{ARITMETIC_OP}"=" {
-  printf("Self operation: %s\n", yytext);
   column += yyleng;
 }
 
@@ -157,7 +147,7 @@ STRING "'"
     column += yyleng;
 }
 
-[ \t]+
+[ \t]+ {}
 
 \n|\r {
     line++;
