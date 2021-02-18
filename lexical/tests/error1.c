@@ -1,4 +1,4 @@
 int main(){
     int hsgdkjahkdj# = 2;
-    return int;
+    return;
 }
