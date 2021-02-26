@@ -1,4 +1,5 @@
 %option noyywrap
+%option noinput nounput
 %{
     #include<stdio.h>
     #include<string.h>
@@ -182,5 +183,7 @@ int main(int argc, char ** argv) {
     else{
         printf("Lexical analysis finished without errors.\n");
     }
+    fclose(yyin);
+    yylex_destroy();
     return 0;
 }

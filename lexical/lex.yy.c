@@ -510,14 +510,15 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "lexical.l"
-#line 3 "lexical.l"
+#define YY_NO_INPUT 1
+#line 4 "lexical.l"
     #include<stdio.h>
     #include<string.h>
     #include<stdlib.h>
 
     int line = 1, column = 1, errors = 0;
-#line 520 "lex.yy.c"
 #line 521 "lex.yy.c"
+#line 522 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -577,8 +578,6 @@ extern int yywrap ( void );
 #endif
 
 #ifndef YY_NO_UNPUT
-    
-    static void yyunput ( int c, char *buf_ptr  );
     
 #endif
 
@@ -734,10 +733,10 @@ YY_DECL
 		}
 
 	{
-#line 43 "lexical.l"
+#line 44 "lexical.l"
 
 
-#line 741 "lex.yy.c"
+#line 740 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -796,13 +795,13 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 45 "lexical.l"
+#line 46 "lexical.l"
 {}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 47 "lexical.l"
+#line 48 "lexical.l"
 {
   printf("String output: %s\n", yytext);
   column += yyleng;
@@ -810,7 +809,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 52 "lexical.l"
+#line 53 "lexical.l"
 {
   printf("Integer: %s\n", yytext);
   column += yyleng;
@@ -818,7 +817,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 57 "lexical.l"
+#line 58 "lexical.l"
 {
   printf("Float: %s\n", yytext);
   column += yyleng;
@@ -826,7 +825,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 62 "lexical.l"
+#line 63 "lexical.l"
 {
   printf("Basic type: %s\n", yytext);
   column += yyleng;
@@ -834,7 +833,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 67 "lexical.l"
+#line 68 "lexical.l"
 {
   printf("Set type: %s\n", yytext);
   column += yyleng;
@@ -842,7 +841,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 71 "lexical.l"
+#line 72 "lexical.l"
 {
   printf("Elem type: %s\n", yytext);
   column += yyleng;
@@ -850,7 +849,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 76 "lexical.l"
+#line 77 "lexical.l"
 {
   printf("Constant EMPTY: %s\n", yytext);
   column += yyleng;
@@ -858,7 +857,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 81 "lexical.l"
+#line 82 "lexical.l"
 {
   printf("Basic operator: %s\n", yytext);
   column += yyleng;
@@ -866,7 +865,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 86 "lexical.l"
+#line 87 "lexical.l"
 {
   printf("Aritmetic operator: %s\n", yytext);
   column += yyleng;
@@ -874,7 +873,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 91 "lexical.l"
+#line 92 "lexical.l"
 {
   printf("Relational operator: %s\n", yytext);
   column += yyleng;
@@ -882,7 +881,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 96 "lexical.l"
+#line 97 "lexical.l"
 {
   printf("Logic operator: %s\n", yytext);
   column += yyleng;
@@ -890,7 +889,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 101 "lexical.l"
+#line 102 "lexical.l"
 {
   printf("Set operator: %s\n", yytext);
   column += yyleng;
@@ -898,7 +897,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 106 "lexical.l"
+#line 107 "lexical.l"
 {
   printf("Infix operator: %s\n", yytext);
   column += yyleng;
@@ -906,7 +905,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 111 "lexical.l"
+#line 112 "lexical.l"
 {
   printf("Input operator: %s\n", yytext);
   column += yyleng;
@@ -914,7 +913,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 116 "lexical.l"
+#line 117 "lexical.l"
 {
   printf("Output operator: %s\n", yytext);
   column += yyleng;
@@ -922,7 +921,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 121 "lexical.l"
+#line 122 "lexical.l"
 {
     printf("Identifier: %s\n", yytext);
     column += yyleng;
@@ -930,7 +929,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 126 "lexical.l"
+#line 127 "lexical.l"
 {
   printf("Assingnment: %s\n", yytext);
   column += yyleng;
@@ -938,14 +937,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 131 "lexical.l"
+#line 132 "lexical.l"
 {
     printf("Variable separator: %s\n", yytext);
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 135 "lexical.l"
+#line 136 "lexical.l"
 {
     printf("Command separator: %s\n", yytext);
     column += yyleng;
@@ -953,7 +952,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 140 "lexical.l"
+#line 141 "lexical.l"
 {
     printf("Block delimiter: %s\n", yytext);
     column += yyleng;
@@ -961,7 +960,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 145 "lexical.l"
+#line 146 "lexical.l"
 {
     printf("Parentheses: %s\n", yytext);
     column += yyleng;
@@ -969,13 +968,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 150 "lexical.l"
+#line 151 "lexical.l"
 {}
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 152 "lexical.l"
+#line 153 "lexical.l"
 {
     line++;
     column = 1;
@@ -983,7 +982,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 157 "lexical.l"
+#line 158 "lexical.l"
 {
     errors++;
     printf("ERROR: Unidentified character: %s - line: %d - column: %d\n", yytext, line, column);
@@ -991,7 +990,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 162 "lexical.l"
+#line 163 "lexical.l"
 {
     errors++;
     printf("ERROR: Incorrect token format: %s - line: %d - column: %d\n", yytext, line, column);
@@ -999,10 +998,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 167 "lexical.l"
+#line 168 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1006 "lex.yy.c"
+#line 1005 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1337,43 +1336,6 @@ static int yy_get_next_buffer (void)
 }
 
 #ifndef YY_NO_UNPUT
-
-    static void yyunput (int c, char * yy_bp )
-{
-	char *yy_cp;
-    
-    yy_cp = (yy_c_buf_p);
-
-	/* undo effects of setting up yytext */
-	*yy_cp = (yy_hold_char);
-
-	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
-		{ /* need to shift things up to make room */
-		/* +2 for EOB chars. */
-		int number_to_move = (yy_n_chars) + 2;
-		char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
-					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
-		char *source =
-				&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move];
-
-		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
-			*--dest = *--source;
-
-		yy_cp += (int) (dest - source);
-		yy_bp += (int) (dest - source);
-		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-			(yy_n_chars) = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
-
-		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
-			YY_FATAL_ERROR( "flex scanner push-back overflow" );
-		}
-
-	*--yy_cp = (char) c;
-
-	(yytext_ptr) = yy_bp;
-	(yy_hold_char) = *yy_cp;
-	(yy_c_buf_p) = yy_cp;
-}
 
 #endif
 
@@ -2007,7 +1969,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 167 "lexical.l"
+#line 168 "lexical.l"
 
 
 int main(int argc, char ** argv) {
@@ -2026,5 +1988,7 @@ int main(int argc, char ** argv) {
     else{
         printf("Lexical analysis finished without errors.\n");
     }
+    fclose(yyin);
+    yylex_destroy();
     return 0;
 }
