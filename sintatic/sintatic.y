@@ -12,7 +12,13 @@
     char *lex;
   };
 
+  extern FILE *yyin;
   extern int yylex();
+  extern int yylex_destroy();
+  void yyerror(const char* msg) {
+    fprintf (stderr, "%s\n", msg);
+  }
+
 
 %}
 
@@ -120,9 +126,9 @@ return_stmt:
   | "return" exp {}
 
 set_stmt:
-  "forall" "(" ID "in" set_exp ")"  stmt {}
-  | "is_set" "(" ID ")" {}
-  | "is_set" "(" set_exp ")" {}
+  "forall" "(" ID "in" set_exp ")" stmt {}
+  | "is_set" "(" ID ")" ";" {}
+  | "is_set" "(" set_exp ")" ";" {}
 
 exp_stmt:
   exp ";" {}
@@ -132,13 +138,13 @@ exp:
   ID "=" exp {}
   | or_exp {}
   | set_exp {}
-  | %empty {}
 
 set_exp:
-  SET_OP1 "(" set_in_exp ")" {printf("alo");}
+  SET_OP1 "(" set_in_exp ")" {}
 
 set_in_exp:
   or_exp "in" set_exp {}
+  | or_exp "in" ID {}
 
 or_exp:
   or_exp "||" and_exp {}
@@ -177,8 +183,20 @@ type:
   | SET_TYPE {}
   | ELEM_TYPE {}
 
+%%
 
 
-
-
+int main(int argc, char ** argv) {
+    ++argv, --argc;
+    if(argc > 0) {
+        yyin = fopen(argv[0], "r");
+    }
+    else {
+        yyin = stdin;
+    }
+    yyparse();
+    fclose(yyin);
+    yylex_destroy();
+    return 0;
+}
 

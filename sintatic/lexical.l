@@ -1,12 +1,9 @@
 %option noyywrap
 %option noinput nounput
-%option bison-bridge
-
 %{
     #include<stdio.h>
     #include<string.h>
     #include<stdlib.h>
-    #include "sintatic.tab.h"
 
     int line = 1, column = 1, errors = 0;
 %}
@@ -25,17 +22,13 @@ EMPTY EMPTY
 
 BASIC_OP  if|else|for|return
 
-ARITMETIC_OP1 "+"|"-"
-
-ARITMETIC_OP2  "*"|"/"
+ARITMETIC_OP  "+"|"-"|"*"|"/"
 
 RELATIONAL_OP >|<|">="|"<="|"!="|"=="
 
 LOGIC_OP "!"|"&&"|"||"
 
-SET_OP1 add|remove|exists
-
-SET_OP2 forall|is_set
+SET_OP  add|remove|forall|is_set|exists
 
 INFIX_OP in
 
@@ -53,65 +46,37 @@ STRING \"[^\"]*\"|'[^']*'
 {COMMENT} {}
 
 {STRING} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("String output: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return STRING;
 }
 
 {DIGIT}+ {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Integer: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return INTEGER;
 }
 
 {DIGIT}+"."{DIGIT}+ {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Float: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return FLOAT;
 }
 
 {BASIC_TYPE} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Basic type: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return BASIC_TYPE;
 }
 
 {SET_TYPE} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Set type: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return SET_TYPE;
 }
 {ELEM_TYPE} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Elem type: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return ELEM_TYPE;
 }
 
 {EMPTY} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Constant EMPTY: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return EMPTY;
 }
 
 {BASIC_OP} {
@@ -119,58 +84,24 @@ STRING \"[^\"]*\"|'[^']*'
   column += yyleng;
 }
 
-{ARITMETIC_OP1} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+{ARITMETIC_OP} {
+  printf("Aritmetic operator: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return ARITMETIC_OP1;
-}
-
-{ARITMETIC_OP2} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  column += yyleng;
-  yylval->token.column = column;
-  return ARITMETIC_OP2;
 }
 
 {RELATIONAL_OP} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Relational operator: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return RELATIONAL_OP;
 }
 
 {LOGIC_OP} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Logic operator: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return LOGIC_OP;
 }
 
-{SET_OP1} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+{SET_OP} {
+  printf("Set operator: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return SET_OP1;
-}
-
-{SET_OP2} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  column += yyleng;
-  yylval->token.column = column;
-  return SET_OP2;
 }
 
 {INFIX_OP} {
@@ -179,30 +110,18 @@ STRING \"[^\"]*\"|'[^']*'
 }
 
 {INPUT} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Input operator: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return INPUT;
 }
 
 {OUTPUT} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
+  printf("Output operator: %s\n", yytext);
   column += yyleng;
-  yylval->token.column = column;
-  return OUTPUT;
 }
 
 {ID} {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  column += yyleng;
-  yylval->token.column = column;
-  return ID;
+    printf("Identifier: %s\n", yytext);
+    column += yyleng;
 }
 
 "=" {
@@ -247,24 +166,3 @@ STRING \"[^\"]*\"|'[^']*'
 }
 
 %%
-
-int main(int argc, char ** argv) {
-    ++argv, --argc;
-    if(argc > 0) {
-        yyin = fopen(argv[0], "r");
-    }
-    else {
-        yyin = stdin;
-    }
-    yylex();
-    printf("\n");
-    if(errors > 0){
-        printf("Lexical analysis finished with %d error(s)\n", errors);
-    }
-    else{
-        printf("Lexical analysis finished without errors.\n");
-    }
-    fclose(yyin);
-    yylex_destroy();
-    return 0;
-}
