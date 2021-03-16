@@ -255,27 +255,73 @@ STRING \"[^\"]*\"|'[^']*'
 }
 
 "=" {
-  printf("Assingnment: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return '=';
 }
 
 "," {
-    printf("Variable separator: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return ',';
 }
 
 ";" {
-    printf("Command separator: %s\n", yytext);
-    column += yyleng;
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return ';';
 }
 
-"{"|"}" {
-    printf("Block delimiter: %s\n", yytext);
-    column += yyleng;
+"{" {
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return '{';
 }
 
-"("|")" {
-    printf("Parentheses: %s\n", yytext);
-    column += yyleng;
+"}" {
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return '}';
+}
+
+"(" {
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return '(';
+}
+
+")" {
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return ')';
 }
 
 [ \t]+ {}

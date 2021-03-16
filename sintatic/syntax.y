@@ -1,5 +1,6 @@
 %defines
 %define lr.type canonical-lr
+%define parse.error verbose
 
 %code requires {
   #include <stdio.h>
@@ -82,6 +83,7 @@
 %token <token> '}'
 %token <token> '('
 %token <token> ')'
+%token <token> '='
 
 
 
@@ -105,7 +107,7 @@ var_declaration:
 
 function_declaration:
   type ID '(' params_list ')' brackets_stmt {printf("SINTATICO -------- function_declaration -> type ID ( params_list ) brackets_stmt\n");}
-  type ID '(' ')' brackets_stmt {printf("SINTATICO -------- function_declaration -> type ID ( ) brackets_stmt\n");}
+  | type ID '(' ')' brackets_stmt {printf("SINTATICO -------- function_declaration -> type ID ( ) brackets_stmt\n");}
 
 params_list:
  type ID ',' params_list {}
@@ -122,7 +124,7 @@ stmt:
   | var_declaration {}
 
 brackets_stmt:
-  "{" stmt "}" {printf("SINTATICO -------- brackets_stmt -> stmt ;\n");}
+  '{' stmt '}' {printf("SINTATICO -------- brackets_stmt -> stmt ;\n");}
 
 io_stmt: 
   INPUT '(' ID ')' ';' {}

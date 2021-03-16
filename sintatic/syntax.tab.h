@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 4 "syntax.y"
+#line 5 "syntax.y"
 
   #include <stdio.h>
   #include <stdlib.h>
@@ -97,7 +97,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 27 "syntax.y"
+#line 28 "syntax.y"
 
   Token token;
 
