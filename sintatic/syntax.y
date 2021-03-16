@@ -1,32 +1,24 @@
-%defines
 %define lr.type canonical-lr
 %define parse.error verbose
-
-%code requires {
-  #include <stdio.h>
-  #include <stdlib.h>
-
-  typedef struct Token Token;
-
-  struct Token {
-    int column, line;
-    char *lex;
-  };
-}
+%defines
 
 %{
+
   #include <stdio.h>
   #include <stdlib.h>
 
-  extern FILE *yyin;
   extern int yylex();
   extern int yylex_destroy();
   void yyerror (char const *);
-
+  
+  extern FILE *yyin;
 %}
 
 %union {
-  Token token;
+  struct Token {
+    int column, line;
+    char *body;
+  } token;
 }
 
 %type program
@@ -35,6 +27,7 @@
 %type var_declaration
 %type function_declaration
 %type params_list
+%type stmts
 %type stmt
 %type brackets_stmt
 %type io_stmt
@@ -54,10 +47,11 @@
 %type primal_exp
 %type arg_list
 %type type
+%type const
+%type assignment
 
 
 %token <token> ID
-%token <token> CONST
 %token <token> BASIC_TYPE
 %token <token> SET_TYPE
 %token <token> ELEM_TYPE
@@ -77,6 +71,7 @@
 %token <token> ELSE
 %token <token> FOR
 %token <token> RETURN
+%token <token> INFIX_OP
 %token <token> ';'
 %token <token> ','
 %token <token> '{'
@@ -93,9 +88,10 @@
 
 program:
   declaration_list {printf("SINTATICO -------- program -> declaration_list\n");}
+  | error {}
 
 declaration_list:
-  declaration declaration_list {printf("SINTATICO -------- declaration_list -> declaration declaration_list\n");}
+  declaration_list declaration  {printf("SINTATICO -------- declaration_list -> declaration declaration_list\n");}
   | declaration {printf("SINTATICO -------- declaration_list -> declaration\n");}
 
 declaration:
@@ -103,7 +99,7 @@ declaration:
   | var_declaration {printf("SINTATICO -------- declaration -> var_declaration\n");}
 
 var_declaration:
-  type ID ';' {printf("SINTATICO -------- var_declaration -> type ID\n");}
+  type ID ';' {printf("SINTATICO -------- var_declaration -> type %s\n", $2.body);}
 
 function_declaration:
   type ID '(' params_list ')' brackets_stmt {printf("SINTATICO -------- function_declaration -> type ID ( params_list ) brackets_stmt\n");}
@@ -113,18 +109,23 @@ params_list:
  type ID ',' params_list {}
  | type ID {}
 
+brackets_stmt:
+  '{' stmts '}' {printf("SINTATICO -------- brackets_stmt -> stmt\n");}
+
+stmts:
+  stmt stmts {}
+  | brackets_stmt {}
+  | stmt {}
+
 stmt:
-  brackets_stmt {}
-  | for_stmt {}
+  for_stmt {}
   | if_else_stmt {}
   | return_stmt {}
   | io_stmt {}
   | exp_stmt {}
   | set_stmt {}
   | var_declaration {}
-
-brackets_stmt:
-  '{' stmt '}' {printf("SINTATICO -------- brackets_stmt -> stmt ;\n");}
+  | assignment {}
 
 io_stmt: 
   INPUT '(' ID ')' ';' {}
@@ -132,7 +133,7 @@ io_stmt:
   | OUTPUT '(' exp ')' ';' {}
 
 for_stmt:
-  FOR '(' exp ';' exp ';' exp ')' stmt {}
+  FOR '(' assignment ';' exp ';' assignment ')' stmt {}
 
 if_else_stmt:
   IF '(' exp ')' brackets_stmt {}
@@ -140,10 +141,10 @@ if_else_stmt:
 
 return_stmt:
   RETURN ';' {printf("SINTATICO -------- return_stmt -> RETURN ;\n");}
-  | RETURN exp {printf("SINTATICO -------- return_stmt -> RETURN exp\n");}
+  | RETURN exp ';' {printf("SINTATICO -------- return_stmt -> RETURN exp\n");}
 
 set_stmt:
-  "forall" '(' ID "in" set_exp ')' stmt {}
+  "forall" '(' ID INFIX_OP set_exp ')' stmt {}
   | "is_set" '(' ID ')' ';' {}
   | "is_set" '(' set_exp ')' ';' {}
 
@@ -151,17 +152,19 @@ exp_stmt:
   exp ';' {}
   ';' {}
 
+assignment:
+  ID '=' exp ';' {printf("SINTATICO -------- assignment -> %s = exp\n", $1.body);}
+
 exp:
-  ID "=" exp {}
-  | or_exp {}
+  or_exp {}
   | set_exp {}
 
 set_exp:
   SET_OP1 '(' set_in_exp ')' {}
 
 set_in_exp:
-  or_exp "in" set_exp {}
-  | or_exp "in" ID {}
+  or_exp INFIX_OP set_exp {}
+  | or_exp INFIX_OP ID {}
 
 or_exp:
   or_exp "||" and_exp {}
@@ -185,20 +188,24 @@ mul_exp:
   | primal_exp {}
 
 primal_exp:
-  ID {}
-  | CONST {}
-  | '(' exp ')' {}
-  | ID '(' arg_list ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.lex);}
-  | ID '(' ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.lex);}
+  ID {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.body);}
+  | const {printf("SINTATICO -------- primal_exp -> const\n");}
+  | ID '(' arg_list ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.body);}
+  | ID '(' ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.body);}
 
 arg_list:
-  exp ',' arg_list {}
-  | exp {}
+  exp ',' arg_list {printf("SINTATICO -------- arg_list -> exp , arg_list\n");}
+  | exp {printf("SINTATICO -------- arg_list -> exp\n");}
 
 type:
-  BASIC_TYPE {printf("SINTATICO %d:%d-------- type -> %s\n", $1.line, $1.column, $1.lex);}
-  | SET_TYPE {}
-  | ELEM_TYPE {}
+  BASIC_TYPE {printf("SINTATICO %d:%d-------- type -> %s\n", $1.line, $1.column, $1.body);}
+  | SET_TYPE {printf("SINTATICO %d:%d-------- type -> %s\n", $1.line, $1.column, $1.body);}
+  | ELEM_TYPE {printf("SINTATICO %d:%d-------- type -> %s\n", $1.line, $1.column, $1.body);}
+
+const:
+  INTEGER {printf("SINTATICO %d:%d-------- const -> %s\n", $1.line, $1.column, $1.body);}
+  | FLOAT {printf("SINTATICO %d:%d-------- const -> %s\n", $1.line, $1.column, $1.body);}
+  | EMPTY {printf("SINTATICO %d:%d-------- const -> %s\n", $1.line, $1.column, $1.body);}
 
 %%
 
@@ -214,7 +221,6 @@ int main(int argc, char ** argv) {
     else {
         yyin = stdin;
     }
-    printf("\n");
     yyparse();
     fclose(yyin);
     yylex_destroy();

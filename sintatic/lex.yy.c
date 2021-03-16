@@ -13,18 +13,6 @@
 #define FLEX_BETA
 #endif
 
-#ifdef yyget_lval
-#define yyget_lval_ALREADY_DEFINED
-#else
-#define yyget_lval yyget_lval
-#endif
-
-#ifdef yyset_lval
-#define yyset_lval_ALREADY_DEFINED
-#else
-#define yyset_lval yyset_lval
-#endif
-
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
 /* begin standard C headers. */
@@ -525,15 +513,12 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "lexical.l"
 #define YY_NO_INPUT 1
-#line 6 "lexical.l"
+#line 5 "lexical.l"
     #include "syntax.tab.h"
-    #include<stdio.h>
-    #include<string.h>
-    #include<stdlib.h>
 
     int line = 1, column = 1, errors = 0;
-#line 536 "lex.yy.c"
-#line 537 "lex.yy.c"
+#line 521 "lex.yy.c"
+#line 522 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -579,10 +564,6 @@ char *yyget_text ( void );
 int yyget_lineno ( void );
 
 void yyset_lineno ( int _line_number  );
-
-YYSTYPE * yyget_lval ( void );
-
-void yyset_lval ( YYSTYPE * yylval_param  );
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -697,11 +678,9 @@ static int input ( void );
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int yylex \
-               (YYSTYPE * yylval_param );
+extern int yylex (void);
 
-#define YY_DECL int yylex \
-               (YYSTYPE * yylval_param )
+#define YY_DECL int yylex (void)
 #endif /* !YY_DECL */
 
 /* Code executed at the beginning of each rule, after yytext and yyleng
@@ -727,10 +706,6 @@ YY_DECL
 	char *yy_cp, *yy_bp;
 	int yy_act;
     
-        YYSTYPE * yylval;
-    
-    yylval = yylval_param;
-
 	if ( !(yy_init) )
 		{
 		(yy_init) = 1;
@@ -758,10 +733,10 @@ YY_DECL
 		}
 
 	{
-#line 49 "lexical.l"
+#line 45 "lexical.l"
 
 
-#line 765 "lex.yy.c"
+#line 740 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -820,18 +795,17 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 51 "lexical.l"
+#line 47 "lexical.l"
 {}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 53 "lexical.l"
+#line 49 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return STRING;
@@ -839,12 +813,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 63 "lexical.l"
+#line 58 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return INTEGER;
@@ -852,12 +825,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 73 "lexical.l"
+#line 67 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return FLOAT;
@@ -865,12 +837,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 83 "lexical.l"
+#line 76 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return BASIC_TYPE;
@@ -878,12 +849,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 93 "lexical.l"
+#line 85 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return SET_TYPE;
@@ -891,12 +861,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 102 "lexical.l"
+#line 93 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ELEM_TYPE;
@@ -904,12 +873,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 112 "lexical.l"
+#line 102 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return EMPTY;
@@ -917,12 +885,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 122 "lexical.l"
+#line 111 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return IF;
@@ -930,12 +897,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 132 "lexical.l"
+#line 120 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ELSE;
@@ -943,12 +909,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 142 "lexical.l"
+#line 129 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return FOR;
@@ -956,12 +921,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 152 "lexical.l"
+#line 138 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return RETURN;
@@ -969,12 +933,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 162 "lexical.l"
+#line 147 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ARITMETIC_OP1;
@@ -982,12 +945,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 172 "lexical.l"
+#line 156 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ARITMETIC_OP2;
@@ -995,12 +957,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 182 "lexical.l"
+#line 165 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return RELATIONAL_OP;
@@ -1008,12 +969,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 192 "lexical.l"
+#line 174 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return LOGIC_OP;
@@ -1021,12 +981,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 202 "lexical.l"
+#line 183 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return SET_OP1;
@@ -1034,12 +993,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 212 "lexical.l"
+#line 192 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return SET_OP2;
@@ -1047,20 +1005,23 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 222 "lexical.l"
+#line 201 "lexical.l"
 {
-  printf("Infix operator: %s\n", yytext);
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  INFIX_OP;
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 227 "lexical.l"
+#line 210 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return INPUT;
@@ -1068,12 +1029,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 237 "lexical.l"
+#line 219 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return OUTPUT;
@@ -1081,12 +1041,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 247 "lexical.l"
+#line 228 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- identifier: %s\n", line, column, yytext);
   column += yyleng;
   return ID;
@@ -1094,12 +1053,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 257 "lexical.l"
+#line 237 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '=';
@@ -1107,12 +1065,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 267 "lexical.l"
+#line 246 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ',';
@@ -1120,12 +1077,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 277 "lexical.l"
+#line 255 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ';';
@@ -1133,12 +1089,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 287 "lexical.l"
+#line 264 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '{';
@@ -1146,12 +1101,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 297 "lexical.l"
+#line 273 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '}';
@@ -1159,12 +1113,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 307 "lexical.l"
+#line 282 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '(';
@@ -1172,12 +1125,11 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 317 "lexical.l"
+#line 291 "lexical.l"
 {
-  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
-  strcpy(yylval->token.lex, yytext);
-  yylval->token.line = line;
-  yylval->token.column = column;
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ')';
@@ -1185,13 +1137,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 327 "lexical.l"
+#line 300 "lexical.l"
 {}
 	YY_BREAK
 case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
-#line 329 "lexical.l"
+#line 302 "lexical.l"
 {
     line++;
     column = 1;
@@ -1199,7 +1151,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 334 "lexical.l"
+#line 307 "lexical.l"
 {
     errors++;
     printf("ERROR: Unidentified character: %s - line: %d - column: %d\n", yytext, line, column);
@@ -1207,7 +1159,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 339 "lexical.l"
+#line 312 "lexical.l"
 {
     errors++;
     printf("ERROR: Incorrect token format: %s - line: %d - column: %d\n", yytext, line, column);
@@ -1215,10 +1167,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 343 "lexical.l"
+#line 316 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1222 "lex.yy.c"
+#line 1174 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2186,4 +2138,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 343 "lexical.l"
+#line 316 "lexical.l"

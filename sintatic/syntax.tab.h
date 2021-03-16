@@ -44,20 +44,6 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
-/* "%code requires" blocks.  */
-#line 5 "syntax.y"
-
-  #include <stdio.h>
-  #include <stdlib.h>
-
-  typedef struct Token Token;
-
-  struct Token {
-    int column, line;
-    char *lex;
-  };
-
-#line 61 "syntax.tab.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -69,26 +55,26 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     ID = 258,                      /* ID  */
-    CONST = 259,                   /* CONST  */
-    BASIC_TYPE = 260,              /* BASIC_TYPE  */
-    SET_TYPE = 261,                /* SET_TYPE  */
-    ELEM_TYPE = 262,               /* ELEM_TYPE  */
-    ARITMETIC_OP1 = 263,           /* ARITMETIC_OP1  */
-    ARITMETIC_OP2 = 264,           /* ARITMETIC_OP2  */
-    RELATIONAL_OP = 265,           /* RELATIONAL_OP  */
-    LOGIC_OP = 266,                /* LOGIC_OP  */
-    SET_OP1 = 267,                 /* SET_OP1  */
-    SET_OP2 = 268,                 /* SET_OP2  */
-    INPUT = 269,                   /* INPUT  */
-    OUTPUT = 270,                  /* OUTPUT  */
-    STRING = 271,                  /* STRING  */
-    INTEGER = 272,                 /* INTEGER  */
-    FLOAT = 273,                   /* FLOAT  */
-    EMPTY = 274,                   /* EMPTY  */
-    IF = 275,                      /* IF  */
-    ELSE = 276,                    /* ELSE  */
-    FOR = 277,                     /* FOR  */
-    RETURN = 278                   /* RETURN  */
+    BASIC_TYPE = 259,              /* BASIC_TYPE  */
+    SET_TYPE = 260,                /* SET_TYPE  */
+    ELEM_TYPE = 261,               /* ELEM_TYPE  */
+    ARITMETIC_OP1 = 262,           /* ARITMETIC_OP1  */
+    ARITMETIC_OP2 = 263,           /* ARITMETIC_OP2  */
+    RELATIONAL_OP = 264,           /* RELATIONAL_OP  */
+    LOGIC_OP = 265,                /* LOGIC_OP  */
+    SET_OP1 = 266,                 /* SET_OP1  */
+    SET_OP2 = 267,                 /* SET_OP2  */
+    INPUT = 268,                   /* INPUT  */
+    OUTPUT = 269,                  /* OUTPUT  */
+    STRING = 270,                  /* STRING  */
+    INTEGER = 271,                 /* INTEGER  */
+    FLOAT = 272,                   /* FLOAT  */
+    EMPTY = 273,                   /* EMPTY  */
+    IF = 274,                      /* IF  */
+    ELSE = 275,                    /* ELSE  */
+    FOR = 276,                     /* FOR  */
+    RETURN = 277,                  /* RETURN  */
+    INFIX_OP = 278                 /* INFIX_OP  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -97,11 +83,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 28 "syntax.y"
+#line 17 "syntax.y"
 
-  Token token;
+  struct Token {
+    int column, line;
+    char *body;
+  } token;
 
-#line 105 "syntax.tab.h"
+#line 94 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
