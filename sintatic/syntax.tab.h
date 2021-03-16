@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_SINTATIC_TAB_H_INCLUDED
-# define YY_YY_SINTATIC_TAB_H_INCLUDED
+#ifndef YY_YY_SYNTAX_TAB_H_INCLUDED
+# define YY_YY_SYNTAX_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -44,6 +44,20 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 4 "syntax.y"
+
+  #include <stdio.h>
+  #include <stdlib.h>
+
+  typedef struct Token Token;
+
+  struct Token {
+    int column, line;
+    char *lex;
+  };
+
+#line 61 "syntax.tab.h"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -64,12 +78,17 @@ extern int yydebug;
     RELATIONAL_OP = 265,           /* RELATIONAL_OP  */
     LOGIC_OP = 266,                /* LOGIC_OP  */
     SET_OP1 = 267,                 /* SET_OP1  */
-    INPUT = 268,                   /* INPUT  */
-    OUTPUT = 269,                  /* OUTPUT  */
-    STRING = 270,                  /* STRING  */
-    INTEGER = 271,                 /* INTEGER  */
-    FLOAT = 272,                   /* FLOAT  */
-    EMPTY = 273                    /* EMPTY  */
+    SET_OP2 = 268,                 /* SET_OP2  */
+    INPUT = 269,                   /* INPUT  */
+    OUTPUT = 270,                  /* OUTPUT  */
+    STRING = 271,                  /* STRING  */
+    INTEGER = 272,                 /* INTEGER  */
+    FLOAT = 273,                   /* FLOAT  */
+    EMPTY = 274,                   /* EMPTY  */
+    IF = 275,                      /* IF  */
+    ELSE = 276,                    /* ELSE  */
+    FOR = 277,                     /* FOR  */
+    RETURN = 278                   /* RETURN  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -78,11 +97,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 25 "sintatic.y"
+#line 27 "syntax.y"
 
   Token token;
 
-#line 86 "sintatic.tab.h"
+#line 105 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -95,4 +114,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SINTATIC_TAB_H_INCLUDED  */
+#endif /* !YY_YY_SYNTAX_TAB_H_INCLUDED  */

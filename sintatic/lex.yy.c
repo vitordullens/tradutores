@@ -13,6 +13,18 @@
 #define FLEX_BETA
 #endif
 
+#ifdef yyget_lval
+#define yyget_lval_ALREADY_DEFINED
+#else
+#define yyget_lval yyget_lval
+#endif
+
+#ifdef yyset_lval
+#define yyset_lval_ALREADY_DEFINED
+#else
+#define yyset_lval yyset_lval
+#endif
+
 /* First, we deal with  platform-specific or compiler-specific issues. */
 
 /* begin standard C headers. */
@@ -321,8 +333,6 @@ void yyfree ( void *  );
 	}
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
-/* Begin user sect3 */
-
 #define yywrap() (/*CONSTCOND*/1)
 #define YY_SKIP_YYWRAP
 typedef flex_uint8_t YY_CHAR;
@@ -354,8 +364,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 27
-#define YY_END_OF_BUFFER 28
+#define YY_NUM_RULES 32
+#define YY_END_OF_BUFFER 33
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -363,17 +373,19 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[91] =
+static const flex_int16_t yy_accept[95] =
     {   0,
-        0,    0,   28,   25,   23,   24,   24,   12,   25,   25,
-       25,   22,   10,   19,   10,    3,   20,   11,   18,   11,
-       17,   17,   17,   17,   17,   17,   17,   17,   17,   21,
-       25,   23,   11,    0,    2,   12,    0,    1,   26,   26,
-        3,   17,   17,   17,   17,   17,   17,   17,    9,   14,
-       17,   17,   17,   17,    1,    4,   17,   13,   17,   17,
-       17,   17,    9,    5,   17,   17,   17,   17,    6,   17,
-       17,    7,   17,   17,   17,   17,   15,   17,   17,   17,
-        8,   17,   17,   17,   17,   17,   16,   17,   16,    0
+        0,    0,   33,   30,   28,   29,   29,   16,   30,   30,
+       30,   27,   14,   13,   24,   14,    3,   25,   15,   23,
+       15,   22,   22,   22,   22,   22,   22,   22,   22,   22,
+       26,   30,   28,   15,    0,    2,   16,    0,    1,   31,
+       31,    3,   22,   22,   22,   22,   22,   22,   22,    9,
+       19,   22,   22,   22,   22,    1,    4,   22,   17,   22,
+       22,   22,   22,   11,    5,   22,   22,   22,   22,    6,
+       22,   22,    7,   10,   22,   22,   22,   22,   20,   22,
+       22,   22,    8,   22,   22,   22,   22,   22,   21,   18,
+       12,   22,   21,    0
+
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -417,58 +429,58 @@ static const YY_CHAR yy_meta[49] =
         4,    4,    4,    4,    4,    1,    2,    1
     } ;
 
-static const flex_int16_t yy_base[96] =
+static const flex_int16_t yy_base[100] =
     {   0,
         0,    0,  134,  135,  131,  135,  135,  112,  125,  123,
-      121,  135,  135,  135,  112,   34,  135,  107,  106,  105,
-        0,  100,   92,   15,   17,   21,   90,   89,   81,  135,
-       72,  116,  135,  111,  135,  135,  108,    0,    0,   98,
-       42,    0,   89,   82,   24,   78,   73,   71,    0,   68,
-       79,   32,   66,   72,    0,   88,   78,    0,   67,   70,
-       61,   70,   69,    0,   58,   66,   58,   53,    0,   53,
-       66,    0,   51,   50,   55,   56,    0,   41,   44,   40,
-        0,   31,   35,   28,   35,   29,   30,   26,    0,  135,
-       73,   77,   81,   49,   85
+      121,  135,  135,  135,  135,  112,   34,  135,  107,  106,
+      105,    0,  100,   92,   15,   17,   21,   90,   89,   81,
+      135,   72,  116,  135,  111,  135,  135,  108,    0,    0,
+       98,   42,    0,   89,   82,   24,   78,   73,   71,    0,
+       68,   79,   32,   66,   72,    0,   88,   78,    0,   67,
+       70,   61,   70,   69,    0,   58,   66,   58,   53,    0,
+       53,   66,    0,    0,   51,   50,   55,   56,    0,   41,
+       44,   40,    0,   31,   35,   28,   35,   29,   30,    0,
+        0,   26,    0,  135,   73,   77,   81,   49,   85
 
     } ;
 
-static const flex_int16_t yy_def[96] =
+static const flex_int16_t yy_def[100] =
     {   0,
-       90,    1,   90,   90,   90,   90,   90,   90,   91,   90,
-       92,   90,   90,   90,   90,   93,   90,   90,   90,   90,
-       94,   94,   94,   94,   94,   94,   94,   94,   94,   90,
-       90,   90,   90,   91,   90,   90,   92,   95,   93,   93,
-       93,   94,   94,   94,   94,   94,   94,   94,   94,   94,
-       94,   94,   94,   94,   95,   93,   94,   94,   94,   94,
-       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
-       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
-       94,   94,   94,   94,   94,   94,   94,   94,   94,    0,
-       90,   90,   90,   90,   90
+       94,    1,   94,   94,   94,   94,   94,   94,   95,   94,
+       96,   94,   94,   94,   94,   94,   97,   94,   94,   94,
+       94,   98,   98,   98,   98,   98,   98,   98,   98,   98,
+       94,   94,   94,   94,   95,   94,   94,   96,   99,   97,
+       97,   97,   98,   98,   98,   98,   98,   98,   98,   98,
+       98,   98,   98,   98,   98,   99,   97,   98,   98,   98,
+       98,   98,   98,   98,   98,   98,   98,   98,   98,   98,
+       98,   98,   98,   98,   98,   98,   98,   98,   98,   98,
+       98,   98,   98,   98,   98,   98,   98,   98,   98,   98,
+       98,   98,   98,    0,   94,   94,   94,   94,   94
 
     } ;
 
 static const flex_int16_t yy_nxt[184] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   12,
-       13,   13,   14,   13,    4,   15,   16,   17,   18,   19,
-       20,   21,   22,   21,   21,   21,   21,    4,   21,   23,
-       21,   24,   25,   26,   21,   21,   21,   21,   27,   28,
-       21,   21,   21,   29,   21,   30,   31,   30,   40,   45,
-       41,   47,   42,   49,   48,   59,   40,   50,   41,   46,
-       51,   66,   89,   60,   88,   49,   58,   67,   58,   58,
-       58,   87,   68,   34,   34,   34,   34,   37,   37,   37,
-       37,   39,   86,   85,   39,   55,   55,   84,   55,   83,
-       64,   82,   81,   80,   79,   78,   77,   76,   75,   74,
+       13,   14,   15,   14,    4,   16,   17,   18,   19,   20,
+       21,   22,   23,   22,   22,   22,   22,    4,   22,   24,
+       22,   25,   26,   27,   22,   22,   22,   22,   28,   29,
+       22,   22,   22,   30,   22,   31,   32,   31,   41,   46,
+       42,   48,   43,   50,   49,   60,   41,   51,   42,   47,
+       52,   67,   93,   61,   92,   91,   59,   68,   90,   90,
+       59,   89,   69,   35,   35,   35,   35,   38,   38,   38,
+       38,   40,   88,   87,   40,   56,   56,   86,   56,   85,
+       65,   84,   83,   82,   81,   80,   79,   78,   77,   76,
 
-       73,   49,   72,   71,   56,   70,   69,   65,   64,   63,
-       62,   61,   58,   57,   56,   35,   35,   32,   36,   54,
-       53,   52,   44,   43,   33,   33,   33,   38,   35,   36,
-       35,   33,   32,   90,    3,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90
+       75,   74,   73,   72,   57,   71,   70,   66,   65,   64,
+       63,   62,   59,   58,   57,   36,   36,   33,   37,   55,
+       54,   53,   45,   44,   34,   34,   34,   39,   36,   37,
+       36,   34,   33,   94,    3,   94,   94,   94,   94,   94,
+       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
+       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
+       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
+       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
+       94,   94,   94
     } ;
 
 static const flex_int16_t yy_chk[184] =
@@ -477,22 +489,22 @@ static const flex_int16_t yy_chk[184] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,   16,   24,
-       16,   25,   94,   26,   25,   45,   41,   26,   41,   24,
-       26,   52,   88,   45,   87,   86,   85,   52,   84,   83,
-       82,   80,   52,   91,   91,   91,   91,   92,   92,   92,
-       92,   93,   79,   78,   93,   95,   95,   76,   95,   75,
-       74,   73,   71,   70,   68,   67,   66,   65,   63,   62,
+        1,    1,    1,    1,    1,    1,    1,    1,   17,   25,
+       17,   26,   98,   27,   26,   46,   42,   27,   42,   25,
+       27,   53,   92,   46,   89,   88,   87,   53,   86,   85,
+       84,   82,   53,   95,   95,   95,   95,   96,   96,   96,
+       96,   97,   81,   80,   97,   99,   99,   78,   99,   77,
+       76,   75,   72,   71,   69,   68,   67,   66,   64,   63,
 
-       61,   60,   59,   57,   56,   54,   53,   51,   50,   48,
-       47,   46,   44,   43,   40,   37,   34,   32,   31,   29,
-       28,   27,   23,   22,   20,   19,   18,   15,   11,   10,
-        9,    8,    5,    3,   90,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90
+       62,   61,   60,   58,   57,   55,   54,   52,   51,   49,
+       48,   47,   45,   44,   41,   38,   35,   33,   32,   30,
+       29,   28,   24,   23,   21,   20,   19,   16,   11,   10,
+        9,    8,    5,    3,   94,   94,   94,   94,   94,   94,
+       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
+       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
+       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
+       94,   94,   94,   94,   94,   94,   94,   94,   94,   94,
+       94,   94,   94
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -511,14 +523,15 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "lexical.l"
 #define YY_NO_INPUT 1
-#line 4 "lexical.l"
+#line 6 "lexical.l"
+    #include "syntax.tab.h"
     #include<stdio.h>
     #include<string.h>
     #include<stdlib.h>
 
     int line = 1, column = 1, errors = 0;
-#line 521 "lex.yy.c"
-#line 522 "lex.yy.c"
+#line 534 "lex.yy.c"
+#line 535 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -564,6 +577,10 @@ char *yyget_text ( void );
 int yyget_lineno ( void );
 
 void yyset_lineno ( int _line_number  );
+
+YYSTYPE * yyget_lval ( void );
+
+void yyset_lval ( YYSTYPE * yylval_param  );
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -678,9 +695,11 @@ static int input ( void );
 #ifndef YY_DECL
 #define YY_DECL_IS_OURS 1
 
-extern int yylex (void);
+extern int yylex \
+               (YYSTYPE * yylval_param );
 
-#define YY_DECL int yylex (void)
+#define YY_DECL int yylex \
+               (YYSTYPE * yylval_param )
 #endif /* !YY_DECL */
 
 /* Code executed at the beginning of each rule, after yytext and yyleng
@@ -706,6 +725,10 @@ YY_DECL
 	char *yy_cp, *yy_bp;
 	int yy_act;
     
+        YYSTYPE * yylval;
+    
+    yylval = yylval_param;
+
 	if ( !(yy_init) )
 		{
 		(yy_init) = 1;
@@ -733,10 +756,10 @@ YY_DECL
 		}
 
 	{
-#line 44 "lexical.l"
+#line 49 "lexical.l"
 
 
-#line 740 "lex.yy.c"
+#line 763 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -763,7 +786,7 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 91 )
+				if ( yy_current_state >= 95 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -795,213 +818,353 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 46 "lexical.l"
+#line 51 "lexical.l"
 {}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 48 "lexical.l"
+#line 53 "lexical.l"
 {
-  printf("String output: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return STRING;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 53 "lexical.l"
+#line 63 "lexical.l"
 {
-  printf("Integer: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return INTEGER;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 58 "lexical.l"
+#line 73 "lexical.l"
 {
-  printf("Float: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return FLOAT;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 63 "lexical.l"
+#line 83 "lexical.l"
 {
-  printf("Basic type: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return BASIC_TYPE;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 68 "lexical.l"
+#line 93 "lexical.l"
 {
-  printf("Set type: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return SET_TYPE;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 72 "lexical.l"
+#line 102 "lexical.l"
 {
-  printf("Elem type: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return ELEM_TYPE;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 77 "lexical.l"
+#line 112 "lexical.l"
 {
-  printf("Constant EMPTY: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return EMPTY;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 82 "lexical.l"
+#line 122 "lexical.l"
 {
-  printf("Basic operator: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return IF;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 87 "lexical.l"
+#line 132 "lexical.l"
 {
-  printf("Aritmetic operator: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return ELSE;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 92 "lexical.l"
+#line 142 "lexical.l"
 {
-  printf("Relational operator: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return FOR;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 97 "lexical.l"
+#line 152 "lexical.l"
 {
-  printf("Logic operator: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return RETURN;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 102 "lexical.l"
+#line 162 "lexical.l"
 {
-  printf("Set operator: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return ARITMETIC_OP1;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 107 "lexical.l"
+#line 172 "lexical.l"
+{
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return ARITMETIC_OP2;
+}
+	YY_BREAK
+case 15:
+YY_RULE_SETUP
+#line 182 "lexical.l"
+{
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return RELATIONAL_OP;
+}
+	YY_BREAK
+case 16:
+YY_RULE_SETUP
+#line 192 "lexical.l"
+{
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return LOGIC_OP;
+}
+	YY_BREAK
+case 17:
+YY_RULE_SETUP
+#line 202 "lexical.l"
+{
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return SET_OP1;
+}
+	YY_BREAK
+case 18:
+YY_RULE_SETUP
+#line 212 "lexical.l"
+{
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return SET_OP2;
+}
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 222 "lexical.l"
 {
   printf("Infix operator: %s\n", yytext);
   column += yyleng;
 }
 	YY_BREAK
-case 15:
+case 20:
 YY_RULE_SETUP
-#line 112 "lexical.l"
+#line 227 "lexical.l"
 {
-  printf("Input operator: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return INPUT;
 }
 	YY_BREAK
-case 16:
+case 21:
 YY_RULE_SETUP
-#line 117 "lexical.l"
+#line 237 "lexical.l"
 {
-  printf("Output operator: %s\n", yytext);
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
+  return OUTPUT;
 }
 	YY_BREAK
-case 17:
+case 22:
 YY_RULE_SETUP
-#line 122 "lexical.l"
+#line 247 "lexical.l"
 {
-    printf("Identifier: %s\n", yytext);
-    column += yyleng;
+  yylval->token.lex = (char*) malloc(sizeof(char) * (1 + strlen(yytext)));
+  strcpy(yylval->token.lex, yytext);
+  yylval->token.line = line;
+  yylval->token.column = column;
+  printf("LEXICO %d:%d -------- identifier: %s\n", line, column, yytext);
+  column += yyleng;
+  return ID;
 }
 	YY_BREAK
-case 18:
+case 23:
 YY_RULE_SETUP
-#line 127 "lexical.l"
+#line 257 "lexical.l"
 {
   printf("Assingnment: %s\n", yytext);
   column += yyleng;
 }
 	YY_BREAK
-case 19:
+case 24:
 YY_RULE_SETUP
-#line 132 "lexical.l"
+#line 262 "lexical.l"
 {
     printf("Variable separator: %s\n", yytext);
 }
 	YY_BREAK
-case 20:
+case 25:
 YY_RULE_SETUP
-#line 136 "lexical.l"
+#line 266 "lexical.l"
 {
     printf("Command separator: %s\n", yytext);
     column += yyleng;
 }
 	YY_BREAK
-case 21:
+case 26:
 YY_RULE_SETUP
-#line 141 "lexical.l"
+#line 271 "lexical.l"
 {
     printf("Block delimiter: %s\n", yytext);
     column += yyleng;
 }
 	YY_BREAK
-case 22:
+case 27:
 YY_RULE_SETUP
-#line 146 "lexical.l"
+#line 276 "lexical.l"
 {
     printf("Parentheses: %s\n", yytext);
     column += yyleng;
 }
 	YY_BREAK
-case 23:
+case 28:
 YY_RULE_SETUP
-#line 151 "lexical.l"
+#line 281 "lexical.l"
 {}
 	YY_BREAK
-case 24:
-/* rule 24 can match eol */
+case 29:
+/* rule 29 can match eol */
 YY_RULE_SETUP
-#line 153 "lexical.l"
+#line 283 "lexical.l"
 {
     line++;
     column = 1;
 }
 	YY_BREAK
-case 25:
+case 30:
 YY_RULE_SETUP
-#line 158 "lexical.l"
+#line 288 "lexical.l"
 {
     errors++;
     printf("ERROR: Unidentified character: %s - line: %d - column: %d\n", yytext, line, column);
 }
 	YY_BREAK
-case 26:
+case 31:
 YY_RULE_SETUP
-#line 163 "lexical.l"
+#line 293 "lexical.l"
 {
     errors++;
     printf("ERROR: Incorrect token format: %s - line: %d - column: %d\n", yytext, line, column);
 }
 	YY_BREAK
-case 27:
+case 32:
 YY_RULE_SETUP
-#line 168 "lexical.l"
+#line 297 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1005 "lex.yy.c"
+#line 1168 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1298,7 +1461,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 91 )
+			if ( yy_current_state >= 95 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1326,11 +1489,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 91 )
+		if ( yy_current_state >= 95 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 90);
+	yy_is_jam = (yy_current_state == 94);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1969,5 +2132,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 168 "lexical.l"
-
+#line 297 "lexical.l"

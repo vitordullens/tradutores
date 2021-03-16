@@ -1,4 +1,4 @@
 all:
-	bison sintatic.y -Wcounterexamples
+	bison syntax.y -Wcounterexamples
 	flex lexical.l
-	gcc sintatic.tab.c lex.yy.c
+	gcc syntax.tab.c lex.yy.c

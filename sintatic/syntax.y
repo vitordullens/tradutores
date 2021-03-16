@@ -1,7 +1,7 @@
 %defines
 %define lr.type canonical-lr
-%{
 
+%code requires {
   #include <stdio.h>
   #include <stdlib.h>
 
@@ -11,14 +11,16 @@
     int column, line;
     char *lex;
   };
+}
+
+%{
+  #include <stdio.h>
+  #include <stdlib.h>
 
   extern FILE *yyin;
   extern int yylex();
   extern int yylex_destroy();
-  void yyerror(const char* msg) {
-    fprintf (stderr, "%s\n", msg);
-  }
-
+  void yyerror (char const *);
 
 %}
 
@@ -63,37 +65,50 @@
 %token <token> RELATIONAL_OP
 %token <token> LOGIC_OP
 %token <token> SET_OP1
+%token <token> SET_OP2
 %token <token> INPUT
 %token <token> OUTPUT
 %token <token> STRING
 %token <token> INTEGER
 %token <token> FLOAT
 %token <token> EMPTY
+%token <token> IF
+%token <token> ELSE
+%token <token> FOR
+%token <token> RETURN
+%token <token> ';'
+%token <token> ','
+%token <token> '{'
+%token <token> '}'
+%token <token> '('
+%token <token> ')'
+
+
 
 %start program
 
 %%
 
 program:
-  declaration_list {}
+  declaration_list {printf("SINTATICO -------- program -> declaration_list\n");}
 
 declaration_list:
-  declaration declaration_list {}
-  | declaration {}
+  declaration declaration_list {printf("SINTATICO -------- declaration_list -> declaration declaration_list\n");}
+  | declaration {printf("SINTATICO -------- declaration_list -> declaration\n");}
 
 declaration:
-  function_declaration {}
-  | var_declaration {}
+  function_declaration {printf("SINTATICO -------- declaration -> function_declaration\n");}
+  | var_declaration {printf("SINTATICO -------- declaration -> var_declaration\n");}
 
 var_declaration:
-  type ID ";"
+  type ID ';' {printf("SINTATICO -------- var_declaration -> type ID\n");}
 
 function_declaration:
-  type ID "(" params_list ")" brackets_stmt {}
-  type ID "(" ")" brackets_stmt {}
+  type ID '(' params_list ')' brackets_stmt {printf("SINTATICO -------- function_declaration -> type ID ( params_list ) brackets_stmt\n");}
+  type ID '(' ')' brackets_stmt {printf("SINTATICO -------- function_declaration -> type ID ( ) brackets_stmt\n");}
 
 params_list:
- type ID "," params_list {}
+ type ID ',' params_list {}
  | type ID {}
 
 stmt:
@@ -107,32 +122,32 @@ stmt:
   | var_declaration {}
 
 brackets_stmt:
-  "{" stmt "}" {}
+  "{" stmt "}" {printf("SINTATICO -------- brackets_stmt -> stmt ;\n");}
 
 io_stmt: 
-  INPUT "(" ID ")" ";" {}
-  | OUTPUT "(" STRING ")" ";" {}
-  | OUTPUT "(" exp ")" ";" {}
+  INPUT '(' ID ')' ';' {}
+  | OUTPUT '(' STRING ')' ';' {}
+  | OUTPUT '(' exp ')' ';' {}
 
 for_stmt:
-  "for" "(" exp ";" exp ";" exp ")" stmt {}
+  FOR '(' exp ';' exp ';' exp ')' stmt {}
 
 if_else_stmt:
-  "if" "(" exp ")" brackets_stmt {}
-  | "if" "(" exp ")" brackets_stmt "else" brackets_stmt {}
+  IF '(' exp ')' brackets_stmt {}
+  | IF '(' exp ')' brackets_stmt ELSE brackets_stmt {}
 
 return_stmt:
-  "return" ";" {}
-  | "return" exp {}
+  RETURN ';' {printf("SINTATICO -------- return_stmt -> RETURN ;\n");}
+  | RETURN exp {printf("SINTATICO -------- return_stmt -> RETURN exp\n");}
 
 set_stmt:
-  "forall" "(" ID "in" set_exp ")" stmt {}
-  | "is_set" "(" ID ")" ";" {}
-  | "is_set" "(" set_exp ")" ";" {}
+  "forall" '(' ID "in" set_exp ')' stmt {}
+  | "is_set" '(' ID ')' ';' {}
+  | "is_set" '(' set_exp ')' ';' {}
 
 exp_stmt:
-  exp ";" {}
-  ";" {}
+  exp ';' {}
+  ';' {}
 
 exp:
   ID "=" exp {}
@@ -140,7 +155,7 @@ exp:
   | set_exp {}
 
 set_exp:
-  SET_OP1 "(" set_in_exp ")" {}
+  SET_OP1 '(' set_in_exp ')' {}
 
 set_in_exp:
   or_exp "in" set_exp {}
@@ -170,21 +185,24 @@ mul_exp:
 primal_exp:
   ID {}
   | CONST {}
-  | "(" exp ")" {}
-  | ID "(" arg_list ")" {}
-  | ID "(" ")" {}
+  | '(' exp ')' {}
+  | ID '(' arg_list ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.lex);}
+  | ID '(' ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.lex);}
 
 arg_list:
-  exp "," arg_list {}
+  exp ',' arg_list {}
   | exp {}
 
 type:
-  BASIC_TYPE {}
+  BASIC_TYPE {printf("SINTATICO %d:%d-------- type -> %s\n", $1.line, $1.column, $1.lex);}
   | SET_TYPE {}
   | ELEM_TYPE {}
 
 %%
 
+void yyerror(const char* msg) {
+  fprintf (stderr, "ERROR %d:%d - %s\n", yylval.token.line, yylval.token.column, msg);
+}
 
 int main(int argc, char ** argv) {
     ++argv, --argc;
@@ -194,6 +212,7 @@ int main(int argc, char ** argv) {
     else {
         yyin = stdin;
     }
+    printf("\n");
     yyparse();
     fclose(yyin);
     yylex_destroy();
