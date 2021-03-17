@@ -101,6 +101,7 @@ declaration_list:
 declaration:
   function_declaration {printf("SINTATICO -------- declaration -> function_declaration\n");}
   | var_declaration {printf("SINTATICO -------- declaration -> var_declaration\n");}
+  | error {}
 
 var_declaration:
   type ID ';' {printf("SINTATICO -------- var_declaration -> type %s\n", $2.body);}
@@ -140,7 +141,7 @@ for_stmt:
   FOR '(' assignment ';' exp ';' assignment ')' stmt {printf("SINTATICO -------- return_stmt -> RETURN exp\n");}
 
 if_else_stmt:
-  IF '(' exp ')' brackets_stmt {printf("SINTATICO -------- if_else_stmt -> IF ( exp ) brackets_stmt\n");}
+  IF '(' exp ')' stmt {printf("SINTATICO -------- if_else_stmt -> IF ( exp ) brackets_stmt\n");}
   | IF '(' exp ')' brackets_stmt ELSE stmt {printf("SINTATICO -------- if_else_stmt -> IF ( exp ) brackets_stmt ELSE stmt\n");}
 
 return_stmt:
@@ -148,9 +149,10 @@ return_stmt:
   | RETURN exp ';' {printf("SINTATICO -------- return_stmt -> RETURN exp\n");}
 
 set_stmt:
-  FORALL '(' ID INFIX_OP set_exp ')' stmt {printf("SINTATICO -------- set_stmt -> RETURN exp\n");}
-  | ISSET '(' ID ')' ';' {printf("SINTATICO -------- set_stmt -> RETURN exp\n");}
-  | ISSET '(' set_exp ')' ';' {printf("SINTATICO -------- set_stmt -> RETURN exp\n");}
+  FORALL '(' ID INFIX_OP set_exp ')' stmt {printf("SINTATICO -------- set_stmt -> FORALL\n");}
+  | FORALL '(' ID INFIX_OP ID ')' stmt {printf("SINTATICO -------- set_stmt -> FORALL\n");}
+  | ISSET '(' ID ')' ';' {printf("SINTATICO -------- set_stmt -> ISSET ( %s )\n", $3.body);}
+  | ISSET '(' set_exp ')' ';' {printf("SINTATICO -------- set_stmt -> ISSET ( set_exp )\n");}
 
 exp_stmt:
   exp ';' {}
@@ -166,12 +168,13 @@ set_exp:
   SET_OP1 '(' set_in_exp ')' {printf("SINTATICO -------- set_exp -> %s ( set_in_exp )\n", $1.body);}
 
 set_in_exp:
-  or_exp INFIX_OP set_exp {printf("SINTATICO -------- set_in_exp -> or_exp %s set_exp ( set_in_exp )\n", $2.body);}
-  | or_exp INFIX_OP ID {printf("SINTATICO -------- set_in_exp -> or_exp %s %s( set_in_exp )\n", $2.body, $3.body);}
+  or_exp INFIX_OP ID {printf("SINTATICO -------- set_in_exp -> or_exp %s %s\n", $2.body, $3.body);}
+  | or_exp INFIX_OP set_exp {printf("SINTATICO -------- set_in_exp -> or_exp %s set_exp\n", $2.body);}
 
 or_exp:
   or_exp OR and_exp {printf("SINTATICO -------- or_exp -> or_exp %s and_exp\n", $2.body);}
   | and_exp {}
+  | set_in_exp {}
 
 and_exp:
   and_exp AND relational_exp {printf("SINTATICO -------- and_exp -> and_exp %s relational_exp\n", $2.body);}
@@ -219,7 +222,7 @@ const:
 %%
 
 void yyerror(const char* msg) {
-  fprintf (stderr, "ERROR %d:%d - %s\n", yylval.token.line, yylval.token.column, msg);
+  fprintf (stderr, "SYNTAX ERROR %d:%d - %s\n", yylval.token.line, yylval.token.column, msg);
 }
 
 int main(int argc, char ** argv) {

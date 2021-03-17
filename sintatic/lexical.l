@@ -31,12 +31,6 @@ AND "&&"
 
 SET_OP1 add|remove|exists
 
-FORALL forall
-
-ISSET is_set
-
-INFIX_OP in
-
 INPUT  read
 
 OUTPUT write|writeln
@@ -54,7 +48,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return STRING;
 }
@@ -63,7 +57,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return INTEGER;
 }
@@ -72,7 +66,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return FLOAT;
 }
@@ -81,7 +75,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return BASIC_TYPE;
 }
@@ -90,7 +84,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return SET_TYPE;
 }
@@ -98,7 +92,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ELEM_TYPE;
 }
@@ -107,7 +101,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return EMPTY;
 }
@@ -116,7 +110,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return IF;
 }
@@ -125,7 +119,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ELSE;
 }
@@ -134,7 +128,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return FOR;
 }
@@ -143,25 +137,25 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return RETURN;
 }
 
-{FORALL} {
+"forall" {
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return FORALL;
 }
 
-{ISSET} {
+"is_set" {
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ISSET;
 }
@@ -170,7 +164,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ARITMETIC_OP1;
 }
@@ -179,7 +173,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ARITMETIC_OP2;
 }
@@ -188,7 +182,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return RELATIONAL_OP;
 }
@@ -197,7 +191,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return OR;
 }
@@ -206,7 +200,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return AND;
 }
@@ -215,7 +209,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '!';
 }
@@ -224,25 +218,25 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return SET_OP1;
 }
 
-{INFIX_OP} {
+"in" {
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
-  INFIX_OP;
+  return INFIX_OP;
 }
 
 {INPUT} {
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return INPUT;
 }
@@ -251,7 +245,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return OUTPUT;
 }
@@ -260,7 +254,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- identifier: %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- identifier: %s\n", line, column, yytext);
   column += yyleng;
   return ID;
 }
@@ -269,7 +263,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '=';
 }
@@ -278,7 +272,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ',';
 }
@@ -287,7 +281,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ';';
 }
@@ -296,7 +290,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '{';
 }
@@ -305,7 +299,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '}';
 }
@@ -314,7 +308,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return '(';
 }
@@ -323,12 +317,14 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return ')';
 }
 
-[ \t]+ {}
+[ \t]+ {
+  column += yyleng;
+}
 
 \n|\r {
     line++;

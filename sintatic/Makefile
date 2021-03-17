@@ -1,4 +1,4 @@
 all:
 	bison -d syntax.y -Wcounterexamples
 	flex lexical.l
-	gcc syntax.tab.c lex.yy.c
+	gcc syntax.tab.c lex.yy.c -Wall -ll
