@@ -61,9 +61,9 @@ extern int yydebug;
     ARITMETIC_OP1 = 262,           /* ARITMETIC_OP1  */
     ARITMETIC_OP2 = 263,           /* ARITMETIC_OP2  */
     RELATIONAL_OP = 264,           /* RELATIONAL_OP  */
-    LOGIC_OP = 265,                /* LOGIC_OP  */
-    SET_OP1 = 266,                 /* SET_OP1  */
-    SET_OP2 = 267,                 /* SET_OP2  */
+    AND = 265,                     /* AND  */
+    OR = 266,                      /* OR  */
+    SET_OP1 = 267,                 /* SET_OP1  */
     INPUT = 268,                   /* INPUT  */
     OUTPUT = 269,                  /* OUTPUT  */
     STRING = 270,                  /* STRING  */
@@ -74,7 +74,9 @@ extern int yydebug;
     ELSE = 275,                    /* ELSE  */
     FOR = 276,                     /* FOR  */
     RETURN = 277,                  /* RETURN  */
-    INFIX_OP = 278                 /* INFIX_OP  */
+    INFIX_OP = 278,                /* INFIX_OP  */
+    FORALL = 279,                  /* FORALL  */
+    ISSET = 280                    /* ISSET  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -90,7 +92,7 @@ union YYSTYPE
     char *body;
   } token;
 
-#line 94 "syntax.tab.h"
+#line 96 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

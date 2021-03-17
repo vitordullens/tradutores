@@ -25,11 +25,15 @@ ARITMETIC_OP2  "*"|"/"
 
 RELATIONAL_OP >|<|">="|"<="|"!="|"=="
 
-LOGIC_OP "!"|"&&"|"||"
+OR "||"
+
+AND "&&"
 
 SET_OP1 add|remove|exists
 
-SET_OP2 forall|is_set
+FORALL forall
+
+ISSET is_set
 
 INFIX_OP in
 
@@ -144,6 +148,24 @@ STRING \"[^\"]*\"|'[^']*'
   return RETURN;
 }
 
+{FORALL} {
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return FORALL;
+}
+
+{ISSET} {
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return ISSET;
+}
+
 {ARITMETIC_OP1} {
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
@@ -171,13 +193,31 @@ STRING \"[^\"]*\"|'[^']*'
   return RELATIONAL_OP;
 }
 
-{LOGIC_OP} {
+{OR} {
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
-  return LOGIC_OP;
+  return OR;
+}
+
+{AND} {
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return AND;
+}
+
+"!" {
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
+  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return '!';
 }
 
 {SET_OP1} {
@@ -187,15 +227,6 @@ STRING \"[^\"]*\"|'[^']*'
   printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
   return SET_OP1;
-}
-
-{SET_OP2} {
-  yylval.token.body = strdup(yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
-  column += yyleng;
-  return SET_OP2;
 }
 
 {INFIX_OP} {

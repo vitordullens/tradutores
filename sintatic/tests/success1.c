@@ -1,3 +1,6 @@
+int f(int a, int b, int k, int c){
+     writeln("vntc");
+}
 int main() {
-    return ;
+    f(1,2,0,3);
 }

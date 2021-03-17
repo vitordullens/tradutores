@@ -49,6 +49,7 @@
 %type type
 %type const
 %type assignment
+%type unary_exp
 
 
 %token <token> ID
@@ -58,9 +59,9 @@
 %token <token> ARITMETIC_OP1
 %token <token> ARITMETIC_OP2
 %token <token> RELATIONAL_OP
-%token <token> LOGIC_OP
+%token <token> AND
+%token <token> OR
 %token <token> SET_OP1
-%token <token> SET_OP2
 %token <token> INPUT
 %token <token> OUTPUT
 %token <token> STRING
@@ -72,6 +73,8 @@
 %token <token> FOR
 %token <token> RETURN
 %token <token> INFIX_OP
+%token <token> FORALL
+%token <token> ISSET
 %token <token> ';'
 %token <token> ','
 %token <token> '{'
@@ -79,6 +82,8 @@
 %token <token> '('
 %token <token> ')'
 %token <token> '='
+%token <token> '!'
+
 
 
 
@@ -88,7 +93,6 @@
 
 program:
   declaration_list {printf("SINTATICO -------- program -> declaration_list\n");}
-  | error {}
 
 declaration_list:
   declaration_list declaration  {printf("SINTATICO -------- declaration_list -> declaration declaration_list\n");}
@@ -114,7 +118,6 @@ brackets_stmt:
 
 stmts:
   stmt stmts {}
-  | brackets_stmt {}
   | stmt {}
 
 stmt:
@@ -126,72 +129,78 @@ stmt:
   | set_stmt {}
   | var_declaration {}
   | assignment {}
+  | brackets_stmt {}
 
 io_stmt: 
-  INPUT '(' ID ')' ';' {}
-  | OUTPUT '(' STRING ')' ';' {}
-  | OUTPUT '(' exp ')' ';' {}
+  INPUT '(' ID ')' ';' {printf("SINTATICO -------- io_stmt -> %s ( %s )\n", $1.body, $3.body);}
+  | OUTPUT '(' STRING ')' ';' {printf("SINTATICO -------- io_stmt -> %s ( %s )\n", $1.body, $3.body);}
+  | OUTPUT '(' exp ')' ';' {printf("SINTATICO -------- io_stmt -> %s ( exp )\n", $1.body);}
 
 for_stmt:
-  FOR '(' assignment ';' exp ';' assignment ')' stmt {}
+  FOR '(' assignment ';' exp ';' assignment ')' stmt {printf("SINTATICO -------- return_stmt -> RETURN exp\n");}
 
 if_else_stmt:
-  IF '(' exp ')' brackets_stmt {}
-  | IF '(' exp ')' brackets_stmt ELSE brackets_stmt {}
+  IF '(' exp ')' brackets_stmt {printf("SINTATICO -------- if_else_stmt -> IF ( exp ) brackets_stmt\n");}
+  | IF '(' exp ')' brackets_stmt ELSE stmt {printf("SINTATICO -------- if_else_stmt -> IF ( exp ) brackets_stmt ELSE stmt\n");}
 
 return_stmt:
   RETURN ';' {printf("SINTATICO -------- return_stmt -> RETURN ;\n");}
   | RETURN exp ';' {printf("SINTATICO -------- return_stmt -> RETURN exp\n");}
 
 set_stmt:
-  "forall" '(' ID INFIX_OP set_exp ')' stmt {}
-  | "is_set" '(' ID ')' ';' {}
-  | "is_set" '(' set_exp ')' ';' {}
+  FORALL '(' ID INFIX_OP set_exp ')' stmt {printf("SINTATICO -------- set_stmt -> RETURN exp\n");}
+  | ISSET '(' ID ')' ';' {printf("SINTATICO -------- set_stmt -> RETURN exp\n");}
+  | ISSET '(' set_exp ')' ';' {printf("SINTATICO -------- set_stmt -> RETURN exp\n");}
 
 exp_stmt:
   exp ';' {}
-  ';' {}
 
 assignment:
   ID '=' exp ';' {printf("SINTATICO -------- assignment -> %s = exp\n", $1.body);}
 
 exp:
-  or_exp {}
+  or_exp {printf("SINTATICO -------- exp -> or_exp\n");}
   | set_exp {}
 
 set_exp:
-  SET_OP1 '(' set_in_exp ')' {}
+  SET_OP1 '(' set_in_exp ')' {printf("SINTATICO -------- set_exp -> %s ( set_in_exp )\n", $1.body);}
 
 set_in_exp:
-  or_exp INFIX_OP set_exp {}
-  | or_exp INFIX_OP ID {}
+  or_exp INFIX_OP set_exp {printf("SINTATICO -------- set_in_exp -> or_exp %s set_exp ( set_in_exp )\n", $2.body);}
+  | or_exp INFIX_OP ID {printf("SINTATICO -------- set_in_exp -> or_exp %s %s( set_in_exp )\n", $2.body, $3.body);}
 
 or_exp:
-  or_exp "||" and_exp {}
+  or_exp OR and_exp {printf("SINTATICO -------- or_exp -> or_exp %s and_exp\n", $2.body);}
   | and_exp {}
 
 and_exp:
-  and_exp "&&" relational_exp {}
+  and_exp AND relational_exp {printf("SINTATICO -------- and_exp -> and_exp %s relational_exp\n", $2.body);}
   | relational_exp {}
 
 relational_exp:
-  relational_exp RELATIONAL_OP sum_exp {}
+  relational_exp RELATIONAL_OP sum_exp {printf("SINTATICO -------- relational_exp -> relational_exp %s sum_exp\n", $2.body);}
   | sum_exp {}
 
 sum_exp:
-  sum_exp ARITMETIC_OP1 mul_exp {}
+  sum_exp ARITMETIC_OP1 mul_exp {printf("SINTATICO -------- sum_exp -> sum_exp %s mul_exp\n", $2.body);}
   | mul_exp {}
 
 mul_exp:
-  mul_exp ARITMETIC_OP2 primal_exp {}
-  | "-" primal_exp {}
-  | primal_exp {}
+  mul_exp ARITMETIC_OP2 unary_exp {printf("SINTATICO -------- mul_exp -> mul_exp %s unary_exp\n", $2.body);}
+  | unary_exp {}
+
+unary_exp:
+  primal_exp {}
+  | '!' primal_exp {}
+  | ARITMETIC_OP1 primal_exp {printf("SINTATICO -------- unary_exp -> %s primal_exp\n", $1.body);}
+  | ID '(' arg_list ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s ( arg_list )\n", $1.line, $1.column, $1.body);}
+  | ID '(' ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.body);}
+
 
 primal_exp:
   ID {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.body);}
   | const {printf("SINTATICO -------- primal_exp -> const\n");}
-  | ID '(' arg_list ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.body);}
-  | ID '(' ')' {printf("SINTATICO %d:%d-------- primal_exp -> %s\n", $1.line, $1.column, $1.body);}
+  | '(' exp ')' {}
 
 arg_list:
   exp ',' arg_list {printf("SINTATICO -------- arg_list -> exp , arg_list\n");}
