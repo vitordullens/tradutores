@@ -1,27 +1,27 @@
-int main() {
-    x = (1 + 2);
+// Global var
+int k;
+
+int f(int x) {
+    int a; 
+    int b;   // Teste
+    float pi;
     set s;
-    s = EMPTY;
+    elem el;
+    a = 1;
+    b = 2;
+    return a + b;
+}
 
-    add(1 in s);
-    add(2 in s);
-    add(5 in s);
-    add(8 in s);
+int aaaaa(int a, int b, int c){
+    alolao(teste(b), a);
+}
 
-    set possibleSums;
-    possibleSums = EMPTY;
-    int x;
-    
-    forall (x in s) {
-        set sumsWithX;   
-        sumsWithX = EMPTY;
-        int val;
-        forall (val in possibleSums) add(x + val in sumsWithX);
-        forall (val in sumsWithX) add (val in possibleSums);
-        if (13 in possibleSums){
-            writeln('y');
-        } else {
-            writeln('n');
-        }
+// Main
+int main() {
+    int a;
+    int b;
+    if (1) {
+        int a;
+        remove((exists (el in s)) in s);
     }
 }
