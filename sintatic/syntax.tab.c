@@ -81,7 +81,7 @@
   
   extern FILE *yyin;
 
-  char *tipo;
+  char tipo[100];
 
   int indiceTabela = -1;
 
@@ -2656,7 +2656,7 @@ yyreduce:
   case 66: /* type: INT_TYPE  */
 #line 461 "syntax.y"
            {
-    tipo = strdup("INT");
+    strcpy(tipo, "INT");
     (yyval.nodo) = criarNodo("INT_TYPE");
   }
 #line 2663 "syntax.tab.c"
@@ -2665,7 +2665,7 @@ yyreduce:
   case 67: /* type: FLOAT_TYPE  */
 #line 465 "syntax.y"
                {
-    tipo = strdup("FLOAT");
+    strcpy(tipo, "FLOAT");
     (yyval.nodo) = criarNodo("FLOAT_TYPE");
   }
 #line 2672 "syntax.tab.c"
@@ -2674,7 +2674,7 @@ yyreduce:
   case 68: /* type: SET_TYPE  */
 #line 469 "syntax.y"
              {
-    tipo = strdup("SET");
+    strcpy(tipo, "SET");
     (yyval.nodo) = criarNodo("SET_TYPE");
   }
 #line 2681 "syntax.tab.c"
@@ -2683,7 +2683,7 @@ yyreduce:
   case 69: /* type: ELEM_TYPE  */
 #line 473 "syntax.y"
               {
-    tipo = strdup("ELEM");
+    strcpy(tipo,"ELEM");
     (yyval.nodo) = criarNodo("ELEM_TYPE");
   }
 #line 2690 "syntax.tab.c"
@@ -2965,6 +2965,8 @@ int main(int argc, char ** argv) {
 
     printTabela(indiceTabela);
     printArvore(raiz, 0);
+
+    freeArvore(raiz);
 
     fclose(yyin);
     yylex_destroy();

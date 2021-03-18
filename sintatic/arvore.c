@@ -6,7 +6,28 @@
 NodoArvore* criarNodo(char *val) {
   NodoArvore* novoNodo = (NodoArvore*) malloc(sizeof(NodoArvore));
   novoNodo->val = strdup(val);
+  novoNodo->proximo = NULL;
+  novoNodo->filho = NULL;
+  novoNodo->simbolo = NULL;
   return novoNodo;
+}
+
+void freeArvore(NodoArvore *nodo) {
+  if(!nodo) {
+    return;
+  }
+  if(nodo->simbolo) {
+    free(nodo->simbolo);
+  }
+  if(nodo->proximo){
+    freeArvore(nodo->proximo);
+  }
+  if(nodo->filho) {
+    freeArvore(nodo->filho);
+  }
+  free(nodo->val);
+  free(nodo);
+
 }
 
 void printArvore(NodoArvore *nodo, int profundidade) {

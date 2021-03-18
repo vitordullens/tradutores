@@ -15,7 +15,7 @@
   
   extern FILE *yyin;
 
-  char *tipo;
+  char tipo[100];
 
   int indiceTabela = -1;
 
@@ -459,19 +459,19 @@ arg_list:
 
 type:
   INT_TYPE {
-    tipo = strdup("INT");
+    strcpy(tipo, "INT");
     $$ = criarNodo("INT_TYPE");
   }
   | FLOAT_TYPE {
-    tipo = strdup("FLOAT");
+    strcpy(tipo, "FLOAT");
     $$ = criarNodo("FLOAT_TYPE");
   }
   | SET_TYPE {
-    tipo = strdup("SET");
+    strcpy(tipo, "SET");
     $$ = criarNodo("SET_TYPE");
   }
   | ELEM_TYPE {
-    tipo = strdup("ELEM");
+    strcpy(tipo,"ELEM");
     $$ = criarNodo("ELEM_TYPE");
   }
 
@@ -511,6 +511,8 @@ int main(int argc, char ** argv) {
 
     printTabela(indiceTabela);
     printArvore(raiz, 0);
+
+    freeArvore(raiz);
 
     fclose(yyin);
     yylex_destroy();

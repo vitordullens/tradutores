@@ -14,5 +14,6 @@ struct NodoArvore {
 
 NodoArvore* criarNodo(char*);
 void printArvore(NodoArvore*, int);
+void freeArvore(NodoArvore *);
 
 #endif
