@@ -13,7 +13,7 @@ set subsum(set s, int target, int cur_sum, set ans) {
        is_set(a);
        is_set(add(a in b));
        forall(a in add(a in b)) {
-           int a;
+           set a;
        }
        if(subsum(s, target, cur_sum, ans))
            return ans;
