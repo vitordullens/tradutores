@@ -1,13 +1,3 @@
-float x;
-set b;
-elem y;
 int main() {
-  int a;
+  return 1;
 }
-
-
-
-
-
-
-int a;

@@ -7,6 +7,7 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include "tabela.h"
+  #include "arvore.h"
 
   extern int yylex();
   extern int yylex_destroy();
@@ -17,6 +18,8 @@
   char *tipo;
 
   int indiceTabela = -1;
+
+  NodoArvore* raiz;
 %}
 
 %union {
@@ -24,37 +27,39 @@
     int column, line;
     char *body;
   } token;
+
+  struct NodoArvore* nodo;
 }
 
-%type program
-%type declaration_list
-%type declaration
-%type var_declaration
-%type function_declaration
-%type params_list
-%type stmts
-%type stmt
-%type brackets_stmt
-%type io_stmt
-%type for_stmt
-%type if_else_stmt
-%type return_stmt
-%type set_stmt
-%type exp_stmt
-%type exp
-%type set_exp
-%type set_in_exp
-%type or_exp
-%type and_exp
-%type relational_exp
-%type sum_exp
-%type mul_exp
-%type primal_exp
-%type arg_list
-%type type
-%type const
-%type assignment
-%type unary_exp
+%type <nodo> program
+%type <nodo> declaration_list
+%type <nodo> declaration
+%type <nodo> var_declaration
+%type <nodo> function_declaration
+%type <nodo> params_list
+%type <nodo> stmts
+%type <nodo> stmt
+%type <nodo> brackets_stmt
+%type <nodo> io_stmt
+%type <nodo> for_stmt
+%type <nodo> if_else_stmt
+%type <nodo> return_stmt
+%type <nodo> set_stmt
+%type <nodo> exp_stmt
+%type <nodo> exp
+%type <nodo> set_exp
+%type <nodo> set_in_exp
+%type <nodo> or_exp
+%type <nodo> and_exp
+%type <nodo> relational_exp
+%type <nodo> sum_exp
+%type <nodo> mul_exp
+%type <nodo> primal_exp
+%type <nodo> arg_list
+%type <nodo> type
+%type <nodo> const
+%type <nodo> assignment
+%type <nodo> unary_exp
 
 
 %token <token> ID
@@ -96,14 +101,24 @@
 %%
 
 program:
-  declaration_list {}
+  declaration_list {
+    $$ = criarNodo("program");
+    $$->filho = $1;
+    raiz = $$;
+  }
 
 declaration_list:
   declaration_list declaration  {}
-  | declaration {}
+  | declaration {
+    $$ = criarNodo("declaration_list");
+    $$->filho = $1;
+  }
 
 declaration:
-  function_declaration {}
+  function_declaration {
+    $$ = criarNodo("declaration");
+    $$->filho = $1;
+  }
   | var_declaration {}
   | error {}
 
@@ -133,6 +148,11 @@ function_declaration:
     s.tipo = strdup(tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
+
+    $$ = criarNodo("function_declaration");
+    $$->filho = $1;
+    $$->simbolo = criarSimboloArvore($2.line, $2.column, $2.body);
+    $1->proximo = $5;
   }
 
 params_list:
@@ -141,17 +161,25 @@ params_list:
 
 brackets_stmt:
   '{' stmts '}' {
+    $$ = criarNodo("brackets_stmt");
+    $$->filho = $2;
   }
   | error {}
 
 stmts:
   stmt stmts {}
-  | stmt {}
+  | stmt {
+    $$ = criarNodo("stmts");
+    $$->filho = $1;
+  }
 
 stmt:
   for_stmt {}
   | if_else_stmt {}
-  | return_stmt {}
+  | return_stmt {
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
   | io_stmt {}
   | exp_stmt {}
   | set_stmt {}
@@ -173,7 +201,10 @@ if_else_stmt:
 
 return_stmt:
   RETURN ';' {}
-  | RETURN exp ';' {}
+  | RETURN exp ';' {
+    $$ = criarNodo("return_stmt");
+    $$->filho = $2;
+  }
 
 set_stmt:
   FORALL '(' ID INFIX_OP set_exp ')' stmt {}
@@ -182,13 +213,19 @@ set_stmt:
   | ISSET '(' set_exp ')' ';' {}
 
 exp_stmt:
-  exp ';' {}
+  exp ';' {
+    $$ = criarNodo("exp_stmt");
+    $$->filho = $1;
+  }
 
 assignment:
   ID '=' exp ';' {}
 
 exp:
-  or_exp {}
+  or_exp {
+    $$ = criarNodo("exp");
+    $$->filho = $1;
+  }
   | set_exp {}
 
 set_exp:
@@ -200,27 +237,45 @@ set_in_exp:
 
 or_exp:
   or_exp OR and_exp {}
-  | and_exp {}
+  | and_exp {
+    $$ = criarNodo("or_exp");
+    $$->filho = $1;
+  }
   | set_in_exp {}
 
 and_exp:
   and_exp AND relational_exp {}
-  | relational_exp {}
+  | relational_exp {
+    $$ = criarNodo("and_exp");
+    $$->filho = $1;
+  }
 
 relational_exp:
   relational_exp RELATIONAL_OP sum_exp {}
-  | sum_exp {}
+  | sum_exp {
+    $$ = criarNodo("relatorional_exp");
+    $$->filho = $1;
+  }
 
 sum_exp:
   sum_exp ARITMETIC_OP1 mul_exp {}
-  | mul_exp {}
+  | mul_exp {
+    $$ = criarNodo("sum_exp");
+    $$->filho = $1;
+  }
 
 mul_exp:
   mul_exp ARITMETIC_OP2 unary_exp {}
-  | unary_exp {}
+  | unary_exp {
+    $$ = criarNodo("mul_exp");
+    $$->filho = $1;
+  }
 
 unary_exp:
-  primal_exp {}
+  primal_exp {
+    $$ = criarNodo("unary_exp");
+    $$->filho = $1;
+  }
   | '!' primal_exp {}
   | ARITMETIC_OP1 primal_exp {}
   | ID '(' arg_list ')' {}
@@ -229,7 +284,10 @@ unary_exp:
 
 primal_exp:
   ID {}
-  | const {}
+  | const {
+    $$ = criarNodo("primal_exp");
+    $$->filho = $1;
+  }
   | '(' exp ')' {}
 
 arg_list:
@@ -239,21 +297,38 @@ arg_list:
 type:
   INT_TYPE {
     tipo = strdup("INT");
+    $$ = criarNodo("INT_TYPE");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
   }
   | FLOAT_TYPE {
     tipo = strdup("FLOAT");
+    $$ = criarNodo("FLOAT_TYPE");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
   }
   | SET_TYPE {
     tipo = strdup("SET");
+    $$ = criarNodo("SET_TYPE");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
   }
   | ELEM_TYPE {
     tipo = strdup("ELEM");
+    $$ = criarNodo("ELEM_TYPE");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
   }
 
 const:
-  INTEGER {}
-  | FLOAT {}
-  | EMPTY {}
+  INTEGER {
+    $$ = criarNodo("const");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
+  }
+  | FLOAT {
+    $$ = criarNodo("const");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
+  }
+  | EMPTY {
+    $$ = criarNodo("const");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
+  }
 
 %%
 
@@ -276,6 +351,7 @@ int main(int argc, char ** argv) {
     yyparse();
 
     printTabela(indiceTabela);
+    printArvore(raiz, 0);
 
     fclose(yyin);
     yylex_destroy();

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "tabela.h"
 
 int escopoAtual(Escopo* escopo) {
@@ -24,6 +25,15 @@ Simbolo criarSimbolo(int linha, int coluna, char* body) {
   
   return s;
 }
+
+Simbolo* criarSimboloArvore(int linha, int coluna, char* body) {
+  Simbolo* s = (Simbolo*) malloc(sizeof(Simbolo));
+  s->body = strdup(body);
+  s->linha = linha;
+  s->coluna = coluna;
+  return s;
+}
+
 
 void printTabela(int size) {
   if (size == -1) return;

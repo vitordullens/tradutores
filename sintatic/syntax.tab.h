@@ -86,14 +86,16 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 22 "syntax.y"
+#line 25 "syntax.y"
 
   struct Token {
     int column, line;
     char *body;
   } token;
 
-#line 97 "syntax.tab.h"
+  struct NodoArvore* nodo;
+
+#line 99 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

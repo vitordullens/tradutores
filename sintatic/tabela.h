@@ -25,6 +25,7 @@ Simbolo tabelaSimbolos[1000000];
 Escopo escopo;
 
 Simbolo criarSimbolo(int, int, char*);
+Simbolo *criarSimboloArvore(int, int, char*);
 
 int escopoAtual(Escopo*);
 void adicionarEscopo(Escopo*);

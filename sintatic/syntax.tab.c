@@ -73,6 +73,7 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include "tabela.h"
+  #include "arvore.h"
 
   extern int yylex();
   extern int yylex_destroy();
@@ -84,7 +85,9 @@
 
   int indiceTabela = -1;
 
-#line 88 "syntax.tab.c"
+  NodoArvore* raiz;
+
+#line 91 "syntax.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -559,14 +562,14 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    99,    99,   102,   103,   106,   107,   108,   111,   121,
-     129,   139,   140,   143,   145,   148,   149,   152,   153,   154,
-     155,   156,   157,   158,   159,   160,   163,   164,   165,   168,
-     171,   172,   175,   176,   179,   180,   181,   182,   185,   188,
-     191,   192,   195,   198,   199,   202,   203,   204,   207,   208,
-     211,   212,   215,   216,   219,   220,   223,   224,   225,   226,
-     227,   231,   232,   233,   236,   237,   240,   243,   246,   249,
-     254,   255,   256
+       0,   104,   104,   111,   112,   118,   122,   123,   126,   136,
+     144,   159,   160,   163,   167,   170,   171,   177,   178,   179,
+     183,   184,   185,   186,   187,   188,   191,   192,   193,   196,
+     199,   200,   203,   204,   210,   211,   212,   213,   216,   222,
+     225,   229,   232,   235,   236,   239,   240,   244,   247,   248,
+     254,   255,   261,   262,   268,   269,   275,   279,   280,   281,
+     282,   286,   287,   291,   294,   295,   298,   303,   308,   313,
+     320,   324,   328
 };
 #endif
 
@@ -2031,43 +2034,53 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: declaration_list  */
-#line 99 "syntax.y"
-                   {}
-#line 2037 "syntax.tab.c"
+#line 104 "syntax.y"
+                   {
+    (yyval.nodo) = criarNodo("program");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+    raiz = (yyval.nodo);
+  }
+#line 2044 "syntax.tab.c"
     break;
 
   case 3: /* declaration_list: declaration_list declaration  */
-#line 102 "syntax.y"
+#line 111 "syntax.y"
                                 {}
-#line 2043 "syntax.tab.c"
+#line 2050 "syntax.tab.c"
     break;
 
   case 4: /* declaration_list: declaration  */
-#line 103 "syntax.y"
-                {}
-#line 2049 "syntax.tab.c"
+#line 112 "syntax.y"
+                {
+    (yyval.nodo) = criarNodo("declaration_list");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2059 "syntax.tab.c"
     break;
 
   case 5: /* declaration: function_declaration  */
-#line 106 "syntax.y"
-                       {}
-#line 2055 "syntax.tab.c"
+#line 118 "syntax.y"
+                       {
+    (yyval.nodo) = criarNodo("declaration");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2068 "syntax.tab.c"
     break;
 
   case 6: /* declaration: var_declaration  */
-#line 107 "syntax.y"
+#line 122 "syntax.y"
                     {}
-#line 2061 "syntax.tab.c"
+#line 2074 "syntax.tab.c"
     break;
 
   case 7: /* declaration: error  */
-#line 108 "syntax.y"
+#line 123 "syntax.y"
           {}
-#line 2067 "syntax.tab.c"
+#line 2080 "syntax.tab.c"
     break;
 
   case 8: /* var_declaration: type ID ';'  */
-#line 111 "syntax.y"
+#line 126 "syntax.y"
               {
     Simbolo s = criarSimbolo((yyvsp[-1].token).line, (yyvsp[-1].token).column, (yyvsp[-1].token).body);
     s.escopo = escopoAtual(&escopo);
@@ -2076,26 +2089,13 @@ yyreduce:
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
   }
-#line 2080 "syntax.tab.c"
-    break;
-
-  case 9: /* function_declaration: type ID '(' params_list ')' brackets_stmt  */
-#line 121 "syntax.y"
-                                            {
-    Simbolo s = criarSimbolo((yyvsp[-4].token).line, (yyvsp[-4].token).column, (yyvsp[-4].token).body);
-    s.escopo = escopoAtual(&escopo);
-    s.ehFuncao = 1;
-    s.tipo = strdup(tipo);
-    indiceTabela++;
-    tabelaSimbolos[indiceTabela] = s;
-  }
 #line 2093 "syntax.tab.c"
     break;
 
-  case 10: /* function_declaration: type ID '(' ')' brackets_stmt  */
-#line 129 "syntax.y"
-                                  {
-    Simbolo s = criarSimbolo((yyvsp[-3].token).line, (yyvsp[-3].token).column, (yyvsp[-3].token).body);
+  case 9: /* function_declaration: type ID '(' params_list ')' brackets_stmt  */
+#line 136 "syntax.y"
+                                            {
+    Simbolo s = criarSimbolo((yyvsp[-4].token).line, (yyvsp[-4].token).column, (yyvsp[-4].token).body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 1;
     s.tipo = strdup(tipo);
@@ -2105,389 +2105,462 @@ yyreduce:
 #line 2106 "syntax.tab.c"
     break;
 
+  case 10: /* function_declaration: type ID '(' ')' brackets_stmt  */
+#line 144 "syntax.y"
+                                  {
+    Simbolo s = criarSimbolo((yyvsp[-3].token).line, (yyvsp[-3].token).column, (yyvsp[-3].token).body);
+    s.escopo = escopoAtual(&escopo);
+    s.ehFuncao = 1;
+    s.tipo = strdup(tipo);
+    indiceTabela++;
+    tabelaSimbolos[indiceTabela] = s;
+
+    (yyval.nodo) = criarNodo("function_declaration");
+    (yyval.nodo)->filho = (yyvsp[-4].nodo);
+    (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-3].token).line, (yyvsp[-3].token).column, (yyvsp[-3].token).body);
+    (yyvsp[-4].nodo)->proximo = (yyvsp[0].nodo);
+  }
+#line 2124 "syntax.tab.c"
+    break;
+
   case 11: /* params_list: type ID ',' params_list  */
-#line 139 "syntax.y"
+#line 159 "syntax.y"
                          {}
-#line 2112 "syntax.tab.c"
+#line 2130 "syntax.tab.c"
     break;
 
   case 12: /* params_list: type ID  */
-#line 140 "syntax.y"
+#line 160 "syntax.y"
            {}
-#line 2118 "syntax.tab.c"
+#line 2136 "syntax.tab.c"
     break;
 
   case 13: /* brackets_stmt: '{' stmts '}'  */
-#line 143 "syntax.y"
+#line 163 "syntax.y"
                 {
+    (yyval.nodo) = criarNodo("brackets_stmt");
+    (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2125 "syntax.tab.c"
+#line 2145 "syntax.tab.c"
     break;
 
   case 14: /* brackets_stmt: error  */
-#line 145 "syntax.y"
+#line 167 "syntax.y"
           {}
-#line 2131 "syntax.tab.c"
+#line 2151 "syntax.tab.c"
     break;
 
   case 15: /* stmts: stmt stmts  */
-#line 148 "syntax.y"
+#line 170 "syntax.y"
              {}
-#line 2137 "syntax.tab.c"
+#line 2157 "syntax.tab.c"
     break;
 
   case 16: /* stmts: stmt  */
-#line 149 "syntax.y"
-         {}
-#line 2143 "syntax.tab.c"
+#line 171 "syntax.y"
+         {
+    (yyval.nodo) = criarNodo("stmts");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2166 "syntax.tab.c"
     break;
 
   case 17: /* stmt: for_stmt  */
-#line 152 "syntax.y"
+#line 177 "syntax.y"
            {}
-#line 2149 "syntax.tab.c"
+#line 2172 "syntax.tab.c"
     break;
 
   case 18: /* stmt: if_else_stmt  */
-#line 153 "syntax.y"
+#line 178 "syntax.y"
                  {}
-#line 2155 "syntax.tab.c"
+#line 2178 "syntax.tab.c"
     break;
 
   case 19: /* stmt: return_stmt  */
-#line 154 "syntax.y"
-                {}
-#line 2161 "syntax.tab.c"
+#line 179 "syntax.y"
+                {
+    (yyval.nodo) = criarNodo("stmt");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2187 "syntax.tab.c"
     break;
 
   case 20: /* stmt: io_stmt  */
-#line 155 "syntax.y"
+#line 183 "syntax.y"
             {}
-#line 2167 "syntax.tab.c"
+#line 2193 "syntax.tab.c"
     break;
 
   case 21: /* stmt: exp_stmt  */
-#line 156 "syntax.y"
+#line 184 "syntax.y"
              {}
-#line 2173 "syntax.tab.c"
+#line 2199 "syntax.tab.c"
     break;
 
   case 22: /* stmt: set_stmt  */
-#line 157 "syntax.y"
+#line 185 "syntax.y"
              {}
-#line 2179 "syntax.tab.c"
+#line 2205 "syntax.tab.c"
     break;
 
   case 23: /* stmt: var_declaration  */
-#line 158 "syntax.y"
+#line 186 "syntax.y"
                     {}
-#line 2185 "syntax.tab.c"
+#line 2211 "syntax.tab.c"
     break;
 
   case 24: /* stmt: assignment  */
-#line 159 "syntax.y"
+#line 187 "syntax.y"
                {}
-#line 2191 "syntax.tab.c"
+#line 2217 "syntax.tab.c"
     break;
 
   case 25: /* stmt: brackets_stmt  */
-#line 160 "syntax.y"
+#line 188 "syntax.y"
                   {}
-#line 2197 "syntax.tab.c"
+#line 2223 "syntax.tab.c"
     break;
 
   case 26: /* io_stmt: INPUT '(' ID ')' ';'  */
-#line 163 "syntax.y"
+#line 191 "syntax.y"
                        {}
-#line 2203 "syntax.tab.c"
+#line 2229 "syntax.tab.c"
     break;
 
   case 27: /* io_stmt: OUTPUT '(' STRING ')' ';'  */
-#line 164 "syntax.y"
+#line 192 "syntax.y"
                               {}
-#line 2209 "syntax.tab.c"
+#line 2235 "syntax.tab.c"
     break;
 
   case 28: /* io_stmt: OUTPUT '(' exp ')' ';'  */
-#line 165 "syntax.y"
+#line 193 "syntax.y"
                            {}
-#line 2215 "syntax.tab.c"
+#line 2241 "syntax.tab.c"
     break;
 
   case 29: /* for_stmt: FOR '(' assignment ';' exp ';' assignment ')' stmt  */
-#line 168 "syntax.y"
+#line 196 "syntax.y"
                                                      {}
-#line 2221 "syntax.tab.c"
+#line 2247 "syntax.tab.c"
     break;
 
   case 30: /* if_else_stmt: IF '(' exp ')' stmt  */
-#line 171 "syntax.y"
+#line 199 "syntax.y"
                       {}
-#line 2227 "syntax.tab.c"
+#line 2253 "syntax.tab.c"
     break;
 
   case 31: /* if_else_stmt: IF '(' exp ')' brackets_stmt ELSE stmt  */
-#line 172 "syntax.y"
+#line 200 "syntax.y"
                                            {}
-#line 2233 "syntax.tab.c"
+#line 2259 "syntax.tab.c"
     break;
 
   case 32: /* return_stmt: RETURN ';'  */
-#line 175 "syntax.y"
+#line 203 "syntax.y"
              {}
-#line 2239 "syntax.tab.c"
+#line 2265 "syntax.tab.c"
     break;
 
   case 33: /* return_stmt: RETURN exp ';'  */
-#line 176 "syntax.y"
-                   {}
-#line 2245 "syntax.tab.c"
+#line 204 "syntax.y"
+                   {
+    (yyval.nodo) = criarNodo("return_stmt");
+    (yyval.nodo)->filho = (yyvsp[-1].nodo);
+  }
+#line 2274 "syntax.tab.c"
     break;
 
   case 34: /* set_stmt: FORALL '(' ID INFIX_OP set_exp ')' stmt  */
-#line 179 "syntax.y"
+#line 210 "syntax.y"
                                           {}
-#line 2251 "syntax.tab.c"
+#line 2280 "syntax.tab.c"
     break;
 
   case 35: /* set_stmt: FORALL '(' ID INFIX_OP ID ')' stmt  */
-#line 180 "syntax.y"
+#line 211 "syntax.y"
                                        {}
-#line 2257 "syntax.tab.c"
+#line 2286 "syntax.tab.c"
     break;
 
   case 36: /* set_stmt: ISSET '(' ID ')' ';'  */
-#line 181 "syntax.y"
+#line 212 "syntax.y"
                          {}
-#line 2263 "syntax.tab.c"
+#line 2292 "syntax.tab.c"
     break;
 
   case 37: /* set_stmt: ISSET '(' set_exp ')' ';'  */
-#line 182 "syntax.y"
+#line 213 "syntax.y"
                               {}
-#line 2269 "syntax.tab.c"
+#line 2298 "syntax.tab.c"
     break;
 
   case 38: /* exp_stmt: exp ';'  */
-#line 185 "syntax.y"
-          {}
-#line 2275 "syntax.tab.c"
+#line 216 "syntax.y"
+          {
+    (yyval.nodo) = criarNodo("exp_stmt");
+    (yyval.nodo)->filho = (yyvsp[-1].nodo);
+  }
+#line 2307 "syntax.tab.c"
     break;
 
   case 39: /* assignment: ID '=' exp ';'  */
-#line 188 "syntax.y"
+#line 222 "syntax.y"
                  {}
-#line 2281 "syntax.tab.c"
+#line 2313 "syntax.tab.c"
     break;
 
   case 40: /* exp: or_exp  */
-#line 191 "syntax.y"
-         {}
-#line 2287 "syntax.tab.c"
+#line 225 "syntax.y"
+         {
+    (yyval.nodo) = criarNodo("exp");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2322 "syntax.tab.c"
     break;
 
   case 41: /* exp: set_exp  */
-#line 192 "syntax.y"
+#line 229 "syntax.y"
             {}
-#line 2293 "syntax.tab.c"
+#line 2328 "syntax.tab.c"
     break;
 
   case 42: /* set_exp: SET_OP1 '(' set_in_exp ')'  */
-#line 195 "syntax.y"
+#line 232 "syntax.y"
                              {}
-#line 2299 "syntax.tab.c"
+#line 2334 "syntax.tab.c"
     break;
 
   case 43: /* set_in_exp: or_exp INFIX_OP ID  */
-#line 198 "syntax.y"
+#line 235 "syntax.y"
                      {}
-#line 2305 "syntax.tab.c"
+#line 2340 "syntax.tab.c"
     break;
 
   case 44: /* set_in_exp: or_exp INFIX_OP set_exp  */
-#line 199 "syntax.y"
+#line 236 "syntax.y"
                             {}
-#line 2311 "syntax.tab.c"
+#line 2346 "syntax.tab.c"
     break;
 
   case 45: /* or_exp: or_exp OR and_exp  */
-#line 202 "syntax.y"
+#line 239 "syntax.y"
                     {}
-#line 2317 "syntax.tab.c"
+#line 2352 "syntax.tab.c"
     break;
 
   case 46: /* or_exp: and_exp  */
-#line 203 "syntax.y"
-            {}
-#line 2323 "syntax.tab.c"
+#line 240 "syntax.y"
+            {
+    (yyval.nodo) = criarNodo("or_exp");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2361 "syntax.tab.c"
     break;
 
   case 47: /* or_exp: set_in_exp  */
-#line 204 "syntax.y"
+#line 244 "syntax.y"
                {}
-#line 2329 "syntax.tab.c"
+#line 2367 "syntax.tab.c"
     break;
 
   case 48: /* and_exp: and_exp AND relational_exp  */
-#line 207 "syntax.y"
+#line 247 "syntax.y"
                              {}
-#line 2335 "syntax.tab.c"
+#line 2373 "syntax.tab.c"
     break;
 
   case 49: /* and_exp: relational_exp  */
-#line 208 "syntax.y"
-                   {}
-#line 2341 "syntax.tab.c"
+#line 248 "syntax.y"
+                   {
+    (yyval.nodo) = criarNodo("and_exp");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2382 "syntax.tab.c"
     break;
 
   case 50: /* relational_exp: relational_exp RELATIONAL_OP sum_exp  */
-#line 211 "syntax.y"
+#line 254 "syntax.y"
                                        {}
-#line 2347 "syntax.tab.c"
+#line 2388 "syntax.tab.c"
     break;
 
   case 51: /* relational_exp: sum_exp  */
-#line 212 "syntax.y"
-            {}
-#line 2353 "syntax.tab.c"
+#line 255 "syntax.y"
+            {
+    (yyval.nodo) = criarNodo("relatorional_exp");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2397 "syntax.tab.c"
     break;
 
   case 52: /* sum_exp: sum_exp ARITMETIC_OP1 mul_exp  */
-#line 215 "syntax.y"
+#line 261 "syntax.y"
                                 {}
-#line 2359 "syntax.tab.c"
+#line 2403 "syntax.tab.c"
     break;
 
   case 53: /* sum_exp: mul_exp  */
-#line 216 "syntax.y"
-            {}
-#line 2365 "syntax.tab.c"
+#line 262 "syntax.y"
+            {
+    (yyval.nodo) = criarNodo("sum_exp");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2412 "syntax.tab.c"
     break;
 
   case 54: /* mul_exp: mul_exp ARITMETIC_OP2 unary_exp  */
-#line 219 "syntax.y"
+#line 268 "syntax.y"
                                   {}
-#line 2371 "syntax.tab.c"
+#line 2418 "syntax.tab.c"
     break;
 
   case 55: /* mul_exp: unary_exp  */
-#line 220 "syntax.y"
-              {}
-#line 2377 "syntax.tab.c"
+#line 269 "syntax.y"
+              {
+    (yyval.nodo) = criarNodo("mul_exp");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2427 "syntax.tab.c"
     break;
 
   case 56: /* unary_exp: primal_exp  */
-#line 223 "syntax.y"
-             {}
-#line 2383 "syntax.tab.c"
+#line 275 "syntax.y"
+             {
+    (yyval.nodo) = criarNodo("unary_exp");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
+  }
+#line 2436 "syntax.tab.c"
     break;
 
   case 57: /* unary_exp: '!' primal_exp  */
-#line 224 "syntax.y"
+#line 279 "syntax.y"
                    {}
-#line 2389 "syntax.tab.c"
+#line 2442 "syntax.tab.c"
     break;
 
   case 58: /* unary_exp: ARITMETIC_OP1 primal_exp  */
-#line 225 "syntax.y"
+#line 280 "syntax.y"
                              {}
-#line 2395 "syntax.tab.c"
+#line 2448 "syntax.tab.c"
     break;
 
   case 59: /* unary_exp: ID '(' arg_list ')'  */
-#line 226 "syntax.y"
+#line 281 "syntax.y"
                         {}
-#line 2401 "syntax.tab.c"
+#line 2454 "syntax.tab.c"
     break;
 
   case 60: /* unary_exp: ID '(' ')'  */
-#line 227 "syntax.y"
+#line 282 "syntax.y"
                {}
-#line 2407 "syntax.tab.c"
+#line 2460 "syntax.tab.c"
     break;
 
   case 61: /* primal_exp: ID  */
-#line 231 "syntax.y"
+#line 286 "syntax.y"
      {}
-#line 2413 "syntax.tab.c"
+#line 2466 "syntax.tab.c"
     break;
 
   case 62: /* primal_exp: const  */
-#line 232 "syntax.y"
-          {}
-#line 2419 "syntax.tab.c"
-    break;
-
-  case 63: /* primal_exp: '(' exp ')'  */
-#line 233 "syntax.y"
-                {}
-#line 2425 "syntax.tab.c"
-    break;
-
-  case 64: /* arg_list: exp ',' arg_list  */
-#line 236 "syntax.y"
-                   {}
-#line 2431 "syntax.tab.c"
-    break;
-
-  case 65: /* arg_list: exp  */
-#line 237 "syntax.y"
-        {}
-#line 2437 "syntax.tab.c"
-    break;
-
-  case 66: /* type: INT_TYPE  */
-#line 240 "syntax.y"
-           {
-    tipo = strdup("INT");
+#line 287 "syntax.y"
+          {
+    (yyval.nodo) = criarNodo("primal_exp");
+    (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2445 "syntax.tab.c"
-    break;
-
-  case 67: /* type: FLOAT_TYPE  */
-#line 243 "syntax.y"
-               {
-    tipo = strdup("FLOAT");
-  }
-#line 2453 "syntax.tab.c"
-    break;
-
-  case 68: /* type: SET_TYPE  */
-#line 246 "syntax.y"
-             {
-    tipo = strdup("SET");
-  }
-#line 2461 "syntax.tab.c"
-    break;
-
-  case 69: /* type: ELEM_TYPE  */
-#line 249 "syntax.y"
-              {
-    tipo = strdup("ELEM");
-  }
-#line 2469 "syntax.tab.c"
-    break;
-
-  case 70: /* const: INTEGER  */
-#line 254 "syntax.y"
-          {}
 #line 2475 "syntax.tab.c"
     break;
 
-  case 71: /* const: FLOAT  */
-#line 255 "syntax.y"
-          {}
+  case 63: /* primal_exp: '(' exp ')'  */
+#line 291 "syntax.y"
+                {}
 #line 2481 "syntax.tab.c"
     break;
 
-  case 72: /* const: EMPTY  */
-#line 256 "syntax.y"
-          {}
+  case 64: /* arg_list: exp ',' arg_list  */
+#line 294 "syntax.y"
+                   {}
 #line 2487 "syntax.tab.c"
     break;
 
+  case 65: /* arg_list: exp  */
+#line 295 "syntax.y"
+        {}
+#line 2493 "syntax.tab.c"
+    break;
 
-#line 2491 "syntax.tab.c"
+  case 66: /* type: INT_TYPE  */
+#line 298 "syntax.y"
+           {
+    tipo = strdup("INT");
+    (yyval.nodo) = criarNodo("INT_TYPE");
+    (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
+  }
+#line 2503 "syntax.tab.c"
+    break;
+
+  case 67: /* type: FLOAT_TYPE  */
+#line 303 "syntax.y"
+               {
+    tipo = strdup("FLOAT");
+    (yyval.nodo) = criarNodo("FLOAT_TYPE");
+    (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
+  }
+#line 2513 "syntax.tab.c"
+    break;
+
+  case 68: /* type: SET_TYPE  */
+#line 308 "syntax.y"
+             {
+    tipo = strdup("SET");
+    (yyval.nodo) = criarNodo("SET_TYPE");
+    (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
+  }
+#line 2523 "syntax.tab.c"
+    break;
+
+  case 69: /* type: ELEM_TYPE  */
+#line 313 "syntax.y"
+              {
+    tipo = strdup("ELEM");
+    (yyval.nodo) = criarNodo("ELEM_TYPE");
+    (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
+  }
+#line 2533 "syntax.tab.c"
+    break;
+
+  case 70: /* const: INTEGER  */
+#line 320 "syntax.y"
+          {
+    (yyval.nodo) = criarNodo("const");
+    (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
+  }
+#line 2542 "syntax.tab.c"
+    break;
+
+  case 71: /* const: FLOAT  */
+#line 324 "syntax.y"
+          {
+    (yyval.nodo) = criarNodo("const");
+    (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
+  }
+#line 2551 "syntax.tab.c"
+    break;
+
+  case 72: /* const: EMPTY  */
+#line 328 "syntax.y"
+          {
+    (yyval.nodo) = criarNodo("const");
+    (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
+  }
+#line 2560 "syntax.tab.c"
+    break;
+
+
+#line 2564 "syntax.tab.c"
 
       default: break;
     }
@@ -2712,7 +2785,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 258 "syntax.y"
+#line 333 "syntax.y"
 
 
 void yyerror(const char* msg) {
@@ -2734,6 +2807,7 @@ int main(int argc, char ** argv) {
     yyparse();
 
     printTabela(indiceTabela);
+    printArvore(raiz, 0);
 
     fclose(yyin);
     yylex_destroy();
