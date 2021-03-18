@@ -2948,7 +2948,7 @@ yyreturn:
 
 
 void yyerror(const char* msg) {
-  fprintf (stderr, "SYNTAX ERROR %d:%d - %s\n", yylval.token.line, yylval.token.column, msg);
+  fprintf (stderr, "%-15s %d:%-3d - %s\n", "SYNTAX ERROR", yylval.token.line, yylval.token.column, msg);
   error++;
 }
 

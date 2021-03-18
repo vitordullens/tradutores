@@ -347,10 +347,10 @@ STRING \"[^\"]*\"|'[^']*'
 
 . {
     errors++;
-    printf("ERROR: Unidentified character: %s - line: %d - column: %d\n", yytext, line, column);
+    printf("%-15s %d:%-3d - Unidentified character: %s\n","LEXICAL ERROR ", line, column, yytext);
 }
 
 {DIGIT}+[^+*<>=~&|/^\n\t ;,)\]-]+ {
     errors++;
-    printf("ERROR: Incorrect token format: %s - line: %d - column: %d\n", yytext, line, column);
+    printf("%-15s %d:%-3d - Incorrect token format: %s\n", "LEXICAL ERROR ", line, column, yytext);
 }
