@@ -37,7 +37,7 @@ Simbolo* criarSimboloArvore(int linha, int coluna, char* body) {
 
 void printTabela(int size) {
   if (size == -1) return;
-  printf("|=================TABELA DE SIMBOLOS==================|\n");
+  printf("\n|=================TABELA DE SIMBOLOS==================|\n");
   printf("|= %10s | %s:%s | %5s | %5s =|\n", "IDENTIFICADOR", "LINHA", "COLUNA", "TYPE", "EH FUNCAO?");
   printf("|================|==============|=======|=============|\n");
   

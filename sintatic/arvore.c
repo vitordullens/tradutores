@@ -14,12 +14,18 @@ void printArvore(NodoArvore *nodo, int profundidade) {
     return;
   }
 
-  for(int i=0; i<profundidade; i++) printf(" | ");
-  printf("%s", nodo->val);
+  if(profundidade == 0){
+    printf("\n-------------------ARVORE SINTATICA-------------------\n");
+    printf("%s\n", nodo->val);
+
+  } else {
+    for(int i=0; i<profundidade; i++) printf(" | ");
+    printf("%s", nodo->val);
+  }
 
   
   if(nodo->simbolo) {
-    printf(" %s", nodo->simbolo->body);
+    printf(" [ simbolo -> %s ]", nodo->simbolo->body);
   }
 
   if(profundidade>0) printf("\n");

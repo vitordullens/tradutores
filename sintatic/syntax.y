@@ -108,7 +108,11 @@ program:
   }
 
 declaration_list:
-  declaration_list declaration  {}
+  declaration_list declaration  {
+    $$ = criarNodo("declaration_list");
+    $$->filho = $1;
+    $1->proximo = $2;
+  }
   | declaration {
     $$ = criarNodo("declaration_list");
     $$->filho = $1;
@@ -119,7 +123,10 @@ declaration:
     $$ = criarNodo("declaration");
     $$->filho = $1;
   }
-  | var_declaration {}
+  | var_declaration {
+    $$ = criarNodo("declaration");
+    $$->filho = $1;
+  }
   | error {}
 
 var_declaration:
@@ -130,6 +137,10 @@ var_declaration:
     s.tipo = strdup(tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
+
+    $$ = criarNodo("var_declaration");
+    $$->filho = $1;
+    $$->simbolo = criarSimboloArvore($2.line, $2.column, $2.body);
   }
 
 function_declaration:
@@ -140,6 +151,12 @@ function_declaration:
     s.tipo = strdup(tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
+
+    $$ = criarNodo("function_declaration");
+    $$->filho = $1;
+    $$->simbolo = criarSimboloArvore($2.line, $2.column, $2.body);
+    $1->proximo = $4;
+    $4->proximo = $6;
   }
   | type ID '(' ')' brackets_stmt {
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
@@ -156,8 +173,17 @@ function_declaration:
   }
 
 params_list:
- type ID ',' params_list {}
- | type ID {}
+ type ID ',' params_list {
+    $$ = criarNodo("params_list");
+    $$->filho = $1;
+    $$->simbolo = criarSimboloArvore($2.line, $2.column, $2.body);
+    $1->proximo = $4;
+ }
+ | type ID {
+    $$ = criarNodo("params_list");
+    $$->filho = $1;
+    $$->simbolo = criarSimboloArvore($2.line, $2.column, $2.body);
+ }
 
 brackets_stmt:
   '{' stmts '}' {
@@ -167,50 +193,119 @@ brackets_stmt:
   | error {}
 
 stmts:
-  stmt stmts {}
+  stmt stmts {
+    $$ = criarNodo("stmts");
+    $$->filho = $1;
+    $$->proximo = $2;
+  }
   | stmt {
     $$ = criarNodo("stmts");
     $$->filho = $1;
   }
 
 stmt:
-  for_stmt {}
-  | if_else_stmt {}
+  for_stmt {
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
+  | if_else_stmt {
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
   | return_stmt {
     $$ = criarNodo("stmt");
     $$->filho = $1;
   }
-  | io_stmt {}
-  | exp_stmt {}
-  | set_stmt {}
-  | var_declaration {}
-  | assignment {}
-  | brackets_stmt {}
+  | io_stmt {
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
+  | exp_stmt {
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
+  | set_stmt {
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
+  | var_declaration {
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
+  | assignment ';'{
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
+  | brackets_stmt {
+    $$ = criarNodo("stmt");
+    $$->filho = $1;
+  }
 
 io_stmt: 
-  INPUT '(' ID ')' ';' {}
-  | OUTPUT '(' STRING ')' ';' {}
-  | OUTPUT '(' exp ')' ';' {}
+  INPUT '(' ID ')' ';' {
+    $$ = criarNodo("io_stmt");
+    $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
+  }
+  | OUTPUT '(' STRING ')' ';' {
+    $$ = criarNodo("io_stmt");
+    $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
+  }
+  | OUTPUT '(' exp ')' ';' {
+    $$ = criarNodo("io_stmt");
+    $$->filho = $3;
+  }
 
 for_stmt:
-  FOR '(' assignment ';' exp ';' assignment ')' stmt {}
+  FOR '(' assignment ';' exp ';' assignment ')' stmt {
+    $$ = criarNodo("for_stmt");
+    $$->filho = $3;
+    $3->proximo = $5;
+    $5->proximo = $7;
+    $7->proximo = $9;
+  }
 
 if_else_stmt:
-  IF '(' exp ')' stmt {}
-  | IF '(' exp ')' brackets_stmt ELSE stmt {}
+  IF '(' exp ')' stmt {
+    $$ = criarNodo("if_else_stmt");
+    $$->filho = $3;
+    $3->proximo = $5;
+  }
+  | IF '(' exp ')' brackets_stmt ELSE stmt {
+    $$ = criarNodo("if_else_stmt");
+    $$->filho = $3;
+    $3->proximo = $5;
+    $5->proximo = $7;
+  }
 
 return_stmt:
-  RETURN ';' {}
+  RETURN ';' {
+    $$ = criarNodo("return_stmt");
+  }
   | RETURN exp ';' {
     $$ = criarNodo("return_stmt");
     $$->filho = $2;
   }
 
 set_stmt:
-  FORALL '(' ID INFIX_OP set_exp ')' stmt {}
-  | FORALL '(' ID INFIX_OP ID ')' stmt {}
-  | ISSET '(' ID ')' ';' {}
-  | ISSET '(' set_exp ')' ';' {}
+  FORALL '(' ID INFIX_OP set_exp ')' stmt {
+    $$ = criarNodo("set_stmt");
+    $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
+    $$->filho = $5;
+    $5->proximo = $7;
+  }
+  | FORALL '(' ID INFIX_OP ID ')' stmt {
+    $$ = criarNodo("set_stmt");
+    $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
+    $$->filho = $7;
+  }
+  | ISSET '(' ID ')' ';' {
+    $$ = criarNodo("set_stmt");
+    $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
+  }
+  | ISSET '(' set_exp ')' ';' {
+    $$ = criarNodo("set_stmt");
+    $$->filho = $3;
+  }
 
 exp_stmt:
   exp ';' {
@@ -219,53 +314,95 @@ exp_stmt:
   }
 
 assignment:
-  ID '=' exp ';' {}
+  ID '=' exp {
+    $$ = criarNodo("assignment");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
+    $$->filho = $3;
+  }
 
 exp:
   or_exp {
     $$ = criarNodo("exp");
     $$->filho = $1;
   }
-  | set_exp {}
+  | set_exp {
+    $$ = criarNodo("exp");
+    $$->filho = $1;
+  }
 
 set_exp:
-  SET_OP1 '(' set_in_exp ')' {}
+  SET_OP1 '(' set_in_exp ')' {
+    $$ = criarNodo("set_exp");
+    $$->filho = $3;
+  }
 
 set_in_exp:
-  or_exp INFIX_OP ID {}
-  | or_exp INFIX_OP set_exp {}
+  or_exp INFIX_OP ID {
+    $$ = criarNodo("set_in_exp");
+    $$->filho = $1;
+    $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
+  }
+  | or_exp INFIX_OP set_exp {
+    $$ = criarNodo("set_in_exp");
+    $$->filho = $1;
+    $1->proximo = $3;
+
+  }
 
 or_exp:
-  or_exp OR and_exp {}
+  or_exp OR and_exp {
+    $$ = criarNodo("or_exp");
+    $$->filho = $1;
+    $1->proximo = $3;
+  }
   | and_exp {
     $$ = criarNodo("or_exp");
     $$->filho = $1;
   }
-  | set_in_exp {}
+  | set_in_exp {
+    $$ = criarNodo("or_exp");
+    $$->filho = $1;
+  }
 
 and_exp:
-  and_exp AND relational_exp {}
+  and_exp AND relational_exp {
+    $$ = criarNodo("and_exp");
+    $$->filho = $1;
+    $$->proximo = $3;
+  }
   | relational_exp {
     $$ = criarNodo("and_exp");
     $$->filho = $1;
   }
 
 relational_exp:
-  relational_exp RELATIONAL_OP sum_exp {}
+  relational_exp RELATIONAL_OP sum_exp {
+    $$ = criarNodo("relatorional_exp");
+    $$->filho = $1;
+    $$->proximo = $3;
+  }
   | sum_exp {
     $$ = criarNodo("relatorional_exp");
     $$->filho = $1;
   }
 
 sum_exp:
-  sum_exp ARITMETIC_OP1 mul_exp {}
+  sum_exp ARITMETIC_OP1 mul_exp {
+    $$ = criarNodo("sum_exp");
+    $$->filho = $1;
+    $1->proximo = $3;
+  }
   | mul_exp {
     $$ = criarNodo("sum_exp");
     $$->filho = $1;
   }
 
 mul_exp:
-  mul_exp ARITMETIC_OP2 unary_exp {}
+  mul_exp ARITMETIC_OP2 unary_exp {
+    $$ = criarNodo("mul_exp");
+    $$->filho = $1;
+    $$->proximo = $3;
+  }
   | unary_exp {
     $$ = criarNodo("mul_exp");
     $$->filho = $1;
@@ -276,44 +413,66 @@ unary_exp:
     $$ = criarNodo("unary_exp");
     $$->filho = $1;
   }
-  | '!' primal_exp {}
-  | ARITMETIC_OP1 primal_exp {}
-  | ID '(' arg_list ')' {}
-  | ID '(' ')' {}
+  | '!' primal_exp {
+    $$ = criarNodo("unary_exp");
+    $$->filho = $2;
+  }
+  | ARITMETIC_OP1 primal_exp {
+    $$ = criarNodo("unary_exp");
+    $$->filho = $2;
+  }
+  | ID '(' arg_list ')' {
+    $$ = criarNodo("unary_exp");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
+    $$->filho = $3;
+  }
+  | ID '(' ')' {
+    $$ = criarNodo("unary_exp");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
+  }
 
 
 primal_exp:
-  ID {}
+  ID {
+    $$ = criarNodo("primal_exp");
+    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
+  }
   | const {
     $$ = criarNodo("primal_exp");
     $$->filho = $1;
   }
-  | '(' exp ')' {}
+  | '(' exp ')' {
+    $$ = criarNodo("arg_list");
+    $$->filho = $2;
+  }
 
 arg_list:
-  exp ',' arg_list {}
-  | exp {}
+  exp ',' arg_list {
+    $$ = criarNodo("arg_list");
+    $$->filho = $1;
+    $1->proximo = $3;
+  }
+  | exp {
+    $$ = criarNodo("arg_list");
+    $$->filho = $1;
+  }
 
 type:
   INT_TYPE {
     tipo = strdup("INT");
     $$ = criarNodo("INT_TYPE");
-    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
   }
   | FLOAT_TYPE {
     tipo = strdup("FLOAT");
     $$ = criarNodo("FLOAT_TYPE");
-    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
   }
   | SET_TYPE {
     tipo = strdup("SET");
     $$ = criarNodo("SET_TYPE");
-    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
   }
   | ELEM_TYPE {
     tipo = strdup("ELEM");
     $$ = criarNodo("ELEM_TYPE");
-    $$->simbolo = criarSimboloArvore($1.line, $1.column, $1.body);
   }
 
 const:
