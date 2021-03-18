@@ -17,6 +17,8 @@
 
   char tipo[100];
 
+  int error = 0;
+
   int indiceTabela = -1;
 
   NodoArvore* raiz;
@@ -493,6 +495,7 @@ const:
 
 void yyerror(const char* msg) {
   fprintf (stderr, "SYNTAX ERROR %d:%d - %s\n", yylval.token.line, yylval.token.column, msg);
+  error++;
 }
 
 int main(int argc, char ** argv) {
@@ -508,6 +511,9 @@ int main(int argc, char ** argv) {
     escopo.proximo = -1;
     
     yyparse();
+
+
+    if(error) return 0;
 
     printTabela(indiceTabela);
     printArvore(raiz, 0);
