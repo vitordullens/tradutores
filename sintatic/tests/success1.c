@@ -3,23 +3,21 @@ int k;
 
 int f(int y) {
     set s;
+    return s + el;
     elem el;
     int x;
-    return s + el;
 }
 
 
-int aaaaa(int a, int b, int c){
+int outrafuncao(int a, int b, int c){
     for(i=0;i<10;i = i +1 ) {
         return 1;
     }
 }
-
-// Main
 int main() {
     float a;
-    int b;
-    if (1) {
-        remove((exists (el in s)) in s);
+    if (a<b) {
+        add((exists (el in s)) in s);
     }
+    int b;
 }
