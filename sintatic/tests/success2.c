@@ -1,5 +1,5 @@
 set subsum(set s, int target, int cur_sum, set ans) {
-    int val;
+    set val;
     val = 1 + 2 + 3;
     read(val); 
     if(target || cur_sum){
@@ -9,7 +9,7 @@ set subsum(set s, int target, int cur_sum, set ans) {
         return EMPTY;
     } 
     else {
-       int el;
+       float el;
        is_set(a);
        is_set(add(a in b));
        forall(a in add(a in b)) {

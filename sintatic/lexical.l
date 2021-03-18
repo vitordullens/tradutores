@@ -3,6 +3,7 @@
 
 %{
     #include "syntax.tab.h"
+    #include "tabela.h"
 
     int line = 1, column = 1, errors = 0;
 %}
@@ -11,7 +12,9 @@ DIGIT [0-9]
 
 ID  [a-zA-Z_][_a-z0-9A-Z]*
 
-BASIC_TYPE int|float
+INT_TYPE int
+
+FLOAT_TYPE float
 
 SET_TYPE set
 
@@ -71,13 +74,22 @@ STRING \"[^\"]*\"|'[^']*'
   return FLOAT;
 }
 
-{BASIC_TYPE} {
+{INT_TYPE} {
   yylval.token.body = strdup(yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
   column += yyleng;
-  return BASIC_TYPE;
+  return INT_TYPE;
+}
+
+{FLOAT_TYPE} {
+  yylval.token.body = strdup(yytext);
+  yylval.token.line = line;
+  yylval.token.column = column;
+  // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  column += yyleng;
+  return FLOAT_TYPE;
 }
 
 {SET_TYPE} {
@@ -291,6 +303,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  adicionarEscopo(&escopo);
   column += yyleng;
   return '{';
 }
@@ -300,6 +313,7 @@ STRING \"[^\"]*\"|'[^']*'
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
+  removerEscopo(&escopo);
   column += yyleng;
   return '}';
 }
