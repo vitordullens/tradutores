@@ -512,9 +512,6 @@ int main(int argc, char ** argv) {
     
     yyparse();
 
-
-    if(error) return 0;
-
     printTabela(indiceTabela);
     printArvore(raiz, 0);
 
