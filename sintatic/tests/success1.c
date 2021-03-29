@@ -1,6 +1,3 @@
-// Global var
-int k;
-
 int f(int y) {
     set s;
     return s + el;

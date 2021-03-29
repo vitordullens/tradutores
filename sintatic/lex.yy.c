@@ -804,7 +804,7 @@ case 2:
 YY_RULE_SETUP
 #line 50 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -816,7 +816,7 @@ case 3:
 YY_RULE_SETUP
 #line 59 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -828,7 +828,7 @@ case 4:
 YY_RULE_SETUP
 #line 68 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -840,7 +840,7 @@ case 5:
 YY_RULE_SETUP
 #line 77 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -852,7 +852,7 @@ case 6:
 YY_RULE_SETUP
 #line 86 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -864,7 +864,7 @@ case 7:
 YY_RULE_SETUP
 #line 95 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -876,7 +876,7 @@ case 8:
 YY_RULE_SETUP
 #line 103 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -888,7 +888,7 @@ case 9:
 YY_RULE_SETUP
 #line 112 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -900,7 +900,7 @@ case 10:
 YY_RULE_SETUP
 #line 121 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -912,7 +912,7 @@ case 11:
 YY_RULE_SETUP
 #line 130 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -924,7 +924,7 @@ case 12:
 YY_RULE_SETUP
 #line 139 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -936,7 +936,7 @@ case 13:
 YY_RULE_SETUP
 #line 148 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -948,7 +948,7 @@ case 14:
 YY_RULE_SETUP
 #line 157 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -960,7 +960,7 @@ case 15:
 YY_RULE_SETUP
 #line 166 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -972,7 +972,7 @@ case 16:
 YY_RULE_SETUP
 #line 175 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -984,7 +984,7 @@ case 17:
 YY_RULE_SETUP
 #line 184 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -996,7 +996,7 @@ case 18:
 YY_RULE_SETUP
 #line 193 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1008,7 +1008,7 @@ case 19:
 YY_RULE_SETUP
 #line 202 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1020,7 +1020,7 @@ case 20:
 YY_RULE_SETUP
 #line 211 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1032,7 +1032,7 @@ case 21:
 YY_RULE_SETUP
 #line 220 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1044,7 +1044,7 @@ case 22:
 YY_RULE_SETUP
 #line 229 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1056,7 +1056,7 @@ case 23:
 YY_RULE_SETUP
 #line 238 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1068,7 +1068,7 @@ case 24:
 YY_RULE_SETUP
 #line 247 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1080,7 +1080,7 @@ case 25:
 YY_RULE_SETUP
 #line 256 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1092,7 +1092,7 @@ case 26:
 YY_RULE_SETUP
 #line 265 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- identifier: %s\n", line, column, yytext);
@@ -1104,7 +1104,7 @@ case 27:
 YY_RULE_SETUP
 #line 274 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1116,7 +1116,7 @@ case 28:
 YY_RULE_SETUP
 #line 283 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1128,7 +1128,7 @@ case 29:
 YY_RULE_SETUP
 #line 292 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1140,7 +1140,7 @@ case 30:
 YY_RULE_SETUP
 #line 301 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1153,7 +1153,7 @@ case 31:
 YY_RULE_SETUP
 #line 311 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1166,7 +1166,7 @@ case 32:
 YY_RULE_SETUP
 #line 321 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);
@@ -1178,7 +1178,7 @@ case 33:
 YY_RULE_SETUP
 #line 330 "lexical.l"
 {
-  yylval.token.body = strdup(yytext);
+  strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
   // printf("LEXICO %d:%d -------- %s\n", line, column, yytext);

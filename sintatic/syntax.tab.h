@@ -90,7 +90,7 @@ union YYSTYPE
 
   struct Token {
     int column, line;
-    char *body;
+    char body[100];
   } token;
 
   struct NodoArvore* nodo;

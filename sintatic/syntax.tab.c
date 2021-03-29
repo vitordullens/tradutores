@@ -2967,8 +2967,10 @@ int main(int argc, char ** argv) {
     yyparse();
 
     printTabela(indiceTabela);
-    printArvore(raiz, 0);
 
+    if (error) return 0;
+
+    printArvore(raiz, 0);
     freeArvore(raiz);
 
     fclose(yyin);
