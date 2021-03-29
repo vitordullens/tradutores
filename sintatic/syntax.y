@@ -15,6 +15,10 @@
   
   extern FILE *yyin;
 
+  extern Simbolo tabelaSimbolos[1000000];
+
+  extern Escopo escopo;
+
   char tipo[100];
 
   int error = 0;

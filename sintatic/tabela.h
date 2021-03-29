@@ -20,10 +20,6 @@ struct Simbolo {
   int escopo;
 };
 
-Simbolo tabelaSimbolos[1000000];
-
-Escopo escopo;
-
 Simbolo criarSimbolo(int, int, char*);
 Simbolo *criarSimboloArvore(int, int, char*);
 

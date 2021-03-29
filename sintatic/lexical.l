@@ -5,6 +5,8 @@
     #include "syntax.tab.h"
     #include "tabela.h"
 
+    extern Escopo escopo;
+
     int line = 1, column = 1, errors = 0;
 %}
 

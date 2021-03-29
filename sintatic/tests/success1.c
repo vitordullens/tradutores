@@ -1,6 +1,6 @@
 int f(int y) {
     set s;
-    return s + el;
+    return s + el * 1;
     elem el;
     int x;
 }

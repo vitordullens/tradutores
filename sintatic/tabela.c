@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include "tabela.h"
 
+Simbolo tabelaSimbolos[1000000];
+
+Escopo escopo;
+
 int escopoAtual(Escopo* escopo) {
   return escopo->pilhaEscopo[escopo->idx];
 }

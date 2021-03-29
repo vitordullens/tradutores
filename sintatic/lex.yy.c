@@ -517,9 +517,11 @@ char *yytext;
     #include "syntax.tab.h"
     #include "tabela.h"
 
+    extern Escopo escopo;
+
     int line = 1, column = 1, errors = 0;
-#line 522 "lex.yy.c"
-#line 523 "lex.yy.c"
+#line 524 "lex.yy.c"
+#line 525 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -734,10 +736,10 @@ YY_DECL
 		}
 
 	{
-#line 46 "lexical.l"
+#line 48 "lexical.l"
 
 
-#line 741 "lex.yy.c"
+#line 743 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -796,13 +798,13 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 48 "lexical.l"
+#line 50 "lexical.l"
 {}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 50 "lexical.l"
+#line 52 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -814,7 +816,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 59 "lexical.l"
+#line 61 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -826,7 +828,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 68 "lexical.l"
+#line 70 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -838,7 +840,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 77 "lexical.l"
+#line 79 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -850,7 +852,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 86 "lexical.l"
+#line 88 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -862,7 +864,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 95 "lexical.l"
+#line 97 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -874,7 +876,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 103 "lexical.l"
+#line 105 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -886,7 +888,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 112 "lexical.l"
+#line 114 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -898,7 +900,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 121 "lexical.l"
+#line 123 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -910,7 +912,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 130 "lexical.l"
+#line 132 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -922,7 +924,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 139 "lexical.l"
+#line 141 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -934,7 +936,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 148 "lexical.l"
+#line 150 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -946,7 +948,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 157 "lexical.l"
+#line 159 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -958,7 +960,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 166 "lexical.l"
+#line 168 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -970,7 +972,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 175 "lexical.l"
+#line 177 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -982,7 +984,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 184 "lexical.l"
+#line 186 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -994,7 +996,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 193 "lexical.l"
+#line 195 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1006,7 +1008,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 202 "lexical.l"
+#line 204 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1018,7 +1020,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 211 "lexical.l"
+#line 213 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1030,7 +1032,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 220 "lexical.l"
+#line 222 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1042,7 +1044,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 229 "lexical.l"
+#line 231 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1054,7 +1056,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 238 "lexical.l"
+#line 240 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1066,7 +1068,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 247 "lexical.l"
+#line 249 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1078,7 +1080,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 256 "lexical.l"
+#line 258 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1090,7 +1092,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 265 "lexical.l"
+#line 267 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1102,7 +1104,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 274 "lexical.l"
+#line 276 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1114,7 +1116,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 283 "lexical.l"
+#line 285 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1126,7 +1128,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 292 "lexical.l"
+#line 294 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1138,7 +1140,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 301 "lexical.l"
+#line 303 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1151,7 +1153,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 311 "lexical.l"
+#line 313 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1164,7 +1166,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 321 "lexical.l"
+#line 323 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1176,7 +1178,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 330 "lexical.l"
+#line 332 "lexical.l"
 {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
@@ -1188,7 +1190,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 339 "lexical.l"
+#line 341 "lexical.l"
 {
   column += yyleng;
 }
@@ -1196,7 +1198,7 @@ YY_RULE_SETUP
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
-#line 343 "lexical.l"
+#line 345 "lexical.l"
 {
     line++;
     column = 1;
@@ -1204,7 +1206,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 348 "lexical.l"
+#line 350 "lexical.l"
 {
     errors++;
     printf("%-15s %d:%-3d - Unidentified character: %s\n","LEXICAL ERROR ", line, column, yytext);
@@ -1212,7 +1214,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 353 "lexical.l"
+#line 355 "lexical.l"
 {
     errors++;
     printf("%-15s %d:%-3d - Incorrect token format: %s\n", "LEXICAL ERROR ", line, column, yytext);
@@ -1220,10 +1222,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 357 "lexical.l"
+#line 359 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1227 "lex.yy.c"
+#line 1229 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2191,4 +2193,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 357 "lexical.l"
+#line 359 "lexical.l"
