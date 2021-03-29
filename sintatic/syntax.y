@@ -140,7 +140,7 @@ var_declaration:
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 0;
-    s.tipo = strdup(tipo);
+    strcpy(s.tipo, tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -154,7 +154,7 @@ function_declaration:
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 1;
-    s.tipo = strdup(tipo);
+    strcpy(s.tipo, tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -168,7 +168,7 @@ function_declaration:
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 1;
-    s.tipo = strdup(tipo);
+    strcpy(s.tipo, tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 

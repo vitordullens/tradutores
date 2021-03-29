@@ -15,8 +15,8 @@ struct Simbolo {
   int linha;
   int coluna;
   int ehFuncao;
-  char* tipo;
-  char* body;
+  char tipo[100];
+  char body[100];
   int escopo;
 };
 

@@ -23,7 +23,7 @@ void removerEscopo(Escopo* escopo) {
 
 Simbolo criarSimbolo(int linha, int coluna, char* body) {
   Simbolo s;
-  s.body = strdup(body);
+  strcpy(s.body, body);
   s.linha = linha;
   s.coluna = coluna;
   
@@ -32,7 +32,7 @@ Simbolo criarSimbolo(int linha, int coluna, char* body) {
 
 Simbolo* criarSimboloArvore(int linha, int coluna, char* body) {
   Simbolo* s = (Simbolo*) malloc(sizeof(Simbolo));
-  s->body = strdup(body);
+  strcpy(s->body, body);
   s->linha = linha;
   s->coluna = coluna;
   return s;

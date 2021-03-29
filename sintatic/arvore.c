@@ -17,7 +17,6 @@ void freeArvore(NodoArvore *nodo) {
     return;
   }
   if(nodo->simbolo) {
-    free(nodo->simbolo->body);
     free(nodo->simbolo);
   }
   if(nodo->proximo){

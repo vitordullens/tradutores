@@ -2096,7 +2096,7 @@ yyreduce:
     Simbolo s = criarSimbolo((yyvsp[-1].token).line, (yyvsp[-1].token).column, (yyvsp[-1].token).body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 0;
-    s.tipo = strdup(tipo);
+    strcpy(s.tipo, tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -2113,7 +2113,7 @@ yyreduce:
     Simbolo s = criarSimbolo((yyvsp[-4].token).line, (yyvsp[-4].token).column, (yyvsp[-4].token).body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 1;
-    s.tipo = strdup(tipo);
+    strcpy(s.tipo, tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -2132,7 +2132,7 @@ yyreduce:
     Simbolo s = criarSimbolo((yyvsp[-3].token).line, (yyvsp[-3].token).column, (yyvsp[-3].token).body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 1;
-    s.tipo = strdup(tipo);
+    strcpy(s.tipo, tipo);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
