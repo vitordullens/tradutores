@@ -83,17 +83,17 @@
 
   extern Simbolo tabelaSimbolos[1000000];
 
-  extern Escopo escopo;
-
   char tipo[1000][100];
 
-  int indexTipo = 0;
-
-  int error = 0;
+  int indiceTipo = 0;
 
   int indiceTabela = -1;
 
+  int escopo = 0;
+
   NodoArvore* raiz;
+
+  int error = 0;
 
 #line 99 "syntax.tab.c"
 
@@ -571,13 +571,13 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,   112,   112,   119,   124,   130,   134,   138,   141,   156,
-     171,   187,   201,   216,   220,   223,   228,   234,   238,   242,
-     246,   250,   254,   258,   262,   266,   272,   276,   280,   286,
-     295,   300,   308,   311,   317,   323,   330,   336,   343,   347,
-     353,   357,   361,   365,   369,   375,   380,   388,   393,   397,
-     403,   408,   414,   419,   425,   430,   436,   441,   447,   451,
-     455,   459,   464,   471,   475,   479,   485,   490,   496,   501,
-     506,   511,   518,   522,   526
+     172,   189,   203,   218,   222,   225,   230,   236,   240,   244,
+     248,   252,   256,   260,   264,   268,   274,   278,   282,   288,
+     297,   302,   310,   313,   319,   325,   332,   338,   345,   349,
+     355,   359,   363,   367,   371,   377,   382,   390,   395,   399,
+     405,   410,   416,   421,   427,   432,   438,   443,   449,   453,
+     457,   461,   466,   473,   477,   481,   487,   492,   498,   503,
+     508,   513,   520,   524,   528
 };
 #endif
 
@@ -2133,10 +2133,10 @@ yyreduce:
 #line 141 "syntax.y"
               {
     Simbolo s = criarSimbolo((yyvsp[-1].token).line, (yyvsp[-1].token).column, (yyvsp[-1].token).body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
     s.ehFuncao = 0;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -2151,10 +2151,11 @@ yyreduce:
 #line 156 "syntax.y"
                                             {
     Simbolo s = criarSimbolo((yyvsp[-4].token).line, (yyvsp[-4].token).column, (yyvsp[-4].token).body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
+    escopo++;
     s.ehFuncao = 1;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -2164,17 +2165,18 @@ yyreduce:
     (yyvsp[-5].nodo)->proximo = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2168 "syntax.tab.c"
+#line 2169 "syntax.tab.c"
     break;
 
   case 10: /* function_declaration: type ID '(' ')' brackets_stmt  */
-#line 171 "syntax.y"
+#line 172 "syntax.y"
                                   {
     Simbolo s = criarSimbolo((yyvsp[-3].token).line, (yyvsp[-3].token).column, (yyvsp[-3].token).body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
+    escopo++;
     s.ehFuncao = 1;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -2183,36 +2185,36 @@ yyreduce:
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-3].token).line, (yyvsp[-3].token).column, (yyvsp[-3].token).body);
     (yyvsp[-4].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2187 "syntax.tab.c"
+#line 2189 "syntax.tab.c"
     break;
 
   case 11: /* params_list: type ID ',' params_list  */
-#line 187 "syntax.y"
+#line 189 "syntax.y"
                          {
    Simbolo s = criarSimbolo((yyvsp[-2].token).line, (yyvsp[-2].token).column, (yyvsp[-2].token).body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
     s.ehFuncao = 0;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
-    
+
     (yyval.nodo) = criarNodo("params_list");
     (yyval.nodo)->filho = (yyvsp[-3].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].token).line, (yyvsp[-2].token).column, (yyvsp[-2].token).body);
     (yyvsp[-3].nodo)->proximo = (yyvsp[0].nodo);
  }
-#line 2206 "syntax.tab.c"
+#line 2208 "syntax.tab.c"
     break;
 
   case 12: /* params_list: type ID  */
-#line 201 "syntax.y"
+#line 203 "syntax.y"
            {
     Simbolo s = criarSimbolo((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
     s.ehFuncao = 0;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -2220,153 +2222,153 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
  }
-#line 2224 "syntax.tab.c"
+#line 2226 "syntax.tab.c"
     break;
 
   case 13: /* brackets_stmt: '{' stmts '}'  */
-#line 216 "syntax.y"
+#line 218 "syntax.y"
                 {
     (yyval.nodo) = criarNodo("brackets_stmt");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2233 "syntax.tab.c"
+#line 2235 "syntax.tab.c"
     break;
 
   case 14: /* brackets_stmt: error  */
-#line 220 "syntax.y"
+#line 222 "syntax.y"
           {}
-#line 2239 "syntax.tab.c"
+#line 2241 "syntax.tab.c"
     break;
 
   case 15: /* stmts: stmt stmts  */
-#line 223 "syntax.y"
+#line 225 "syntax.y"
              {
     (yyval.nodo) = criarNodo("stmts");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
     (yyval.nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2249 "syntax.tab.c"
+#line 2251 "syntax.tab.c"
     break;
 
   case 16: /* stmts: stmt  */
-#line 228 "syntax.y"
+#line 230 "syntax.y"
          {
     (yyval.nodo) = criarNodo("stmts");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2258 "syntax.tab.c"
+#line 2260 "syntax.tab.c"
     break;
 
   case 17: /* stmt: for_stmt  */
-#line 234 "syntax.y"
+#line 236 "syntax.y"
            {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2267 "syntax.tab.c"
+#line 2269 "syntax.tab.c"
     break;
 
   case 18: /* stmt: if_else_stmt  */
-#line 238 "syntax.y"
+#line 240 "syntax.y"
                  {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2276 "syntax.tab.c"
+#line 2278 "syntax.tab.c"
     break;
 
   case 19: /* stmt: return_stmt  */
-#line 242 "syntax.y"
+#line 244 "syntax.y"
                 {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2285 "syntax.tab.c"
+#line 2287 "syntax.tab.c"
     break;
 
   case 20: /* stmt: io_stmt  */
-#line 246 "syntax.y"
+#line 248 "syntax.y"
             {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2294 "syntax.tab.c"
+#line 2296 "syntax.tab.c"
     break;
 
   case 21: /* stmt: exp_stmt  */
-#line 250 "syntax.y"
+#line 252 "syntax.y"
              {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2303 "syntax.tab.c"
+#line 2305 "syntax.tab.c"
     break;
 
   case 22: /* stmt: set_stmt  */
-#line 254 "syntax.y"
+#line 256 "syntax.y"
              {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2312 "syntax.tab.c"
+#line 2314 "syntax.tab.c"
     break;
 
   case 23: /* stmt: var_declaration  */
-#line 258 "syntax.y"
+#line 260 "syntax.y"
                     {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2321 "syntax.tab.c"
+#line 2323 "syntax.tab.c"
     break;
 
   case 24: /* stmt: assignment ';'  */
-#line 262 "syntax.y"
+#line 264 "syntax.y"
                   {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2330 "syntax.tab.c"
+#line 2332 "syntax.tab.c"
     break;
 
   case 25: /* stmt: brackets_stmt  */
-#line 266 "syntax.y"
+#line 268 "syntax.y"
                   {
     (yyval.nodo) = criarNodo("stmt");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2339 "syntax.tab.c"
+#line 2341 "syntax.tab.c"
     break;
 
   case 26: /* io_stmt: INPUT '(' ID ')' ';'  */
-#line 272 "syntax.y"
+#line 274 "syntax.y"
                        {
     (yyval.nodo) = criarNodo("io_stmt");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].token).line, (yyvsp[-2].token).column, (yyvsp[-2].token).body);
   }
-#line 2348 "syntax.tab.c"
+#line 2350 "syntax.tab.c"
     break;
 
   case 27: /* io_stmt: OUTPUT '(' STRING ')' ';'  */
-#line 276 "syntax.y"
+#line 278 "syntax.y"
                               {
     (yyval.nodo) = criarNodo("io_stmt");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].token).line, (yyvsp[-2].token).column, (yyvsp[-2].token).body);
   }
-#line 2357 "syntax.tab.c"
+#line 2359 "syntax.tab.c"
     break;
 
   case 28: /* io_stmt: OUTPUT '(' exp ')' ';'  */
-#line 280 "syntax.y"
+#line 282 "syntax.y"
                            {
     (yyval.nodo) = criarNodo("io_stmt");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
   }
-#line 2366 "syntax.tab.c"
+#line 2368 "syntax.tab.c"
     break;
 
   case 29: /* for_stmt: FOR '(' assignment ';' exp ';' assignment ')' stmt  */
-#line 286 "syntax.y"
+#line 288 "syntax.y"
                                                      {
     (yyval.nodo) = criarNodo("for_stmt");
     (yyval.nodo)->filho = (yyvsp[-6].nodo);
@@ -2374,436 +2376,436 @@ yyreduce:
     (yyvsp[-4].nodo)->proximo = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2378 "syntax.tab.c"
+#line 2380 "syntax.tab.c"
     break;
 
   case 30: /* if_else_stmt: IF '(' exp ')' stmt  */
-#line 295 "syntax.y"
+#line 297 "syntax.y"
                       {
     (yyval.nodo) = criarNodo("if_else_stmt");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2388 "syntax.tab.c"
+#line 2390 "syntax.tab.c"
     break;
 
   case 31: /* if_else_stmt: IF '(' exp ')' brackets_stmt ELSE stmt  */
-#line 300 "syntax.y"
+#line 302 "syntax.y"
                                            {
     (yyval.nodo) = criarNodo("if_else_stmt");
     (yyval.nodo)->filho = (yyvsp[-4].nodo);
     (yyvsp[-4].nodo)->proximo = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2399 "syntax.tab.c"
+#line 2401 "syntax.tab.c"
     break;
 
   case 32: /* return_stmt: RETURN ';'  */
-#line 308 "syntax.y"
+#line 310 "syntax.y"
              {
     (yyval.nodo) = criarNodo("return_stmt");
   }
-#line 2407 "syntax.tab.c"
+#line 2409 "syntax.tab.c"
     break;
 
   case 33: /* return_stmt: RETURN exp ';'  */
-#line 311 "syntax.y"
+#line 313 "syntax.y"
                    {
     (yyval.nodo) = criarNodo("return_stmt");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2416 "syntax.tab.c"
+#line 2418 "syntax.tab.c"
     break;
 
   case 34: /* set_stmt: FORALL '(' ID INFIX_OP set_exp ')' stmt  */
-#line 317 "syntax.y"
+#line 319 "syntax.y"
                                           {
     (yyval.nodo) = criarNodo("set_stmt");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-4].token).line, (yyvsp[-4].token).column, (yyvsp[-4].token).body);
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2427 "syntax.tab.c"
+#line 2429 "syntax.tab.c"
     break;
 
   case 35: /* set_stmt: FORALL '(' ID INFIX_OP ID ')' stmt  */
-#line 323 "syntax.y"
+#line 325 "syntax.y"
                                        {
     (yyval.nodo) = criarNodo("set_stmt");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-4].token).line, (yyvsp[-4].token).column, (yyvsp[-4].token).body);
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2437 "syntax.tab.c"
+#line 2439 "syntax.tab.c"
     break;
 
   case 36: /* exp_stmt: exp ';'  */
-#line 330 "syntax.y"
+#line 332 "syntax.y"
           {
     (yyval.nodo) = criarNodo("exp_stmt");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2446 "syntax.tab.c"
+#line 2448 "syntax.tab.c"
     break;
 
   case 37: /* assignment: ID '=' exp  */
-#line 336 "syntax.y"
+#line 338 "syntax.y"
              {
     (yyval.nodo) = criarNodo("assignment");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].token).line, (yyvsp[-2].token).column, (yyvsp[-2].token).body);
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2456 "syntax.tab.c"
+#line 2458 "syntax.tab.c"
     break;
 
   case 38: /* exp: or_exp  */
-#line 343 "syntax.y"
+#line 345 "syntax.y"
          {
     (yyval.nodo) = criarNodo("exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2465 "syntax.tab.c"
+#line 2467 "syntax.tab.c"
     break;
 
   case 39: /* exp: set_exp  */
-#line 347 "syntax.y"
+#line 349 "syntax.y"
             {
     (yyval.nodo) = criarNodo("exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2474 "syntax.tab.c"
+#line 2476 "syntax.tab.c"
     break;
 
   case 40: /* set_exp: SET_OP1 '(' set_in_exp ')'  */
-#line 353 "syntax.y"
+#line 355 "syntax.y"
                              {
     (yyval.nodo) = criarNodo("set_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2483 "syntax.tab.c"
+#line 2485 "syntax.tab.c"
     break;
 
   case 41: /* set_exp: ISSET '(' ID ')'  */
-#line 357 "syntax.y"
+#line 359 "syntax.y"
                      {
     (yyval.nodo) = criarNodo("set_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].token).line, (yyvsp[-1].token).column, (yyvsp[-1].token).body);
   }
-#line 2492 "syntax.tab.c"
+#line 2494 "syntax.tab.c"
     break;
 
   case 42: /* set_exp: ISSET '(' set_exp ')'  */
-#line 361 "syntax.y"
+#line 363 "syntax.y"
                            {
     (yyval.nodo) = criarNodo("set_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2501 "syntax.tab.c"
+#line 2503 "syntax.tab.c"
     break;
 
   case 43: /* set_exp: '!' ISSET '(' ID ')'  */
-#line 365 "syntax.y"
+#line 367 "syntax.y"
                           {
     (yyval.nodo) = criarNodo("set_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].token).line, (yyvsp[-1].token).column, (yyvsp[-1].token).body);
   }
-#line 2510 "syntax.tab.c"
+#line 2512 "syntax.tab.c"
     break;
 
   case 44: /* set_exp: '!' ISSET '(' set_exp ')'  */
-#line 369 "syntax.y"
+#line 371 "syntax.y"
                                {
     (yyval.nodo) = criarNodo("set_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2519 "syntax.tab.c"
+#line 2521 "syntax.tab.c"
     break;
 
   case 45: /* set_in_exp: or_exp INFIX_OP ID  */
-#line 375 "syntax.y"
+#line 377 "syntax.y"
                      {
     (yyval.nodo) = criarNodo("set_in_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
   }
-#line 2529 "syntax.tab.c"
+#line 2531 "syntax.tab.c"
     break;
 
   case 46: /* set_in_exp: or_exp INFIX_OP set_exp  */
-#line 380 "syntax.y"
+#line 382 "syntax.y"
                             {
     (yyval.nodo) = criarNodo("set_in_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
 
   }
-#line 2540 "syntax.tab.c"
+#line 2542 "syntax.tab.c"
     break;
 
   case 47: /* or_exp: or_exp OR and_exp  */
-#line 388 "syntax.y"
+#line 390 "syntax.y"
                     {
     (yyval.nodo) = criarNodo("or_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2550 "syntax.tab.c"
+#line 2552 "syntax.tab.c"
     break;
 
   case 48: /* or_exp: and_exp  */
-#line 393 "syntax.y"
+#line 395 "syntax.y"
             {
     (yyval.nodo) = criarNodo("or_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2559 "syntax.tab.c"
+#line 2561 "syntax.tab.c"
     break;
 
   case 49: /* or_exp: set_in_exp  */
-#line 397 "syntax.y"
+#line 399 "syntax.y"
                {
     (yyval.nodo) = criarNodo("or_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2568 "syntax.tab.c"
+#line 2570 "syntax.tab.c"
     break;
 
   case 50: /* and_exp: and_exp AND relational_exp  */
-#line 403 "syntax.y"
+#line 405 "syntax.y"
                              {
     (yyval.nodo) = criarNodo("and_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyval.nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2578 "syntax.tab.c"
+#line 2580 "syntax.tab.c"
     break;
 
   case 51: /* and_exp: relational_exp  */
-#line 408 "syntax.y"
+#line 410 "syntax.y"
                    {
     (yyval.nodo) = criarNodo("and_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2587 "syntax.tab.c"
+#line 2589 "syntax.tab.c"
     break;
 
   case 52: /* relational_exp: relational_exp RELATIONAL_OP sum_exp  */
-#line 414 "syntax.y"
+#line 416 "syntax.y"
                                        {
     (yyval.nodo) = criarNodo("relatorional_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyval.nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2597 "syntax.tab.c"
+#line 2599 "syntax.tab.c"
     break;
 
   case 53: /* relational_exp: sum_exp  */
-#line 419 "syntax.y"
+#line 421 "syntax.y"
             {
     (yyval.nodo) = criarNodo("relatorional_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2606 "syntax.tab.c"
+#line 2608 "syntax.tab.c"
     break;
 
   case 54: /* sum_exp: sum_exp ARITMETIC_OP1 mul_exp  */
-#line 425 "syntax.y"
+#line 427 "syntax.y"
                                 {
     (yyval.nodo) = criarNodo("sum_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2616 "syntax.tab.c"
+#line 2618 "syntax.tab.c"
     break;
 
   case 55: /* sum_exp: mul_exp  */
-#line 430 "syntax.y"
+#line 432 "syntax.y"
             {
     (yyval.nodo) = criarNodo("sum_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2625 "syntax.tab.c"
+#line 2627 "syntax.tab.c"
     break;
 
   case 56: /* mul_exp: mul_exp ARITMETIC_OP2 unary_exp  */
-#line 436 "syntax.y"
+#line 438 "syntax.y"
                                   {
     (yyval.nodo) = criarNodo("mul_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyval.nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2635 "syntax.tab.c"
+#line 2637 "syntax.tab.c"
     break;
 
   case 57: /* mul_exp: unary_exp  */
-#line 441 "syntax.y"
+#line 443 "syntax.y"
               {
     (yyval.nodo) = criarNodo("mul_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2644 "syntax.tab.c"
+#line 2646 "syntax.tab.c"
     break;
 
   case 58: /* unary_exp: primal_exp  */
-#line 447 "syntax.y"
+#line 449 "syntax.y"
              {
     (yyval.nodo) = criarNodo("unary_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2653 "syntax.tab.c"
+#line 2655 "syntax.tab.c"
     break;
 
   case 59: /* unary_exp: '!' primal_exp  */
-#line 451 "syntax.y"
+#line 453 "syntax.y"
                    {
     (yyval.nodo) = criarNodo("unary_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2662 "syntax.tab.c"
+#line 2664 "syntax.tab.c"
     break;
 
   case 60: /* unary_exp: ARITMETIC_OP1 primal_exp  */
-#line 455 "syntax.y"
+#line 457 "syntax.y"
                              {
     (yyval.nodo) = criarNodo("unary_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2671 "syntax.tab.c"
+#line 2673 "syntax.tab.c"
     break;
 
   case 61: /* unary_exp: ID '(' arg_list ')'  */
-#line 459 "syntax.y"
+#line 461 "syntax.y"
                         {
     (yyval.nodo) = criarNodo("unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-3].token).line, (yyvsp[-3].token).column, (yyvsp[-3].token).body);
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2681 "syntax.tab.c"
+#line 2683 "syntax.tab.c"
     break;
 
   case 62: /* unary_exp: ID '(' ')'  */
-#line 464 "syntax.y"
+#line 466 "syntax.y"
                {
     (yyval.nodo) = criarNodo("unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].token).line, (yyvsp[-2].token).column, (yyvsp[-2].token).body);
   }
-#line 2690 "syntax.tab.c"
+#line 2692 "syntax.tab.c"
     break;
 
   case 63: /* primal_exp: ID  */
-#line 471 "syntax.y"
+#line 473 "syntax.y"
      {
     (yyval.nodo) = criarNodo("primal_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
   }
-#line 2699 "syntax.tab.c"
+#line 2701 "syntax.tab.c"
     break;
 
   case 64: /* primal_exp: const  */
-#line 475 "syntax.y"
+#line 477 "syntax.y"
           {
     (yyval.nodo) = criarNodo("primal_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2708 "syntax.tab.c"
+#line 2710 "syntax.tab.c"
     break;
 
   case 65: /* primal_exp: '(' exp ')'  */
-#line 479 "syntax.y"
+#line 481 "syntax.y"
                 {
     (yyval.nodo) = criarNodo("arg_list");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2717 "syntax.tab.c"
+#line 2719 "syntax.tab.c"
     break;
 
   case 66: /* arg_list: exp ',' arg_list  */
-#line 485 "syntax.y"
+#line 487 "syntax.y"
                    {
     (yyval.nodo) = criarNodo("arg_list");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2727 "syntax.tab.c"
+#line 2729 "syntax.tab.c"
     break;
 
   case 67: /* arg_list: exp  */
-#line 490 "syntax.y"
+#line 492 "syntax.y"
         {
     (yyval.nodo) = criarNodo("arg_list");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2736 "syntax.tab.c"
+#line 2738 "syntax.tab.c"
     break;
 
   case 68: /* type: INT_TYPE  */
-#line 496 "syntax.y"
+#line 498 "syntax.y"
            {
-    strcpy(tipo[indexTipo], "INT");
-    indexTipo++;
+    strcpy(tipo[indiceTipo], "INT");
+    indiceTipo++;
     (yyval.nodo) = criarNodo("INT_TYPE");
   }
-#line 2746 "syntax.tab.c"
+#line 2748 "syntax.tab.c"
     break;
 
   case 69: /* type: FLOAT_TYPE  */
-#line 501 "syntax.y"
+#line 503 "syntax.y"
                {
-    strcpy(tipo[indexTipo], "FLOAT");
-    indexTipo++;
+    strcpy(tipo[indiceTipo], "FLOAT");
+    indiceTipo++;
     (yyval.nodo) = criarNodo("FLOAT_TYPE");
   }
-#line 2756 "syntax.tab.c"
+#line 2758 "syntax.tab.c"
     break;
 
   case 70: /* type: SET_TYPE  */
-#line 506 "syntax.y"
+#line 508 "syntax.y"
              {
-    strcpy(tipo[indexTipo], "SET");
-    indexTipo++;
+    strcpy(tipo[indiceTipo], "SET");
+    indiceTipo++;
     (yyval.nodo) = criarNodo("SET_TYPE");
   }
-#line 2766 "syntax.tab.c"
+#line 2768 "syntax.tab.c"
     break;
 
   case 71: /* type: ELEM_TYPE  */
-#line 511 "syntax.y"
+#line 513 "syntax.y"
               {
-    strcpy(tipo[indexTipo],"ELEM");
-    indexTipo++;
+    strcpy(tipo[indiceTipo],"ELEM");
+    indiceTipo++;
     (yyval.nodo) = criarNodo("ELEM_TYPE");
   }
-#line 2776 "syntax.tab.c"
+#line 2778 "syntax.tab.c"
     break;
 
   case 72: /* const: INTEGER  */
-#line 518 "syntax.y"
+#line 520 "syntax.y"
           {
     (yyval.nodo) = criarNodo("const");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
   }
-#line 2785 "syntax.tab.c"
+#line 2787 "syntax.tab.c"
     break;
 
   case 73: /* const: FLOAT  */
-#line 522 "syntax.y"
+#line 524 "syntax.y"
           {
     (yyval.nodo) = criarNodo("const");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
   }
-#line 2794 "syntax.tab.c"
+#line 2796 "syntax.tab.c"
     break;
 
   case 74: /* const: EMPTY  */
-#line 526 "syntax.y"
+#line 528 "syntax.y"
           {
     (yyval.nodo) = criarNodo("const");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].token).line, (yyvsp[0].token).column, (yyvsp[0].token).body);
   }
-#line 2803 "syntax.tab.c"
+#line 2805 "syntax.tab.c"
     break;
 
 
-#line 2807 "syntax.tab.c"
+#line 2809 "syntax.tab.c"
 
       default: break;
     }
@@ -3028,7 +3030,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 531 "syntax.y"
+#line 533 "syntax.y"
 
 
 void yyerror(const char* msg) {
@@ -3044,9 +3046,6 @@ int main(int argc, char ** argv) {
     else {
         yyin = stdin;
     }
-
-    escopo.idx = -1;
-    escopo.proximo = -1;
     
     yyparse();
 
@@ -3056,10 +3055,6 @@ int main(int argc, char ** argv) {
 
     printArvore(raiz, 0);
     freeArvore(raiz);
-
-    for(int i=0; i<100; i++){
-      printf("%s\n", tipo[i]);
-    }
 
     fclose(yyin);
     yylex_destroy();

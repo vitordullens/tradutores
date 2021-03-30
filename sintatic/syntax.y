@@ -17,17 +17,17 @@
 
   extern Simbolo tabelaSimbolos[1000000];
 
-  extern Escopo escopo;
-
   char tipo[1000][100];
 
-  int indexTipo = 0;
-
-  int error = 0;
+  int indiceTipo = 0;
 
   int indiceTabela = -1;
 
+  int escopo = 0;
+
   NodoArvore* raiz;
+
+  int error = 0;
 %}
 
 %union {
@@ -140,10 +140,10 @@ declaration:
 var_declaration:
   type ID ';' {
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
     s.ehFuncao = 0;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -155,10 +155,11 @@ var_declaration:
 function_declaration:
   type ID '(' params_list ')' brackets_stmt {
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
+    escopo++;
     s.ehFuncao = 1;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -170,10 +171,11 @@ function_declaration:
   }
   | type ID '(' ')' brackets_stmt {
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
+    escopo++;
     s.ehFuncao = 1;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -186,13 +188,13 @@ function_declaration:
 params_list:
  type ID ',' params_list {
    Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
     s.ehFuncao = 0;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
-    
+
     $$ = criarNodo("params_list");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.line, $2.column, $2.body);
@@ -200,10 +202,10 @@ params_list:
  }
  | type ID {
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
-    s.escopo = escopoAtual(&escopo);
+    s.escopo = escopo;
     s.ehFuncao = 0;
-    indexTipo--;
-    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -494,23 +496,23 @@ arg_list:
 
 type:
   INT_TYPE {
-    strcpy(tipo[indexTipo], "INT");
-    indexTipo++;
+    strcpy(tipo[indiceTipo], "INT");
+    indiceTipo++;
     $$ = criarNodo("INT_TYPE");
   }
   | FLOAT_TYPE {
-    strcpy(tipo[indexTipo], "FLOAT");
-    indexTipo++;
+    strcpy(tipo[indiceTipo], "FLOAT");
+    indiceTipo++;
     $$ = criarNodo("FLOAT_TYPE");
   }
   | SET_TYPE {
-    strcpy(tipo[indexTipo], "SET");
-    indexTipo++;
+    strcpy(tipo[indiceTipo], "SET");
+    indiceTipo++;
     $$ = criarNodo("SET_TYPE");
   }
   | ELEM_TYPE {
-    strcpy(tipo[indexTipo],"ELEM");
-    indexTipo++;
+    strcpy(tipo[indiceTipo],"ELEM");
+    indiceTipo++;
     $$ = criarNodo("ELEM_TYPE");
   }
 
@@ -543,9 +545,6 @@ int main(int argc, char ** argv) {
     else {
         yyin = stdin;
     }
-
-    escopo.idx = -1;
-    escopo.proximo = -1;
     
     yyparse();
 
@@ -555,10 +554,6 @@ int main(int argc, char ** argv) {
 
     printArvore(raiz, 0);
     freeArvore(raiz);
-
-    for(int i=0; i<100; i++){
-      printf("%s\n", tipo[i]);
-    }
 
     fclose(yyin);
     yylex_destroy();
