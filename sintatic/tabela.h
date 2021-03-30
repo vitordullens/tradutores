@@ -4,28 +4,17 @@
 typedef struct Escopo Escopo;
 typedef struct Simbolo Simbolo;
 typedef struct Token Token;
-
-struct Escopo {
-  int pilhaEscopo [1000000];
-  int idx;
-  int proximo;
-};
-
 struct Simbolo {
   int linha;
   int coluna;
   int ehFuncao;
   char tipo[100];
-  char body[100];
+  char corpo[100];
   int escopo;
+  int isIdOrConst;
 };
 
 Simbolo criarSimbolo(int, int, char*);
-Simbolo *criarSimboloArvore(int, int, char*);
-
-int escopoAtual(Escopo*);
-void adicionarEscopo(Escopo*);
-void removerEscopo(Escopo*);
 
 void printTabela(int);
 

@@ -3,35 +3,42 @@
 #include <stdlib.h>
 #include <string.h>
 
-NodoArvore* criarNodo(char *val) {
-  NodoArvore* novoNodo = (NodoArvore*) malloc(sizeof(NodoArvore));
-  novoNodo->val = strdup(val);
-  novoNodo->proximo = NULL;
-  novoNodo->filho = NULL;
-  novoNodo->simbolo = NULL;
-  return novoNodo;
+NodoArvore* retornaNodo() {
+  NodoArvore* nodo = (NodoArvore*) malloc(sizeof(NodoArvore));
+  nodo->proximo = NULL;
+  nodo->filho = NULL;
+  nodo->simbolo = NULL;
+  return nodo;
+}
+
+Simbolo* criarSimboloArvore(int linha, int coluna, char* corpo, int isIdOrConst) {
+  Simbolo* s = (Simbolo*) malloc(sizeof(Simbolo));
+  s->isIdOrConst = isIdOrConst;
+  strcpy(s->corpo, corpo);
+  s->linha = linha;
+  s->coluna = coluna;
+  return s;
 }
 
 void freeArvore(NodoArvore *nodo) {
-  if(!nodo) {
+  if(nodo == NULL) {
     return;
   }
-  if(nodo->simbolo) {
+  if(nodo->simbolo != NULL) {
     free(nodo->simbolo);
   }
-  if(nodo->proximo){
+  if(nodo->proximo != NULL){
     freeArvore(nodo->proximo);
   }
-  if(nodo->filho) {
+  if(nodo->filho != NULL) {
     freeArvore(nodo->filho);
   }
-  free(nodo->val);
   free(nodo);
 
 }
 
 void printArvore(NodoArvore *nodo, int profundidade) {
-  if (!nodo) {
+  if (nodo == NULL) {
     return;
   }
 
@@ -40,21 +47,31 @@ void printArvore(NodoArvore *nodo, int profundidade) {
     printf("%s\n", nodo->val);
 
   } else {
-    for(int i=0; i<profundidade; i++) printf(" | ");
+    for(int i=0; i<profundidade; i++){
+      printf(" | ");
+    } 
     printf("%s", nodo->val);
   }
 
   
-  if(nodo->simbolo) {
-    printf(" [ simbolo -> %s ]", nodo->simbolo->body);
+  if(nodo->simbolo != NULL) {
+    if(nodo->simbolo->isIdOrConst == 1) {
+      printf(" [ constante -> %s ]", nodo->simbolo->corpo);
+    }
+    else if(nodo->simbolo->isIdOrConst == 2) {
+      printf(" [ identificador -> %s ]", nodo->simbolo->corpo);
+    }
+    else {
+      printf("ERRO");
+    }
   }
 
-  if(profundidade>0) printf("\n");
+  if(profundidade >= 1) {
+    printf("\n");
+  }
   if(nodo->filho){
     printArvore(nodo->filho, profundidade+1);
   }
-
-
   if(nodo->proximo) {
     printArvore(nodo->proximo, profundidade);
   }

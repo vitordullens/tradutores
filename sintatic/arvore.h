@@ -11,10 +11,12 @@ void freeArvore(NodoArvore *);
 struct NodoArvore {
   struct NodoArvore* filho;
   Simbolo* simbolo;
-  char* val;
+  char val[100];
+  int isIdorConst;
   struct NodoArvore* proximo;
 };
 
-NodoArvore* criarNodo(char*);
+NodoArvore* retornaNodo();
+Simbolo *criarSimboloArvore(int, int, char*, int);
 
 #endif

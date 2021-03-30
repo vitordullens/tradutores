@@ -1,20 +1,24 @@
-int f(int y) {
-    set s;
-    return s + el * 1;
-    elem el;
-    int x;
-}
-
-
-int outrafuncao(int a, int b, int c){
-    for(i=0;i<10;i = i +1 ) {
-        return 1;
+set subsum(set s, int target, int cur_sum, set ans){
+    int val;
+    val = 1;
+    read(val);
+    if (target == cur_sum){
+        return ans;
+    } else {
+        int el;
+        if (subsum(s, target, cur_sum, ans))
+            return ans;
+        cur_sum = curr_sum + el;
+        if (subsum(s, target, cur_sum, ans)){
+            return ans;
+        }
+        for(el = 0; el < n; el = el + 1) {
+            return EMPTY;
+        }
     }
 }
+
 int main() {
-    float a;
-    if (a<b) {
-        add((exists (el in s)) in s);
-    }
-    a = !is_set(x);
+    int x;
+    x = y = z = w = 1;
 }

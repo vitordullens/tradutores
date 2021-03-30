@@ -5,10 +5,10 @@
     #include "syntax.tab.h"
     #include "tabela.h"
 
-    int line = 1, column = 1, errors = 0;
+    int linha = 1, coluna = 1, erros = 0;
 %}
 
-DIGIT [0-9]
+NUMBER [0-9]
 
 ID  [a-zA-Z_][_a-z0-9A-Z]*
 
@@ -48,270 +48,270 @@ STRING \"[^\"]*\"|\'([^'\\\n]|\\.)'
 {COMMENT} {}
 
 {STRING} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return STRING;
 }
 
-{DIGIT}+ {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+{NUMBER}+ {
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return INTEGER;
 }
 
-{DIGIT}+"."{DIGIT}* {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+{NUMBER}+"."{NUMBER}* {
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return FLOAT;
 }
 
 {INT_TYPE} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return INT_TYPE;
 }
 
 {FLOAT_TYPE} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return FLOAT_TYPE;
 }
 
 {SET_TYPE} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return SET_TYPE;
 }
 {ELEM_TYPE} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ELEM_TYPE;
 }
 
 {EMPTY} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return EMPTY;
 }
 
 "if" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return IF;
 }
 
 "else" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ELSE;
 }
 
 "for" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return FOR;
 }
 
 "return" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return RETURN;
 }
 
 "forall" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return FORALL;
 }
 
 "is_set" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ISSET;
 }
 
 {ARITMETIC_OP1} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ARITMETIC_OP1;
 }
 
 {ARITMETIC_OP2} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ARITMETIC_OP2;
 }
 
 {RELATIONAL_OP} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return RELATIONAL_OP;
 }
 
 {OR} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return OR;
 }
 
 {AND} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return AND;
 }
 
 "!" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '!';
 }
 
 {SET_OP1} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return SET_OP1;
 }
 
 "in" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return INFIX_OP;
 }
 
 {INPUT} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return INPUT;
 }
 
 {OUTPUT} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return OUTPUT;
 }
 
 {ID} {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ID;
 }
 
 "=" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '=';
 }
 
 "," {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ',';
 }
 
 ";" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ';';
 }
 
 "{" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '{';
 }
 
 "}" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '}';
 }
 
 "(" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '(';
 }
 
 ")" {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ')';
 }
 
 [ \t]+ {
-  column += yyleng;
+  coluna += yyleng;
 }
 
 \n|\r {
-    line++;
-    column = 1;
+    linha++;
+    coluna = 1;
 }
 
 . {
-    errors++;
-    printf("%-15s %d:%-3d - Unidentified character: %s\n","LEXICAL ERROR ", line, column, yytext);
+    erros++;
+    printf("%-15s %d:%-3d - Unidentified character: %s\n","LEXICAL ERROR ", linha, coluna, yytext);
 }

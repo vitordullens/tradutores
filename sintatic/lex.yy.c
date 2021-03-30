@@ -515,7 +515,7 @@ char *yytext;
     #include "syntax.tab.h"
     #include "tabela.h"
 
-    int line = 1, column = 1, errors = 0;
+    int linha = 1, coluna = 1, erros = 0;
 #line 520 "lex.yy.c"
 #line 521 "lex.yy.c"
 
@@ -802,10 +802,10 @@ case 2:
 YY_RULE_SETUP
 #line 50 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return STRING;
 }
 	YY_BREAK
@@ -813,10 +813,10 @@ case 3:
 YY_RULE_SETUP
 #line 58 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return INTEGER;
 }
 	YY_BREAK
@@ -824,10 +824,10 @@ case 4:
 YY_RULE_SETUP
 #line 66 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return FLOAT;
 }
 	YY_BREAK
@@ -835,10 +835,10 @@ case 5:
 YY_RULE_SETUP
 #line 74 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return INT_TYPE;
 }
 	YY_BREAK
@@ -846,10 +846,10 @@ case 6:
 YY_RULE_SETUP
 #line 82 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return FLOAT_TYPE;
 }
 	YY_BREAK
@@ -857,10 +857,10 @@ case 7:
 YY_RULE_SETUP
 #line 90 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return SET_TYPE;
 }
 	YY_BREAK
@@ -868,10 +868,10 @@ case 8:
 YY_RULE_SETUP
 #line 97 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ELEM_TYPE;
 }
 	YY_BREAK
@@ -879,10 +879,10 @@ case 9:
 YY_RULE_SETUP
 #line 105 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return EMPTY;
 }
 	YY_BREAK
@@ -890,10 +890,10 @@ case 10:
 YY_RULE_SETUP
 #line 113 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return IF;
 }
 	YY_BREAK
@@ -901,10 +901,10 @@ case 11:
 YY_RULE_SETUP
 #line 121 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ELSE;
 }
 	YY_BREAK
@@ -912,10 +912,10 @@ case 12:
 YY_RULE_SETUP
 #line 129 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return FOR;
 }
 	YY_BREAK
@@ -923,10 +923,10 @@ case 13:
 YY_RULE_SETUP
 #line 137 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return RETURN;
 }
 	YY_BREAK
@@ -934,10 +934,10 @@ case 14:
 YY_RULE_SETUP
 #line 145 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return FORALL;
 }
 	YY_BREAK
@@ -945,10 +945,10 @@ case 15:
 YY_RULE_SETUP
 #line 153 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ISSET;
 }
 	YY_BREAK
@@ -956,10 +956,10 @@ case 16:
 YY_RULE_SETUP
 #line 161 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ARITMETIC_OP1;
 }
 	YY_BREAK
@@ -967,10 +967,10 @@ case 17:
 YY_RULE_SETUP
 #line 169 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ARITMETIC_OP2;
 }
 	YY_BREAK
@@ -978,10 +978,10 @@ case 18:
 YY_RULE_SETUP
 #line 177 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return RELATIONAL_OP;
 }
 	YY_BREAK
@@ -989,10 +989,10 @@ case 19:
 YY_RULE_SETUP
 #line 185 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return OR;
 }
 	YY_BREAK
@@ -1000,10 +1000,10 @@ case 20:
 YY_RULE_SETUP
 #line 193 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return AND;
 }
 	YY_BREAK
@@ -1011,10 +1011,10 @@ case 21:
 YY_RULE_SETUP
 #line 201 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '!';
 }
 	YY_BREAK
@@ -1022,10 +1022,10 @@ case 22:
 YY_RULE_SETUP
 #line 209 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return SET_OP1;
 }
 	YY_BREAK
@@ -1033,10 +1033,10 @@ case 23:
 YY_RULE_SETUP
 #line 217 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return INFIX_OP;
 }
 	YY_BREAK
@@ -1044,10 +1044,10 @@ case 24:
 YY_RULE_SETUP
 #line 225 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return INPUT;
 }
 	YY_BREAK
@@ -1055,10 +1055,10 @@ case 25:
 YY_RULE_SETUP
 #line 233 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return OUTPUT;
 }
 	YY_BREAK
@@ -1066,10 +1066,10 @@ case 26:
 YY_RULE_SETUP
 #line 241 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ID;
 }
 	YY_BREAK
@@ -1077,10 +1077,10 @@ case 27:
 YY_RULE_SETUP
 #line 249 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '=';
 }
 	YY_BREAK
@@ -1088,10 +1088,10 @@ case 28:
 YY_RULE_SETUP
 #line 257 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ',';
 }
 	YY_BREAK
@@ -1099,10 +1099,10 @@ case 29:
 YY_RULE_SETUP
 #line 265 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ';';
 }
 	YY_BREAK
@@ -1110,10 +1110,10 @@ case 30:
 YY_RULE_SETUP
 #line 273 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '{';
 }
 	YY_BREAK
@@ -1121,10 +1121,10 @@ case 31:
 YY_RULE_SETUP
 #line 281 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '}';
 }
 	YY_BREAK
@@ -1132,10 +1132,10 @@ case 32:
 YY_RULE_SETUP
 #line 289 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return '(';
 }
 	YY_BREAK
@@ -1143,10 +1143,10 @@ case 33:
 YY_RULE_SETUP
 #line 297 "lexical.l"
 {
-  strcpy(yylval.token.body, yytext);
-  yylval.token.line = line;
-  yylval.token.column = column;
-  column += yyleng;
+  strcpy(yylval.token.corpo, yytext);
+  yylval.token.linha = linha;
+  yylval.token.coluna = coluna;
+  coluna += yyleng;
   return ')';
 }
 	YY_BREAK
@@ -1154,7 +1154,7 @@ case 34:
 YY_RULE_SETUP
 #line 305 "lexical.l"
 {
-  column += yyleng;
+  coluna += yyleng;
 }
 	YY_BREAK
 case 35:
@@ -1162,16 +1162,16 @@ case 35:
 YY_RULE_SETUP
 #line 309 "lexical.l"
 {
-    line++;
-    column = 1;
+    linha++;
+    coluna = 1;
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 314 "lexical.l"
 {
-    errors++;
-    printf("%-15s %d:%-3d - Unidentified character: %s\n","LEXICAL ERROR ", line, column, yytext);
+    erros++;
+    printf("%-15s %d:%-3d - Unidentified character: %s\n","LEXICAL ERROR ", linha, coluna, yytext);
 }
 	YY_BREAK
 case 37:
