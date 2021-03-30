@@ -22,7 +22,7 @@ void printTabela(int size) {
   printf("|================|==============|=======|=============|==========|\n");
   
   for(int i=0; i<=size; i++) {
-    printf("| %-14s | %2d:%-9d | %-5s | %-11d | %-8d |\n", tabelaSimbolos[i].corpo, tabelaSimbolos[i].linha,tabelaSimbolos[i].coluna, tabelaSimbolos[i].tipo, tabelaSimbolos[i].ehFuncao, tabelaSimbolos[i].escopo);
+    printf("| %-14s | %3d:%-8d | %-5s | %-11d | %-8d |\n", tabelaSimbolos[i].corpo, tabelaSimbolos[i].linha,tabelaSimbolos[i].coluna, tabelaSimbolos[i].tipo, tabelaSimbolos[i].ehFuncao, tabelaSimbolos[i].escopo);
   }
 
   printf("|================================================================|\n");
