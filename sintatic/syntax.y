@@ -19,7 +19,9 @@
 
   extern Escopo escopo;
 
-  char tipo[100];
+  char tipo[1000][100];
+
+  int indexTipo = 0;
 
   int error = 0;
 
@@ -140,7 +142,8 @@ var_declaration:
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 0;
-    strcpy(s.tipo, tipo);
+    indexTipo--;
+    strcpy(s.tipo, tipo[indexTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -154,7 +157,8 @@ function_declaration:
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 1;
-    strcpy(s.tipo, tipo);
+    indexTipo--;
+    strcpy(s.tipo, tipo[indexTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -168,7 +172,8 @@ function_declaration:
     Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
     s.escopo = escopoAtual(&escopo);
     s.ehFuncao = 1;
-    strcpy(s.tipo, tipo);
+    indexTipo--;
+    strcpy(s.tipo, tipo[indexTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
@@ -473,19 +478,23 @@ arg_list:
 
 type:
   INT_TYPE {
-    strcpy(tipo, "INT");
+    strcpy(tipo[indexTipo], "INT");
+    indexTipo++;
     $$ = criarNodo("INT_TYPE");
   }
   | FLOAT_TYPE {
-    strcpy(tipo, "FLOAT");
+    strcpy(tipo[indexTipo], "FLOAT");
+    indexTipo++;
     $$ = criarNodo("FLOAT_TYPE");
   }
   | SET_TYPE {
-    strcpy(tipo, "SET");
+    strcpy(tipo[indexTipo], "SET");
+    indexTipo++;
     $$ = criarNodo("SET_TYPE");
   }
   | ELEM_TYPE {
-    strcpy(tipo,"ELEM");
+    strcpy(tipo[indexTipo],"ELEM");
+    indexTipo++;
     $$ = criarNodo("ELEM_TYPE");
   }
 
