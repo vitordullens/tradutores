@@ -5,15 +5,16 @@
 
 typedef struct NodoArvore NodoArvore;
 
+void printArvore(NodoArvore*, int);
+void freeArvore(NodoArvore *);
+
 struct NodoArvore {
-  struct NodoArvore* proximo;
   struct NodoArvore* filho;
   Simbolo* simbolo;
   char* val;
+  struct NodoArvore* proximo;
 };
 
 NodoArvore* criarNodo(char*);
-void printArvore(NodoArvore*, int);
-void freeArvore(NodoArvore *);
 
 #endif
