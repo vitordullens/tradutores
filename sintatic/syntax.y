@@ -1,5 +1,9 @@
 %define lr.type canonical-lr
 %define parse.error verbose
+
+%nonassoc IFX
+%nonassoc ELSE
+
 %defines
 
 %{
@@ -54,6 +58,7 @@
 %type <nodo> return_stmt
 %type <nodo> set_stmt
 %type <nodo> exp_stmt
+%type <nodo> assignment
 %type <nodo> exp
 %type <nodo> set_exp
 %type <nodo> set_in_exp
@@ -62,46 +67,27 @@
 %type <nodo> relational_exp
 %type <nodo> sum_exp
 %type <nodo> mul_exp
+%type <nodo> unary_exp
 %type <nodo> primal_exp
 %type <nodo> arg_list
 %type <nodo> type
 %type <nodo> const
-%type <nodo> assignment
-%type <nodo> unary_exp
 
 
 %token <token> ID
-%token <token> INT_TYPE
-%token <token> FLOAT_TYPE
-%token <token> SET_TYPE
-%token <token> ELEM_TYPE
-%token <token> ARITMETIC_OP1
-%token <token> ARITMETIC_OP2
+%token <token> FLOAT_TYPE INT_TYPE SET_TYPE ELEM_TYPE
+%token <token> ARITMETIC_OP1 ARITMETIC_OP2
 %token <token> RELATIONAL_OP
-%token <token> AND
-%token <token> OR
+%token <token> AND OR
 %token <token> SET_OP1
-%token <token> INPUT
-%token <token> OUTPUT
-%token <token> STRING
-%token <token> INTEGER
-%token <token> FLOAT
-%token <token> EMPTY
-%token <token> IF
-%token <token> ELSE
+%token <token> INPUT OUTPUT
+%token <token> INTEGER FLOAT STRING EMPTY
+%token <token> IF ELSE
 %token <token> FOR
 %token <token> RETURN
 %token <token> INFIX_OP
-%token <token> FORALL
-%token <token> ISSET
-%token <token> ';'
-%token <token> ','
-%token <token> '{'
-%token <token> '}'
-%token <token> '('
-%token <token> ')'
-%token <token> '='
-%token <token> '!'
+%token <token> FORALL ISSET
+%token <token> ';' '!' '=' ')' '(' '}' '{' ','
 
 
 %start program
@@ -320,13 +306,13 @@ for_stmt:
   }
 
 if_else_stmt:
-  IF '(' exp ')' stmt {
+  IF '(' exp ')' stmt %prec IFX{
     $$ = retornaNodo();
     strcpy($$->val, "if_else_stmt");
     $$->filho = $3;
     $3->proximo = $5;
   }
-  | IF '(' exp ')' brackets_stmt ELSE stmt {
+  | IF '(' exp ')' stmt ELSE stmt {
     $$ = retornaNodo();
     strcpy($$->val, "if_else_stmt");
     $$->filho = $3;
@@ -432,7 +418,18 @@ set_in_exp:
     strcpy($$->val, "set_in_exp");
     $$->filho = $1;
     $1->proximo = $3;
-
+  }
+  | set_exp INFIX_OP set_exp {
+    $$ = retornaNodo();
+    strcpy($$->val, "set_in_exp");
+    $$->filho = $1;
+    $1->proximo = $3;
+  }
+  | set_exp INFIX_OP ID {
+    $$ = retornaNodo();
+    strcpy($$->val, "set_in_exp");
+    $$->filho = $1;
+    $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
   }
 
 or_exp:

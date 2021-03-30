@@ -54,30 +54,31 @@ extern int yydebug;
     YYEOF = 0,                     /* "end of file"  */
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
-    ID = 258,                      /* ID  */
-    INT_TYPE = 259,                /* INT_TYPE  */
+    IFX = 258,                     /* IFX  */
+    ID = 259,                      /* ID  */
     FLOAT_TYPE = 260,              /* FLOAT_TYPE  */
-    SET_TYPE = 261,                /* SET_TYPE  */
-    ELEM_TYPE = 262,               /* ELEM_TYPE  */
-    ARITMETIC_OP1 = 263,           /* ARITMETIC_OP1  */
-    ARITMETIC_OP2 = 264,           /* ARITMETIC_OP2  */
-    RELATIONAL_OP = 265,           /* RELATIONAL_OP  */
-    AND = 266,                     /* AND  */
-    OR = 267,                      /* OR  */
-    SET_OP1 = 268,                 /* SET_OP1  */
-    INPUT = 269,                   /* INPUT  */
-    OUTPUT = 270,                  /* OUTPUT  */
-    STRING = 271,                  /* STRING  */
+    INT_TYPE = 261,                /* INT_TYPE  */
+    SET_TYPE = 262,                /* SET_TYPE  */
+    ELEM_TYPE = 263,               /* ELEM_TYPE  */
+    ARITMETIC_OP1 = 264,           /* ARITMETIC_OP1  */
+    ARITMETIC_OP2 = 265,           /* ARITMETIC_OP2  */
+    RELATIONAL_OP = 266,           /* RELATIONAL_OP  */
+    AND = 267,                     /* AND  */
+    OR = 268,                      /* OR  */
+    SET_OP1 = 269,                 /* SET_OP1  */
+    INPUT = 270,                   /* INPUT  */
+    OUTPUT = 271,                  /* OUTPUT  */
     INTEGER = 272,                 /* INTEGER  */
     FLOAT = 273,                   /* FLOAT  */
-    EMPTY = 274,                   /* EMPTY  */
-    IF = 275,                      /* IF  */
-    ELSE = 276,                    /* ELSE  */
-    FOR = 277,                     /* FOR  */
-    RETURN = 278,                  /* RETURN  */
-    INFIX_OP = 279,                /* INFIX_OP  */
-    FORALL = 280,                  /* FORALL  */
-    ISSET = 281                    /* ISSET  */
+    STRING = 274,                  /* STRING  */
+    EMPTY = 275,                   /* EMPTY  */
+    IF = 276,                      /* IF  */
+    ELSE = 277,                    /* ELSE  */
+    FOR = 278,                     /* FOR  */
+    RETURN = 279,                  /* RETURN  */
+    INFIX_OP = 280,                /* INFIX_OP  */
+    FORALL = 281,                  /* FORALL  */
+    ISSET = 282                    /* ISSET  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -86,7 +87,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 33 "syntax.y"
+#line 37 "syntax.y"
 
   struct Token {
     int coluna, linha;
@@ -95,7 +96,7 @@ union YYSTYPE
 
   struct NodoArvore* nodo;
 
-#line 99 "syntax.tab.h"
+#line 100 "syntax.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
