@@ -1,9 +1,6 @@
 %define lr.type canonical-lr
 %define parse.error verbose
 
-%nonassoc IFX
-%nonassoc ELSE
-
 %defines
 
 %{
@@ -83,6 +80,7 @@
 %token <token> INPUT OUTPUT
 %token <token> INTEGER FLOAT STRING EMPTY
 %token <token> IF ELSE
+%right THEN ELSE
 %token <token> FOR
 %token <token> RETURN
 %token <token> INFIX_OP
@@ -306,7 +304,7 @@ for_stmt:
   }
 
 if_else_stmt:
-  IF '(' exp ')' stmt %prec IFX{
+  IF '(' exp ')' stmt %prec THEN{
     $$ = retornaNodo();
     strcpy($$->val, "if_else_stmt");
     $$->filho = $3;
