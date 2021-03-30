@@ -185,12 +185,28 @@ function_declaration:
 
 params_list:
  type ID ',' params_list {
+   Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
+    s.escopo = escopoAtual(&escopo);
+    s.ehFuncao = 0;
+    indexTipo--;
+    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTabela++;
+    tabelaSimbolos[indiceTabela] = s;
+    
     $$ = criarNodo("params_list");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.line, $2.column, $2.body);
     $1->proximo = $4;
  }
  | type ID {
+    Simbolo s = criarSimbolo($2.line, $2.column, $2.body);
+    s.escopo = escopoAtual(&escopo);
+    s.ehFuncao = 0;
+    indexTipo--;
+    strcpy(s.tipo, tipo[indexTipo]);
+    indiceTabela++;
+    tabelaSimbolos[indiceTabela] = s;
+
     $$ = criarNodo("params_list");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.line, $2.column, $2.body);
@@ -539,6 +555,10 @@ int main(int argc, char ** argv) {
 
     printArvore(raiz, 0);
     freeArvore(raiz);
+
+    for(int i=0; i<100; i++){
+      printf("%s\n", tipo[i]);
+    }
 
     fclose(yyin);
     yylex_destroy();
