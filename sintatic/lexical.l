@@ -5,7 +5,8 @@
     #include "syntax.tab.h"
     #include "tabela.h"
 
-    int linha = 1, coluna = 1, erros = 0;
+    int linha = 1, coluna = 1;
+    extern int erros;
 %}
 
 NUMBER [0-9]

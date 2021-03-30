@@ -93,7 +93,7 @@
 
   NodoArvore* raiz;
 
-  int error = 0;
+  int erros = 0;
 
 #line 99 "syntax.tab.c"
 
@@ -3129,7 +3129,7 @@ yyreturn:
 
 void yyerror(const char* msg) {
   fprintf (stderr, "%-15s %d:%-3d - %s\n", "SYNTAX ERROR", yylval.token.linha, yylval.token.coluna, msg);
-  error++;
+  erros++;
 }
 
 int main(int argc, char * argv[]) {
@@ -3145,7 +3145,15 @@ int main(int argc, char * argv[]) {
 
     printTabela(indiceTabela);
 
-    if (error) return 0;
+    if (erros) {
+      if(erros == 1) {
+      printf("\n\n--> Paser finalizado com %d erro\n", erros);
+      }
+      else {
+        printf("\n\n--> Paser finalizado com %d erros\n", erros);  
+      }
+      return 0;
+    }
 
     printArvore(raiz, 0);
     freeArvore(raiz);
