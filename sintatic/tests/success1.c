@@ -16,5 +16,5 @@ int main() {
     if (a<b) {
         add((exists (el in s)) in s);
     }
-    int b;
+    a = !is_set(x);
 }

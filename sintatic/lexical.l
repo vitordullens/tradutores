@@ -42,7 +42,7 @@ OUTPUT write|writeln
 
 COMMENT "//".*
 
-STRING \"[^\"]*\"|'[^']*'
+STRING \"[^\"]*\"|\'([^'\\\n]|\\.)'
 
 
 %%
@@ -67,7 +67,7 @@ STRING \"[^\"]*\"|'[^']*'
   return INTEGER;
 }
 
-{DIGIT}+"."{DIGIT}+ {
+{DIGIT}+"."{DIGIT}* {
   strcpy(yylval.token.body, yytext);
   yylval.token.line = line;
   yylval.token.column = column;
@@ -350,9 +350,4 @@ STRING \"[^\"]*\"|'[^']*'
 . {
     errors++;
     printf("%-15s %d:%-3d - Unidentified character: %s\n","LEXICAL ERROR ", line, column, yytext);
-}
-
-{DIGIT}+[^+*<>=~&|/^\n\t ;,)\]-]+ {
-    errors++;
-    printf("%-15s %d:%-3d - Incorrect token format: %s\n", "LEXICAL ERROR ", line, column, yytext);
 }

@@ -304,14 +304,6 @@ set_stmt:
     $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
     $$->filho = $7;
   }
-  | ISSET '(' ID ')' ';' {
-    $$ = criarNodo("set_stmt");
-    $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
-  }
-  | ISSET '(' set_exp ')' ';' {
-    $$ = criarNodo("set_stmt");
-    $$->filho = $3;
-  }
 
 exp_stmt:
   exp ';' {
@@ -340,6 +332,22 @@ set_exp:
   SET_OP1 '(' set_in_exp ')' {
     $$ = criarNodo("set_exp");
     $$->filho = $3;
+  }
+  | ISSET '(' ID ')' {
+    $$ = criarNodo("set_exp");
+    $$->simbolo = criarSimboloArvore($3.line, $3.column, $3.body);
+  }
+  | ISSET '(' set_exp ')'  {
+    $$ = criarNodo("set_exp");
+    $$->filho = $3;
+  }
+  | '!' ISSET '(' ID ')'  {
+    $$ = criarNodo("set_exp");
+    $$->simbolo = criarSimboloArvore($4.line, $4.column, $4.body);
+  }
+  | '!' ISSET '(' set_exp ')'  {
+    $$ = criarNodo("set_exp");
+    $$->filho = $4;
   }
 
 set_in_exp:
