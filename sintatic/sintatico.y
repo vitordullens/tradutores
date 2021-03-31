@@ -684,8 +684,8 @@ int main(int argc, char * argv[]) {
       return 0;
     }
 
-    // printArvore(raiz, 0);
-    // freeArvore(raiz);
+    printArvore(raiz, 0);
+    freeArvore(raiz);
 
     fclose(yyin);
     yylex_destroy();

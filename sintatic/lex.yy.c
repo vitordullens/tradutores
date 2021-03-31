@@ -509,9 +509,9 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lexical.l"
+#line 1 "lexico.l"
 #define YY_NO_INPUT 1
-#line 5 "lexical.l"
+#line 5 "lexico.l"
     #include "syntax.tab.h"
     #include "tabela.h"
 
@@ -733,7 +733,7 @@ YY_DECL
 		}
 
 	{
-#line 47 "lexical.l"
+#line 47 "lexico.l"
 
 
 #line 740 "lex.yy.c"
@@ -795,13 +795,13 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 49 "lexical.l"
+#line 49 "lexico.l"
 {}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 51 "lexical.l"
+#line 51 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -812,7 +812,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 59 "lexical.l"
+#line 59 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -823,7 +823,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 67 "lexical.l"
+#line 67 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -834,7 +834,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 75 "lexical.l"
+#line 75 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -845,7 +845,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 83 "lexical.l"
+#line 83 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -856,7 +856,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 91 "lexical.l"
+#line 91 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -867,7 +867,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 98 "lexical.l"
+#line 98 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -878,7 +878,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 106 "lexical.l"
+#line 106 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -889,7 +889,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 114 "lexical.l"
+#line 114 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -900,7 +900,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 122 "lexical.l"
+#line 122 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -911,7 +911,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 130 "lexical.l"
+#line 130 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -922,7 +922,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 138 "lexical.l"
+#line 138 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -933,7 +933,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 146 "lexical.l"
+#line 146 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -944,7 +944,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 154 "lexical.l"
+#line 154 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -955,7 +955,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 162 "lexical.l"
+#line 162 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -966,7 +966,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 170 "lexical.l"
+#line 170 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -977,7 +977,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 178 "lexical.l"
+#line 178 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -988,7 +988,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 186 "lexical.l"
+#line 186 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -999,7 +999,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 194 "lexical.l"
+#line 194 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1010,7 +1010,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 202 "lexical.l"
+#line 202 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1021,7 +1021,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 210 "lexical.l"
+#line 210 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1032,7 +1032,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 218 "lexical.l"
+#line 218 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1043,7 +1043,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 226 "lexical.l"
+#line 226 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1054,7 +1054,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 234 "lexical.l"
+#line 234 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1065,7 +1065,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 242 "lexical.l"
+#line 242 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1076,7 +1076,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 250 "lexical.l"
+#line 250 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1087,7 +1087,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 258 "lexical.l"
+#line 258 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1098,7 +1098,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 266 "lexical.l"
+#line 266 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1109,7 +1109,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 274 "lexical.l"
+#line 274 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1120,7 +1120,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 282 "lexical.l"
+#line 282 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1131,7 +1131,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 290 "lexical.l"
+#line 290 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1142,7 +1142,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 298 "lexical.l"
+#line 298 "lexico.l"
 {
   strcpy(yylval.lexema.corpo, yytext);
   yylval.lexema.linha = linha;
@@ -1153,7 +1153,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 306 "lexical.l"
+#line 306 "lexico.l"
 {
   coluna += yyleng;
 }
@@ -1161,7 +1161,7 @@ YY_RULE_SETUP
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
-#line 310 "lexical.l"
+#line 310 "lexico.l"
 {
     linha++;
     coluna = 1;
@@ -1169,7 +1169,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 315 "lexical.l"
+#line 315 "lexico.l"
 {
     erros++;
     printf("%-15s %d:%-3d - Unidentified character: %s\n","LEXICAL ERROR ", linha, coluna, yytext);
@@ -1177,7 +1177,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 319 "lexical.l"
+#line 319 "lexico.l"
 ECHO;
 	YY_BREAK
 #line 1184 "lex.yy.c"
@@ -2148,4 +2148,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 319 "lexical.l"
+#line 319 "lexico.l"
