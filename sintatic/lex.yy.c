@@ -803,9 +803,9 @@ case 2:
 YY_RULE_SETUP
 #line 51 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return STRING;
 }
@@ -814,9 +814,9 @@ case 3:
 YY_RULE_SETUP
 #line 59 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return INTEGER;
 }
@@ -825,9 +825,9 @@ case 4:
 YY_RULE_SETUP
 #line 67 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return FLOAT;
 }
@@ -836,9 +836,9 @@ case 5:
 YY_RULE_SETUP
 #line 75 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return INT_TYPE;
 }
@@ -847,9 +847,9 @@ case 6:
 YY_RULE_SETUP
 #line 83 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return FLOAT_TYPE;
 }
@@ -858,9 +858,9 @@ case 7:
 YY_RULE_SETUP
 #line 91 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return SET_TYPE;
 }
@@ -869,9 +869,9 @@ case 8:
 YY_RULE_SETUP
 #line 98 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ELEM_TYPE;
 }
@@ -880,9 +880,9 @@ case 9:
 YY_RULE_SETUP
 #line 106 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return EMPTY;
 }
@@ -891,9 +891,9 @@ case 10:
 YY_RULE_SETUP
 #line 114 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return IF;
 }
@@ -902,9 +902,9 @@ case 11:
 YY_RULE_SETUP
 #line 122 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ELSE;
 }
@@ -913,9 +913,9 @@ case 12:
 YY_RULE_SETUP
 #line 130 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return FOR;
 }
@@ -924,9 +924,9 @@ case 13:
 YY_RULE_SETUP
 #line 138 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return RETURN;
 }
@@ -935,9 +935,9 @@ case 14:
 YY_RULE_SETUP
 #line 146 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return FORALL;
 }
@@ -946,9 +946,9 @@ case 15:
 YY_RULE_SETUP
 #line 154 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ISSET;
 }
@@ -957,9 +957,9 @@ case 16:
 YY_RULE_SETUP
 #line 162 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ARITMETIC_OP1;
 }
@@ -968,9 +968,9 @@ case 17:
 YY_RULE_SETUP
 #line 170 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ARITMETIC_OP2;
 }
@@ -979,9 +979,9 @@ case 18:
 YY_RULE_SETUP
 #line 178 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return RELATIONAL_OP;
 }
@@ -990,9 +990,9 @@ case 19:
 YY_RULE_SETUP
 #line 186 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return OR;
 }
@@ -1001,9 +1001,9 @@ case 20:
 YY_RULE_SETUP
 #line 194 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return AND;
 }
@@ -1012,9 +1012,9 @@ case 21:
 YY_RULE_SETUP
 #line 202 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return '!';
 }
@@ -1023,9 +1023,9 @@ case 22:
 YY_RULE_SETUP
 #line 210 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return SET_OP1;
 }
@@ -1034,9 +1034,9 @@ case 23:
 YY_RULE_SETUP
 #line 218 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return INFIX_OP;
 }
@@ -1045,9 +1045,9 @@ case 24:
 YY_RULE_SETUP
 #line 226 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return INPUT;
 }
@@ -1056,9 +1056,9 @@ case 25:
 YY_RULE_SETUP
 #line 234 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return OUTPUT;
 }
@@ -1067,9 +1067,9 @@ case 26:
 YY_RULE_SETUP
 #line 242 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ID;
 }
@@ -1078,9 +1078,9 @@ case 27:
 YY_RULE_SETUP
 #line 250 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return '=';
 }
@@ -1089,9 +1089,9 @@ case 28:
 YY_RULE_SETUP
 #line 258 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ',';
 }
@@ -1100,9 +1100,9 @@ case 29:
 YY_RULE_SETUP
 #line 266 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ';';
 }
@@ -1111,9 +1111,9 @@ case 30:
 YY_RULE_SETUP
 #line 274 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return '{';
 }
@@ -1122,9 +1122,9 @@ case 31:
 YY_RULE_SETUP
 #line 282 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return '}';
 }
@@ -1133,9 +1133,9 @@ case 32:
 YY_RULE_SETUP
 #line 290 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return '(';
 }
@@ -1144,9 +1144,9 @@ case 33:
 YY_RULE_SETUP
 #line 298 "lexical.l"
 {
-  strcpy(yylval.token.corpo, yytext);
-  yylval.token.linha = linha;
-  yylval.token.coluna = coluna;
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return ')';
 }

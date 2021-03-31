@@ -89,10 +89,10 @@ union YYSTYPE
 {
 #line 34 "syntax.y"
 
-  struct Token {
+  struct Lexema {
     int coluna, linha;
     char corpo[100];
-  } token;
+  } lexema;
 
   struct NodoArvore* nodo;
 

@@ -32,10 +32,10 @@
 %}
 
 %union {
-  struct Token {
+  struct Lexema {
     int coluna, linha;
     char corpo[100];
-  } token;
+  } lexema;
 
   struct NodoArvore* nodo;
 }
@@ -71,21 +71,21 @@
 %type <nodo> const
 
 
-%token <token> ID
-%token <token> FLOAT_TYPE INT_TYPE SET_TYPE ELEM_TYPE
-%token <token> ARITMETIC_OP1 ARITMETIC_OP2
-%token <token> RELATIONAL_OP
-%token <token> AND OR
-%token <token> SET_OP1
-%token <token> INPUT OUTPUT
-%token <token> INTEGER FLOAT STRING EMPTY
-%token <token> IF ELSE
+%token <lexema> ID
+%token <lexema> FLOAT_TYPE INT_TYPE SET_TYPE ELEM_TYPE
+%token <lexema> ARITMETIC_OP1 ARITMETIC_OP2
+%token <lexema> RELATIONAL_OP
+%token <lexema> AND OR
+%token <lexema> SET_OP1
+%token <lexema> INPUT OUTPUT
+%token <lexema> INTEGER FLOAT STRING EMPTY
+%token <lexema> IF ELSE
 %right THEN ELSE
-%token <token> FOR
-%token <token> RETURN
-%token <token> INFIX_OP
-%token <token> FORALL ISSET
-%token <token> ';' '!' '=' ')' '(' '}' '{' ','
+%token <lexema> FOR
+%token <lexema> RETURN
+%token <lexema> INFIX_OP
+%token <lexema> FORALL ISSET
+%token <lexema> ';' '!' '=' ')' '(' '}' '{' ','
 
 
 %start program
@@ -383,26 +383,6 @@ set_exp:
     strcpy($$->val, "set_exp");
     $$->filho = $3;
   }
-  | ISSET '(' ID ')' {
-    $$ = retornaNodo();
-    strcpy($$->val, "set_exp");
-    $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
-  }
-  | ISSET '(' set_exp ')'  {
-    $$ = retornaNodo();
-    strcpy($$->val, "set_exp");
-    $$->filho = $3;
-  }
-  | '!' ISSET '(' ID ')'  {
-    $$ = retornaNodo();
-    strcpy($$->val, "set_exp");
-    $$->simbolo = criarSimboloArvore($4.linha, $4.coluna, $4.corpo, 2);
-  }
-  | '!' ISSET '(' set_exp ')'  {
-    $$ = retornaNodo();
-    strcpy($$->val, "set_exp");
-    $$->filho = $4;
-  }
 
 set_in_exp:
   or_exp INFIX_OP ID {
@@ -522,6 +502,17 @@ unary_exp:
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
     $$->filho = $3;
   }
+  | ARITMETIC_OP1 ID '(' ')' {
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
+  }
+  | ARITMETIC_OP1 ID '(' arg_list ')' {
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
+    $$->filho = $4;
+  }
   | ID '(' ')' {
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
@@ -537,6 +528,26 @@ unary_exp:
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
+  }
+  | ISSET '(' ID ')' {
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
+    $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
+  }
+  | ISSET '(' set_exp ')'  {
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
+    $$->filho = $3;
+  }
+  | '!' ISSET '(' ID ')'  {
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
+    $$->simbolo = criarSimboloArvore($4.linha, $4.coluna, $4.corpo, 2);
+  }
+  | '!' ISSET '(' set_exp ')'  {
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
+    $$->filho = $4;
   }
 
 
@@ -621,7 +632,7 @@ const:
 %%
 
 void yyerror(const char* msg) {
-  fprintf (stderr, "%-15s %d:%-3d - %s\n", "SYNTAX ERROR", yylval.token.linha, yylval.token.coluna, msg);
+  fprintf (stderr, "%-15s %d:%-3d - %s\n", "SYNTAX ERROR", yylval.lexema.linha, yylval.lexema.coluna, msg);
   erros++;
 }
 
