@@ -18,13 +18,17 @@
 
   extern Simbolo tabelaSimbolos[1000000];
 
-  char tipo[10000][100];
+  char tipo[100000][100];
 
   int indiceTipo = 0;
 
   int indiceTabela = -1;
 
+  int listaEscopo[100000];
+  int indiceEscopo = 0;
   int escopo = 0;
+
+  int ehFuncao = 0;
 
   NodoArvore* raiz;
 
@@ -33,7 +37,7 @@
 
 %union {
   struct Lexema {
-    int coluna, linha;
+    int coluna, linha, escopo;
     char corpo[100];
   } lexema;
 
@@ -129,7 +133,7 @@ declaration:
 var_declaration:
   type ID ';' {
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
-    s.escopo = escopo;
+    s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 0;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
@@ -143,44 +147,52 @@ var_declaration:
   }
 
 function_declaration:
-  type ID '(' params_list ')' brackets_stmt {
+  type ID '(' { 
+    escopo++; 
+    ehFuncao = 1;
+    indiceEscopo++; 
+    listaEscopo[indiceEscopo] = escopo; 
+
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
-    s.escopo = escopo;
-    escopo++;
+    s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 1;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
-
-    $$ = retornaNodo();
-    strcpy($$->val, "function_declaration");
-    $$->filho = $1;
-    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
-    $1->proximo = $4;
-    $4->proximo = $6;
-  }
-  | type ID '(' ')' brackets_stmt {
-    Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
-    s.escopo = escopo;
-    escopo++;
-    s.ehFuncao = 1;
-    indiceTipo--;
-    strcpy(s.tipo, tipo[indiceTipo]);
-    indiceTabela++;
-    tabelaSimbolos[indiceTabela] = s;
-
+  } params_list ')' brackets_stmt {
     $$ = retornaNodo();
     strcpy($$->val, "function_declaration");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
     $1->proximo = $5;
+    $5->proximo = $7;
+  }
+  | type ID  '('{ 
+    escopo++; 
+    ehFuncao = 1;
+    indiceEscopo++; 
+    listaEscopo[indiceEscopo] = escopo; 
+    Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
+    s.escopo = listaEscopo[indiceEscopo];
+    s.ehFuncao = 1;
+    indiceTipo--;
+    strcpy(s.tipo, tipo[indiceTipo]);
+    indiceTabela++;
+    tabelaSimbolos[indiceTabela] = s;
+  } 
+ ')' brackets_stmt {
+    $$ = retornaNodo();
+    strcpy($$->val, "function_declaration");
+    $$->filho = $1;
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
+    $1->proximo = $6;
   }
 
 params_list:
  type ID ',' params_list {
    Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
-    s.escopo = escopo;
+    s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 0;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
@@ -195,7 +207,7 @@ params_list:
  }
  | type ID {
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
-    s.escopo = escopo;
+    s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 0;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
@@ -209,10 +221,19 @@ params_list:
  }
 
 brackets_stmt:
-  '{' stmts '}' {
+  '{' {
+    if(ehFuncao) {
+      ehFuncao = 0;
+    } else {
+      indiceEscopo++; 
+      escopo++; 
+      listaEscopo[indiceEscopo] = escopo; 
+    }
+  } stmts '}'  {
+    indiceEscopo--;
     $$ = retornaNodo();
     strcpy($$->val, "brackets_stmt");
-    $$->filho = $2;
+    $$->filho = $3;
   }
   | error {}
 
@@ -644,6 +665,10 @@ int main(int argc, char * argv[]) {
     else {
         yyin = stdin;
     }
+
+    for(int i=0; i<100000;i++){
+      listaEscopo[i] = 0;
+    }
     
     yyparse();
 
@@ -659,8 +684,8 @@ int main(int argc, char * argv[]) {
       return 0;
     }
 
-    printArvore(raiz, 0);
-    freeArvore(raiz);
+    // printArvore(raiz, 0);
+    // freeArvore(raiz);
 
     fclose(yyin);
     yylex_destroy();

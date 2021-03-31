@@ -87,10 +87,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 34 "syntax.y"
+#line 38 "syntax.y"
 
   struct Lexema {
-    int coluna, linha;
+    int coluna, linha, escopo;
     char corpo[100];
   } lexema;
 
