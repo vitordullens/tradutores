@@ -527,6 +527,18 @@ unary_exp:
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
   }
+  | '!' ID '(' arg_list ')' {
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
+    $$->filho = $4;
+  }
+  | '!' ID '(' ')' {
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
+  }
+
 
 
 primal_exp:
