@@ -16,7 +16,7 @@
   
   extern FILE *yyin;
 
-  extern Simbolo tabelaSimbolos[1000000];
+  extern Simbolo tabelaSimbolos[10000000];
 
   char tipo[100000][100];
 
@@ -24,7 +24,7 @@
 
   int indiceTabela = -1;
 
-  int listaEscopo[100000];
+  int listaEscopo[10000000];
   int indiceEscopo = 0;
   int escopo = 0;
 
@@ -173,6 +173,7 @@ function_declaration:
     ehFuncao = 1;
     indiceEscopo++; 
     listaEscopo[indiceEscopo] = escopo; 
+    
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 1;
@@ -180,8 +181,7 @@ function_declaration:
     strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
-  } 
- ')' brackets_stmt {
+  } ')' brackets_stmt {
     $$ = retornaNodo();
     strcpy($$->val, "function_declaration");
     $$->filho = $1;
@@ -666,7 +666,7 @@ int main(int argc, char * argv[]) {
         yyin = stdin;
     }
 
-    for(int i=0; i<100000;i++){
+    for(int i=0; i<10000000;i++){
       listaEscopo[i] = 0;
     }
     

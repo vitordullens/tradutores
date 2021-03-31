@@ -2,7 +2,7 @@
 %option noinput nounput
 
 %{
-    #include "syntax.tab.h"
+    #include "sintatico.tab.h"
     #include "tabela.h"
 
     int linha = 1, coluna = 1;
