@@ -17,17 +17,14 @@
   extern FILE *yyin;
 
   extern Simbolo tabelaSimbolos[10000000];
+  int indiceTabela = -1;
 
   char tipo[100000][100];
-
   int indiceTipo = 0;
-
-  int indiceTabela = -1;
 
   int listaEscopo[10000000];
   int indiceEscopo = 0;
   int escopo = 0;
-
   int ehFuncao = 0;
 
   NodoArvore* raiz;
@@ -173,7 +170,7 @@ function_declaration:
     ehFuncao = 1;
     indiceEscopo++; 
     listaEscopo[indiceEscopo] = escopo; 
-    
+
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 1;
