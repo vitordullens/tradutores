@@ -109,21 +109,15 @@ declaration_list:
     $1->proximo = $2;
   }
   | declaration {
-    $$ = retornaNodo();
-    strcpy($$->val, "declaration_list");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 declaration:
   function_declaration {
-    $$ = retornaNodo();
-    strcpy($$->val, "declaration");
-    $$->filho = $1;
+    $$ = $1;
   }
   | var_declaration {
-    $$ = retornaNodo();
-    strcpy($$->val, "declaration");
-    $$->filho = $1;
+    $$ = $1;
   }
   | error {}
 
@@ -228,9 +222,7 @@ brackets_stmt:
     }
   } stmts '}'  {
     indiceEscopo--;
-    $$ = retornaNodo();
-    strcpy($$->val, "brackets_stmt");
-    $$->filho = $3;
+    $$ = $3;
   }
   | error {}
 
@@ -249,49 +241,31 @@ stmts:
 
 stmt:
   for_stmt {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
   | if_else_stmt {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
   | return_stmt {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
   | io_stmt {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
   | exp_stmt {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
   | set_stmt {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
   | var_declaration {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
   | assignment ';'{
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
   | brackets_stmt {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmt");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 io_stmt: 
@@ -385,20 +359,17 @@ assignment:
 
 exp:
   or_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "exp");
-    $$->filho = $1;
+    $$ = $1;
   }
   | set_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "exp");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 set_exp:
   SET_OP1 '(' set_in_exp ')' {
     $$ = retornaNodo();
     strcpy($$->val, "set_exp");
+    $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
     $$->filho = $3;
   }
 
@@ -432,93 +403,79 @@ or_exp:
   or_exp OR and_exp {
     $$ = retornaNodo();
     strcpy($$->val, "or_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
     $1->proximo = $3;
   }
   | and_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "or_exp");
-    $$->filho = $1;
+    $$ = $1;
   }
   | set_in_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "or_exp");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 and_exp:
   and_exp AND relational_exp {
     $$ = retornaNodo();
     strcpy($$->val, "and_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
-    $$->proximo = $3;
+    $1->proximo = $3;
   }
   | relational_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "and_exp");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 relational_exp:
   relational_exp RELATIONAL_OP sum_exp {
     $$ = retornaNodo();
     strcpy($$->val, "relatorional_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
-    $$->proximo = $3;
+    $1->proximo = $3;
   }
   | sum_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "relatorional_exp");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 sum_exp:
   sum_exp ARITMETIC_OP1 mul_exp {
     $$ = retornaNodo();
     strcpy($$->val, "sum_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
     $1->proximo = $3;
   }
   | mul_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "sum_exp");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 mul_exp:
   mul_exp ARITMETIC_OP2 unary_exp {
     $$ = retornaNodo();
     strcpy($$->val, "mul_exp");
+    $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
-    $$->proximo = $3;
+    $1->proximo = $3;
   }
   | unary_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "mul_exp");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 unary_exp:
   primal_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "unary_exp");
-    $$->filho = $1;
+    $$ = $1;
   }
   | '!' primal_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "unary_exp");
-    $$->filho = $2;
+    $$ = $2;
+    $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
   }
   | ARITMETIC_OP1 primal_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "unary_exp");
-    $$->filho = $2;
+    $$ = $2;
+    $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
   }
   | ID '(' arg_list ')' {
-    $$ = retornaNodo();
-    strcpy($$->val, "unary_exp");
-    $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
-    $$->filho = $3;
+    $$ = $3;
   }
   | ARITMETIC_OP1 ID '(' ')' {
     $$ = retornaNodo();
@@ -669,20 +626,21 @@ int main(int argc, char * argv[]) {
     
     yyparse();
 
+    if (erros == 0) {
+      printArvore(raiz, 0);
+      freeArvore(raiz);
+    }
+
     printTabela(indiceTabela);
 
-    if (erros) {
+    if (erros >= 1) {
       if(erros == 1) {
       printf("\n\n--> Paser finalizado com %d erro\n", erros);
       }
       else {
         printf("\n\n--> Paser finalizado com %d erros\n", erros);  
       }
-      return 0;
     }
-
-    printArvore(raiz, 0);
-    freeArvore(raiz);
 
     fclose(yyin);
     yylex_destroy();
