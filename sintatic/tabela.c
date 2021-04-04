@@ -18,7 +18,7 @@ Simbolo criarSimbolo(int linha, int coluna, char* corpo) {
 void printTabela(int size) {
   if (size == -1) return;
   printf("\n|==============================TABELA DE SIMBOLOS================================|\n");
-  printf("|= %-29s | %s:%s | %5s | %11s | %7s =|\n", "IDENTIFICADOR", "LINHA", "COLUNA", "TYPE", "EH FUNCAO?", "ESCOPO");
+  printf("|= %-29s | %s:%s | %5s | %11s | %7s =|\n", "IDENTIFICADOR", "LINHA", "COLUNA", "TIPO", "EH FUNCAO?", "ESCOPO");
   printf("|================================|==============|=======|=============|==========|\n");
   
   for(int i=0; i<=size; i++) {
