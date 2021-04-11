@@ -16,16 +16,19 @@
   
   extern FILE *yyin;
 
-  extern Simbolo tabelaSimbolos[10000000];
+  extern Simbolo tabelaSimbolos[100000];
   int indiceTabela = -1;
 
   char tipo[100000][100];
   int indiceTipo = 0;
 
-  int listaEscopo[10000000];
+  int listaEscopo[100];
   int indiceEscopo = 0;
   int escopo = 0;
   int ehFuncao = 0;
+
+  int indiceFuncao;
+  int indiceParam;
 
   NodoArvore* raiz;
 
@@ -127,6 +130,7 @@ var_declaration:
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 0;
     s.ehParametro = 0;
+    s.quantidadeParams = 0;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
@@ -149,10 +153,15 @@ function_declaration:
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 1;
     s.ehParametro = 0;
+    s.quantidadeParams = 0;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
+
+    indiceFuncao = indiceTabela;
+    indiceParam = 0;
+
   } params_list ')' brackets_stmt {
     $$ = retornaNodo();
     strcpy($$->val, "function_declaration");
@@ -171,6 +180,7 @@ function_declaration:
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 1;
     s.ehParametro = 0;
+    s.quantidadeParams = 0;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
@@ -185,14 +195,22 @@ function_declaration:
 
 params_list:
  type ID ',' params_list {
-   Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
+    Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 0;
     s.ehParametro = 1;
+    s.quantidadeParams = 0;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
+
+    Simbolo funcao = tabelaSimbolos[indiceFuncao];
+    strcpy(funcao.params[indiceParam], s.corpo);
+    strcpy(funcao.tipoParams[indiceParam], s.tipo);
+    funcao.quantidadeParams++;
+    tabelaSimbolos[indiceFuncao] = funcao;
+    indiceParam++;
 
     $$ = retornaNodo();
     strcpy($$->val, "params_list");
@@ -205,10 +223,18 @@ params_list:
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 0;
     s.ehParametro = 1;
+    s.quantidadeParams = 0;
     indiceTipo--;
     strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
+
+    Simbolo funcao = tabelaSimbolos[indiceFuncao];
+    strcpy(funcao.params[indiceParam], s.corpo);
+    strcpy(funcao.tipoParams[indiceParam], s.tipo);
+    funcao.quantidadeParams++;
+    tabelaSimbolos[indiceFuncao] = funcao;
+    indiceParam++;
 
     $$ = retornaNodo();
     strcpy($$->val, "params_list");

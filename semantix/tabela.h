@@ -9,10 +9,13 @@ struct Simbolo {
   int coluna;
   int ehFuncao;
   int ehParametro;
-  char tipo[100];
-  char corpo[100];
+  char tipo[8];
+  char corpo[50];
   int escopo;
   int isIdOrConst;
+  int quantidadeParams;
+  char params[1000][50];
+  char tipoParams[1000][8];
 };
 
 Simbolo criarSimbolo(int, int, char*);
