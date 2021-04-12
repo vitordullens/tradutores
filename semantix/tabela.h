@@ -24,5 +24,6 @@ void printTabela(int);
 
 int checkDeclarado(char*, int, int, int, int[], int);
 int checkDuplicado(char*, int, int);
+int checkMain(int);
 
 #endif

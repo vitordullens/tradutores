@@ -14,6 +14,15 @@ Simbolo criarSimbolo(int linha, int coluna, char* corpo) {
   return s;
 }
 
+int checkMain(int size){
+  for(int i=0; i<=size; i++){
+      if(strcmp(tabelaSimbolos[i].corpo, "main") == 0 && tabelaSimbolos[i].escopo == 0){
+        return 1;
+      }
+    }
+  return 0;
+}
+
 int checkDuplicado(char* corpo, int escopo, int size) {
   for(int i=0; i<=size; i++){
     if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == escopo){

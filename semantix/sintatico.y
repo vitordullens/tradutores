@@ -765,6 +765,12 @@ int main(int argc, char * argv[]) {
     
     yyparse();
 
+    int check = checkMain(indiceTabela);
+    if(!check){
+      printf("%-15s - %s \n", "SEMANTIC ERROR", "The program doens't have a 'main' function");
+      erros++;
+    }
+
     if (erros == 0) {
       printArvore(raiz, 0);
       freeArvore(raiz);
