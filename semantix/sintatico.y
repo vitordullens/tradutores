@@ -126,6 +126,12 @@ declaration:
 
 var_declaration:
   type ID ';' {
+    int check = checkDuplicado($2.corpo, listaEscopo[indiceEscopo], indiceTabela);
+    if(check){
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Redeclaration of variable", $2.corpo);
+      erros++;
+    }
+
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 0;

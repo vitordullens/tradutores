@@ -578,15 +578,15 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   100,   100,   108,   114,   119,   122,   125,   128,   146,
-     146,   173,   173,   197,   221,   246,   246,   258,   261,   267,
-     274,   277,   280,   283,   286,   289,   292,   295,   298,   303,
-     314,   319,   326,   336,   342,   351,   355,   362,   369,   377,
-     384,   396,   410,   413,   418,   426,   438,   444,   450,   464,
-     471,   474,   479,   486,   491,   498,   503,   510,   515,   522,
-     527,   530,   534,   538,   549,   561,   570,   581,   593,   604,
-     615,   620,   631,   640,   651,   656,   663,   669,   676,   683,
-     690,   697,   706,   711,   716
+       0,   100,   100,   108,   114,   119,   122,   125,   128,   152,
+     152,   179,   179,   203,   227,   252,   252,   264,   267,   273,
+     280,   283,   286,   289,   292,   295,   298,   301,   304,   309,
+     320,   325,   332,   342,   348,   357,   361,   368,   375,   383,
+     390,   402,   416,   419,   424,   432,   444,   450,   456,   470,
+     477,   480,   485,   492,   497,   504,   509,   516,   521,   528,
+     533,   536,   540,   544,   555,   567,   576,   587,   599,   610,
+     621,   626,   637,   646,   657,   662,   669,   675,   682,   689,
+     696,   703,   712,   717,   722
 };
 #endif
 
@@ -2502,6 +2502,12 @@ yyreduce:
   case 8: /* var_declaration: type ID ';'  */
 #line 128 "sintatico.y"
               {
+    int check = checkDuplicado((yyvsp[-1].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela);
+    if(check){
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, "Redeclaration of variable", (yyvsp[-1].lexema).corpo);
+      erros++;
+    }
+
     Simbolo s = criarSimbolo((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo);
     s.escopo = listaEscopo[indiceEscopo];
     s.ehFuncao = 0;
@@ -2517,11 +2523,11 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo, 2);
   }
-#line 2521 "sintatico.tab.c"
+#line 2527 "sintatico.tab.c"
     break;
 
   case 9: /* $@1: %empty  */
-#line 146 "sintatico.y"
+#line 152 "sintatico.y"
               { 
     escopo++; 
     ehFuncao = 1;
@@ -2542,11 +2548,11 @@ yyreduce:
     indiceParam = 0;
 
   }
-#line 2546 "sintatico.tab.c"
+#line 2552 "sintatico.tab.c"
     break;
 
   case 10: /* function_declaration: type ID '(' $@1 params_list ')' brackets_stmt  */
-#line 165 "sintatico.y"
+#line 171 "sintatico.y"
                                   {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "function_declaration");
@@ -2555,11 +2561,11 @@ yyreduce:
     (yyvsp[-6].nodo)->proximo = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2559 "sintatico.tab.c"
+#line 2565 "sintatico.tab.c"
     break;
 
   case 11: /* $@2: %empty  */
-#line 173 "sintatico.y"
+#line 179 "sintatico.y"
                 { 
     escopo++; 
     ehFuncao = 1;
@@ -2576,11 +2582,11 @@ yyreduce:
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
   }
-#line 2580 "sintatico.tab.c"
+#line 2586 "sintatico.tab.c"
     break;
 
   case 12: /* function_declaration: type ID '(' $@2 ')' brackets_stmt  */
-#line 188 "sintatico.y"
+#line 194 "sintatico.y"
                       {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "function_declaration");
@@ -2588,11 +2594,11 @@ yyreduce:
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-4].lexema).linha, (yyvsp[-4].lexema).coluna, (yyvsp[-4].lexema).corpo, 2);
     (yyvsp[-5].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2592 "sintatico.tab.c"
+#line 2598 "sintatico.tab.c"
     break;
 
   case 13: /* params_list: type ID ',' params_list  */
-#line 197 "sintatico.y"
+#line 203 "sintatico.y"
                          {
     Simbolo s = criarSimbolo((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo);
     s.escopo = listaEscopo[indiceEscopo];
@@ -2617,11 +2623,11 @@ yyreduce:
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
     (yyvsp[-3].nodo)->proximo = (yyvsp[0].nodo);
  }
-#line 2621 "sintatico.tab.c"
+#line 2627 "sintatico.tab.c"
     break;
 
   case 14: /* params_list: type ID  */
-#line 221 "sintatico.y"
+#line 227 "sintatico.y"
            {
     Simbolo s = criarSimbolo((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo);
     s.escopo = listaEscopo[indiceEscopo];
@@ -2645,11 +2651,11 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 2);
  }
-#line 2649 "sintatico.tab.c"
+#line 2655 "sintatico.tab.c"
     break;
 
   case 15: /* $@3: %empty  */
-#line 246 "sintatico.y"
+#line 252 "sintatico.y"
       {
     if(ehFuncao) {
       ehFuncao = 0;
@@ -2659,119 +2665,119 @@ yyreduce:
       listaEscopo[indiceEscopo] = escopo; 
     }
   }
-#line 2663 "sintatico.tab.c"
+#line 2669 "sintatico.tab.c"
     break;
 
   case 16: /* brackets_stmt: '{' $@3 stmts '}'  */
-#line 254 "sintatico.y"
+#line 260 "sintatico.y"
                {
     indiceEscopo--;
     (yyval.nodo) = (yyvsp[-1].nodo);
   }
-#line 2672 "sintatico.tab.c"
-    break;
-
-  case 17: /* brackets_stmt: error  */
-#line 258 "sintatico.y"
-          {}
 #line 2678 "sintatico.tab.c"
     break;
 
+  case 17: /* brackets_stmt: error  */
+#line 264 "sintatico.y"
+          {}
+#line 2684 "sintatico.tab.c"
+    break;
+
   case 18: /* stmts: stmt stmts  */
-#line 261 "sintatico.y"
+#line 267 "sintatico.y"
              {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "stmts");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
     (yyval.nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2689 "sintatico.tab.c"
+#line 2695 "sintatico.tab.c"
     break;
 
   case 19: /* stmts: stmt  */
-#line 267 "sintatico.y"
+#line 273 "sintatico.y"
          {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "stmts");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2699 "sintatico.tab.c"
+#line 2705 "sintatico.tab.c"
     break;
 
   case 20: /* stmt: for_stmt  */
-#line 274 "sintatico.y"
+#line 280 "sintatico.y"
            {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2707 "sintatico.tab.c"
+#line 2713 "sintatico.tab.c"
     break;
 
   case 21: /* stmt: if_else_stmt  */
-#line 277 "sintatico.y"
+#line 283 "sintatico.y"
                  {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2715 "sintatico.tab.c"
+#line 2721 "sintatico.tab.c"
     break;
 
   case 22: /* stmt: return_stmt  */
-#line 280 "sintatico.y"
+#line 286 "sintatico.y"
                 {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2723 "sintatico.tab.c"
+#line 2729 "sintatico.tab.c"
     break;
 
   case 23: /* stmt: io_stmt  */
-#line 283 "sintatico.y"
+#line 289 "sintatico.y"
             {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2731 "sintatico.tab.c"
+#line 2737 "sintatico.tab.c"
     break;
 
   case 24: /* stmt: exp_stmt  */
-#line 286 "sintatico.y"
+#line 292 "sintatico.y"
              {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2739 "sintatico.tab.c"
+#line 2745 "sintatico.tab.c"
     break;
 
   case 25: /* stmt: set_stmt  */
-#line 289 "sintatico.y"
+#line 295 "sintatico.y"
              {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2747 "sintatico.tab.c"
+#line 2753 "sintatico.tab.c"
     break;
 
   case 26: /* stmt: var_declaration  */
-#line 292 "sintatico.y"
+#line 298 "sintatico.y"
                     {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2755 "sintatico.tab.c"
+#line 2761 "sintatico.tab.c"
     break;
 
   case 27: /* stmt: assignment ';'  */
-#line 295 "sintatico.y"
+#line 301 "sintatico.y"
                   {
     (yyval.nodo) = (yyvsp[-1].nodo);
   }
-#line 2763 "sintatico.tab.c"
+#line 2769 "sintatico.tab.c"
     break;
 
   case 28: /* stmt: brackets_stmt  */
-#line 298 "sintatico.y"
+#line 304 "sintatico.y"
                   {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2771 "sintatico.tab.c"
+#line 2777 "sintatico.tab.c"
     break;
 
   case 29: /* io_stmt: INPUT '(' ID ')' ';'  */
-#line 303 "sintatico.y"
+#line 309 "sintatico.y"
                        {
     int check = checkDeclarado((yyvsp[-2].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!check){
@@ -2783,31 +2789,31 @@ yyreduce:
     strcpy((yyval.nodo)->val, "io_stmt");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
   }
-#line 2787 "sintatico.tab.c"
+#line 2793 "sintatico.tab.c"
     break;
 
   case 30: /* io_stmt: OUTPUT '(' STRING ')' ';'  */
-#line 314 "sintatico.y"
+#line 320 "sintatico.y"
                               {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "io_stmt");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 1);
   }
-#line 2797 "sintatico.tab.c"
+#line 2803 "sintatico.tab.c"
     break;
 
   case 31: /* io_stmt: OUTPUT '(' exp ')' ';'  */
-#line 319 "sintatico.y"
+#line 325 "sintatico.y"
                            {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "io_stmt");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
   }
-#line 2807 "sintatico.tab.c"
+#line 2813 "sintatico.tab.c"
     break;
 
   case 32: /* for_stmt: FOR '(' assignment ';' exp ';' assignment ')' stmt  */
-#line 326 "sintatico.y"
+#line 332 "sintatico.y"
                                                      {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "for_stmt");
@@ -2816,22 +2822,22 @@ yyreduce:
     (yyvsp[-4].nodo)->proximo = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2820 "sintatico.tab.c"
+#line 2826 "sintatico.tab.c"
     break;
 
   case 33: /* if_else_stmt: IF '(' exp ')' stmt  */
-#line 336 "sintatico.y"
+#line 342 "sintatico.y"
                                 {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "if_else_stmt");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2831 "sintatico.tab.c"
+#line 2837 "sintatico.tab.c"
     break;
 
   case 34: /* if_else_stmt: IF '(' exp ')' stmt ELSE stmt  */
-#line 342 "sintatico.y"
+#line 348 "sintatico.y"
                                   {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "if_else_stmt");
@@ -2839,30 +2845,30 @@ yyreduce:
     (yyvsp[-4].nodo)->proximo = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2843 "sintatico.tab.c"
+#line 2849 "sintatico.tab.c"
     break;
 
   case 35: /* return_stmt: RETURN ';'  */
-#line 351 "sintatico.y"
+#line 357 "sintatico.y"
              {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "return_stmt");
   }
-#line 2852 "sintatico.tab.c"
+#line 2858 "sintatico.tab.c"
     break;
 
   case 36: /* return_stmt: RETURN exp ';'  */
-#line 355 "sintatico.y"
+#line 361 "sintatico.y"
                    {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "return_stmt");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2862 "sintatico.tab.c"
+#line 2868 "sintatico.tab.c"
     break;
 
   case 37: /* set_stmt: FORALL '(' ID INFIX_OP set_exp ')' stmt  */
-#line 362 "sintatico.y"
+#line 368 "sintatico.y"
                                           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "set_stmt");
@@ -2870,32 +2876,32 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2874 "sintatico.tab.c"
+#line 2880 "sintatico.tab.c"
     break;
 
   case 38: /* set_stmt: FORALL '(' ID INFIX_OP ID ')' stmt  */
-#line 369 "sintatico.y"
+#line 375 "sintatico.y"
                                        {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "set_stmt");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-4].lexema).linha, (yyvsp[-4].lexema).coluna, (yyvsp[-4].lexema).corpo, 2);
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2885 "sintatico.tab.c"
+#line 2891 "sintatico.tab.c"
     break;
 
   case 39: /* exp_stmt: exp ';'  */
-#line 377 "sintatico.y"
+#line 383 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "exp_stmt");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2895 "sintatico.tab.c"
+#line 2901 "sintatico.tab.c"
     break;
 
   case 40: /* assignment: ID '=' exp  */
-#line 384 "sintatico.y"
+#line 390 "sintatico.y"
              {
     int check = checkDeclarado((yyvsp[-2].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!check){
@@ -2908,11 +2914,11 @@ yyreduce:
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2912 "sintatico.tab.c"
+#line 2918 "sintatico.tab.c"
     break;
 
   case 41: /* assignment: ID '=' assignment  */
-#line 396 "sintatico.y"
+#line 402 "sintatico.y"
                       {
     int check = checkDeclarado((yyvsp[-2].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!check){
@@ -2925,38 +2931,38 @@ yyreduce:
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 2929 "sintatico.tab.c"
+#line 2935 "sintatico.tab.c"
     break;
 
   case 42: /* exp: or_exp  */
-#line 410 "sintatico.y"
+#line 416 "sintatico.y"
          {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2937 "sintatico.tab.c"
+#line 2943 "sintatico.tab.c"
     break;
 
   case 43: /* exp: set_exp  */
-#line 413 "sintatico.y"
+#line 419 "sintatico.y"
             {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 2945 "sintatico.tab.c"
+#line 2951 "sintatico.tab.c"
     break;
 
   case 44: /* set_exp: SET_OP1 '(' set_in_exp ')'  */
-#line 418 "sintatico.y"
+#line 424 "sintatico.y"
                              {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "set_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, (yyvsp[-3].lexema).corpo, 3);
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 2956 "sintatico.tab.c"
+#line 2962 "sintatico.tab.c"
     break;
 
   case 45: /* set_in_exp: or_exp INFIX_OP ID  */
-#line 426 "sintatico.y"
+#line 432 "sintatico.y"
                      {
     int check = checkDeclarado((yyvsp[0].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!check){
@@ -2969,33 +2975,33 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 2);
   }
-#line 2973 "sintatico.tab.c"
+#line 2979 "sintatico.tab.c"
     break;
 
   case 46: /* set_in_exp: or_exp INFIX_OP set_exp  */
-#line 438 "sintatico.y"
+#line 444 "sintatico.y"
                             {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "set_in_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2984 "sintatico.tab.c"
+#line 2990 "sintatico.tab.c"
     break;
 
   case 47: /* set_in_exp: set_exp INFIX_OP set_exp  */
-#line 444 "sintatico.y"
+#line 450 "sintatico.y"
                              {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "set_in_exp");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 2995 "sintatico.tab.c"
+#line 3001 "sintatico.tab.c"
     break;
 
   case 48: /* set_in_exp: set_exp INFIX_OP ID  */
-#line 450 "sintatico.y"
+#line 456 "sintatico.y"
                         {
     int check = checkDeclarado((yyvsp[0].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!check){
@@ -3008,11 +3014,11 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 2);
   }
-#line 3012 "sintatico.tab.c"
+#line 3018 "sintatico.tab.c"
     break;
 
   case 49: /* or_exp: or_exp OR and_exp  */
-#line 464 "sintatico.y"
+#line 470 "sintatico.y"
                     {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "or_exp");
@@ -3020,27 +3026,27 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 3024 "sintatico.tab.c"
+#line 3030 "sintatico.tab.c"
     break;
 
   case 50: /* or_exp: and_exp  */
-#line 471 "sintatico.y"
+#line 477 "sintatico.y"
             {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 3032 "sintatico.tab.c"
+#line 3038 "sintatico.tab.c"
     break;
 
   case 51: /* or_exp: set_in_exp  */
-#line 474 "sintatico.y"
+#line 480 "sintatico.y"
                {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 3040 "sintatico.tab.c"
+#line 3046 "sintatico.tab.c"
     break;
 
   case 52: /* and_exp: and_exp AND relational_exp  */
-#line 479 "sintatico.y"
+#line 485 "sintatico.y"
                              {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "and_exp");
@@ -3048,19 +3054,19 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 3052 "sintatico.tab.c"
+#line 3058 "sintatico.tab.c"
     break;
 
   case 53: /* and_exp: relational_exp  */
-#line 486 "sintatico.y"
+#line 492 "sintatico.y"
                    {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 3060 "sintatico.tab.c"
+#line 3066 "sintatico.tab.c"
     break;
 
   case 54: /* relational_exp: relational_exp RELATIONAL_OP sum_exp  */
-#line 491 "sintatico.y"
+#line 497 "sintatico.y"
                                        {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "relatorional_exp");
@@ -3068,19 +3074,19 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 3072 "sintatico.tab.c"
+#line 3078 "sintatico.tab.c"
     break;
 
   case 55: /* relational_exp: sum_exp  */
-#line 498 "sintatico.y"
+#line 504 "sintatico.y"
             {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 3080 "sintatico.tab.c"
+#line 3086 "sintatico.tab.c"
     break;
 
   case 56: /* sum_exp: sum_exp ARITMETIC_OP1 mul_exp  */
-#line 503 "sintatico.y"
+#line 509 "sintatico.y"
                                 {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "sum_exp");
@@ -3088,19 +3094,19 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 3092 "sintatico.tab.c"
+#line 3098 "sintatico.tab.c"
     break;
 
   case 57: /* sum_exp: mul_exp  */
-#line 510 "sintatico.y"
+#line 516 "sintatico.y"
             {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 3100 "sintatico.tab.c"
+#line 3106 "sintatico.tab.c"
     break;
 
   case 58: /* mul_exp: mul_exp ARITMETIC_OP2 unary_exp  */
-#line 515 "sintatico.y"
+#line 521 "sintatico.y"
                                   {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "mul_exp");
@@ -3108,45 +3114,45 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 3112 "sintatico.tab.c"
+#line 3118 "sintatico.tab.c"
     break;
 
   case 59: /* mul_exp: unary_exp  */
-#line 522 "sintatico.y"
+#line 528 "sintatico.y"
               {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 3120 "sintatico.tab.c"
+#line 3126 "sintatico.tab.c"
     break;
 
   case 60: /* unary_exp: primal_exp  */
-#line 527 "sintatico.y"
+#line 533 "sintatico.y"
              {
     (yyval.nodo) = (yyvsp[0].nodo);
   }
-#line 3128 "sintatico.tab.c"
+#line 3134 "sintatico.tab.c"
     break;
 
   case 61: /* unary_exp: '!' primal_exp  */
-#line 530 "sintatico.y"
+#line 536 "sintatico.y"
                    {
     (yyval.nodo) = (yyvsp[0].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo, 3);
   }
-#line 3137 "sintatico.tab.c"
+#line 3143 "sintatico.tab.c"
     break;
 
   case 62: /* unary_exp: ARITMETIC_OP1 primal_exp  */
-#line 534 "sintatico.y"
+#line 540 "sintatico.y"
                              {
     (yyval.nodo) = (yyvsp[0].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo, 3);
   }
-#line 3146 "sintatico.tab.c"
+#line 3152 "sintatico.tab.c"
     break;
 
   case 63: /* unary_exp: ARITMETIC_OP1 ID '(' ')'  */
-#line 538 "sintatico.y"
+#line 544 "sintatico.y"
                              {
     int check = checkDeclarado((yyvsp[-2].lexema).corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
@@ -3158,11 +3164,11 @@ yyreduce:
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
   }
-#line 3162 "sintatico.tab.c"
+#line 3168 "sintatico.tab.c"
     break;
 
   case 64: /* unary_exp: ARITMETIC_OP1 ID '(' arg_list ')'  */
-#line 549 "sintatico.y"
+#line 555 "sintatico.y"
                                       {
     int check = checkDeclarado((yyvsp[-3].lexema).corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
@@ -3175,11 +3181,11 @@ yyreduce:
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, (yyvsp[-3].lexema).corpo, 2);
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3179 "sintatico.tab.c"
+#line 3185 "sintatico.tab.c"
     break;
 
   case 65: /* unary_exp: ID '(' arg_list ')'  */
-#line 561 "sintatico.y"
+#line 567 "sintatico.y"
                         {
     int check = checkDeclarado((yyvsp[-3].lexema).corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
@@ -3189,11 +3195,11 @@ yyreduce:
 
     (yyval.nodo) = (yyvsp[-1].nodo);
   }
-#line 3193 "sintatico.tab.c"
+#line 3199 "sintatico.tab.c"
     break;
 
   case 66: /* unary_exp: ID '(' ')'  */
-#line 570 "sintatico.y"
+#line 576 "sintatico.y"
                {
     int check = checkDeclarado((yyvsp[-2].lexema).corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
@@ -3205,11 +3211,11 @@ yyreduce:
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
   }
-#line 3209 "sintatico.tab.c"
+#line 3215 "sintatico.tab.c"
     break;
 
   case 67: /* unary_exp: '!' ID '(' arg_list ')'  */
-#line 581 "sintatico.y"
+#line 587 "sintatico.y"
                             {
     int check = checkDeclarado((yyvsp[-3].lexema).corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
@@ -3222,11 +3228,11 @@ yyreduce:
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, (yyvsp[-3].lexema).corpo, 2);
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3226 "sintatico.tab.c"
+#line 3232 "sintatico.tab.c"
     break;
 
   case 68: /* unary_exp: '!' ID '(' ')'  */
-#line 593 "sintatico.y"
+#line 599 "sintatico.y"
                    {
     int check = checkDeclarado((yyvsp[-2].lexema).corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
@@ -3238,11 +3244,11 @@ yyreduce:
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
   }
-#line 3242 "sintatico.tab.c"
+#line 3248 "sintatico.tab.c"
     break;
 
   case 69: /* unary_exp: ISSET '(' ID ')'  */
-#line 604 "sintatico.y"
+#line 610 "sintatico.y"
                      {
     int check = checkDeclarado((yyvsp[-1].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!check){
@@ -3254,21 +3260,21 @@ yyreduce:
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo, 2);
   }
-#line 3258 "sintatico.tab.c"
+#line 3264 "sintatico.tab.c"
     break;
 
   case 70: /* unary_exp: ISSET '(' set_exp ')'  */
-#line 615 "sintatico.y"
+#line 621 "sintatico.y"
                            {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3268 "sintatico.tab.c"
+#line 3274 "sintatico.tab.c"
     break;
 
   case 71: /* unary_exp: '!' ISSET '(' ID ')'  */
-#line 620 "sintatico.y"
+#line 626 "sintatico.y"
                           {
     int check = checkDeclarado((yyvsp[-1].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!check){
@@ -3280,21 +3286,21 @@ yyreduce:
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo, 2);
   }
-#line 3284 "sintatico.tab.c"
+#line 3290 "sintatico.tab.c"
     break;
 
   case 72: /* unary_exp: '!' ISSET '(' set_exp ')'  */
-#line 631 "sintatico.y"
+#line 637 "sintatico.y"
                                {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3294 "sintatico.tab.c"
+#line 3300 "sintatico.tab.c"
     break;
 
   case 73: /* primal_exp: ID  */
-#line 640 "sintatico.y"
+#line 646 "sintatico.y"
      {
     int check = checkDeclarado((yyvsp[0].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!check){
@@ -3306,52 +3312,52 @@ yyreduce:
     strcpy((yyval.nodo)->val, "primal_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 2);
   }
-#line 3310 "sintatico.tab.c"
+#line 3316 "sintatico.tab.c"
     break;
 
   case 74: /* primal_exp: const  */
-#line 651 "sintatico.y"
+#line 657 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "primal_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 3320 "sintatico.tab.c"
+#line 3326 "sintatico.tab.c"
     break;
 
   case 75: /* primal_exp: '(' exp ')'  */
-#line 656 "sintatico.y"
+#line 662 "sintatico.y"
                 {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "primal_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3330 "sintatico.tab.c"
+#line 3336 "sintatico.tab.c"
     break;
 
   case 76: /* arg_list: exp ',' arg_list  */
-#line 663 "sintatico.y"
+#line 669 "sintatico.y"
                    {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "arg_list");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 3341 "sintatico.tab.c"
+#line 3347 "sintatico.tab.c"
     break;
 
   case 77: /* arg_list: exp  */
-#line 669 "sintatico.y"
+#line 675 "sintatico.y"
         {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "arg_list");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 3351 "sintatico.tab.c"
+#line 3357 "sintatico.tab.c"
     break;
 
   case 78: /* type: INT_TYPE  */
-#line 676 "sintatico.y"
+#line 682 "sintatico.y"
            {
     strcpy(tipo[indiceTipo], "INT");
     indiceTipo++;
@@ -3359,11 +3365,11 @@ yyreduce:
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "INT_TYPE");
   }
-#line 3363 "sintatico.tab.c"
+#line 3369 "sintatico.tab.c"
     break;
 
   case 79: /* type: FLOAT_TYPE  */
-#line 683 "sintatico.y"
+#line 689 "sintatico.y"
                {
     strcpy(tipo[indiceTipo], "FLOAT");
     indiceTipo++;
@@ -3371,11 +3377,11 @@ yyreduce:
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "FLOAT_TYPE");
   }
-#line 3375 "sintatico.tab.c"
+#line 3381 "sintatico.tab.c"
     break;
 
   case 80: /* type: SET_TYPE  */
-#line 690 "sintatico.y"
+#line 696 "sintatico.y"
              {
     strcpy(tipo[indiceTipo], "SET");
     indiceTipo++;
@@ -3383,11 +3389,11 @@ yyreduce:
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "SET_TYPE");
   }
-#line 3387 "sintatico.tab.c"
+#line 3393 "sintatico.tab.c"
     break;
 
   case 81: /* type: ELEM_TYPE  */
-#line 697 "sintatico.y"
+#line 703 "sintatico.y"
               {
     strcpy(tipo[indiceTipo],"ELEM");
     indiceTipo++;
@@ -3395,41 +3401,41 @@ yyreduce:
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "ELEM_TYPE");
   }
-#line 3399 "sintatico.tab.c"
+#line 3405 "sintatico.tab.c"
     break;
 
   case 82: /* const: INTEGER  */
-#line 706 "sintatico.y"
+#line 712 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "CONST");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 1);
   }
-#line 3409 "sintatico.tab.c"
+#line 3415 "sintatico.tab.c"
     break;
 
   case 83: /* const: FLOAT  */
-#line 711 "sintatico.y"
+#line 717 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "CONST");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 1);
   }
-#line 3419 "sintatico.tab.c"
+#line 3425 "sintatico.tab.c"
     break;
 
   case 84: /* const: EMPTY  */
-#line 716 "sintatico.y"
+#line 722 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "CONST");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 1);
   }
-#line 3429 "sintatico.tab.c"
+#line 3435 "sintatico.tab.c"
     break;
 
 
-#line 3433 "sintatico.tab.c"
+#line 3439 "sintatico.tab.c"
 
       default: break;
     }
@@ -3654,7 +3660,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 722 "sintatico.y"
+#line 728 "sintatico.y"
 
 
 void yyerror(const char* msg) {

@@ -1,15 +1,15 @@
+int x; 
+
 int f(int a) {
-    int b;
     int x;
+    int a;
     is_set(x);
 
-    return 1;
-}
-
-
-int main(){
-    int b;
-    if (a in b){
-        return 2;
+    if(a == x) {
+        int a;
     }
+
+    return 1;
+
+    float a;
 }
