@@ -13,6 +13,7 @@ struct NodoArvore {
   Simbolo* simbolo;
   char val[100];
   int isIdorConst;
+  char type[8];
   struct NodoArvore* proximo;
 };
 

@@ -388,6 +388,12 @@ return_stmt:
 
 set_stmt:
   FORALL '(' ID INFIX_OP set_exp ')' stmt {
+    int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
+    if(!check){
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
+      erros++;
+    }
+
     $$ = retornaNodo();
     strcpy($$->val, "set_stmt");
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
@@ -395,6 +401,17 @@ set_stmt:
     $5->proximo = $7;
   }
   | FORALL '(' ID INFIX_OP ID ')' stmt {
+    int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
+    if(!check){
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
+      erros++;
+    }
+    check = checkDeclarado($5.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
+    if(!check){
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $5.linha, $5.coluna, "Undeclared variable", $5.corpo);
+      erros++;
+    }
+
     $$ = retornaNodo();
     strcpy($$->val, "set_stmt");
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
