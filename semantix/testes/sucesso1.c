@@ -1,5 +1,9 @@
-int main(int a, float b){
+int f(int a) {
+    int b;
     return 1;
+}
 
-    main();
+int main(int a){
+    int b;
+    f();
 }

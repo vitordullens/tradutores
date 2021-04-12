@@ -22,4 +22,6 @@ Simbolo criarSimbolo(int, int, char*);
 
 void printTabela(int);
 
+int checkDeclarado(char*, int, int, int);
+
 #endif

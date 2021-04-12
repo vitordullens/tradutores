@@ -584,9 +584,9 @@ static const yytype_int16 yyrline[] =
      308,   313,   320,   330,   336,   345,   349,   356,   363,   371,
      378,   384,   392,   395,   400,   408,   414,   420,   426,   434,
      441,   444,   449,   456,   461,   468,   473,   480,   485,   492,
-     497,   500,   504,   508,   511,   516,   522,   527,   533,   538,
-     543,   548,   553,   562,   567,   572,   579,   585,   592,   599,
-     606,   613,   622,   627,   632
+     497,   500,   504,   508,   513,   519,   528,   539,   551,   562,
+     567,   572,   577,   586,   591,   596,   603,   609,   616,   623,
+     630,   637,   646,   651,   656
 };
 #endif
 
@@ -1110,17 +1110,17 @@ static const yytype_int16 yytable[] =
        0,     0,   -66,   -61,     0,     0,     0,   -61,   -66,   -75,
        0,     0,   -66,     0,     0,   -75,     0,     0,     0,   -75,
      -56,   281,   -56,   -56,   -56,   -58,   -58,   -58,   -58,   -58,
-       0,     0,   -63,   -63,   -63,   -63,   -63,   -56,     0,     0,
-       0,     0,   -58,   -56,     0,     0,     0,   -56,   -58,   -63,
-       0,     0,   -58,     0,     0,   -63,     0,     0,     0,   -63,
-     -64,   -64,   -64,   -64,   -64,   -69,   -69,   -69,   -69,   -69,
-       0,     0,   -70,   -70,   -70,   -70,   -70,   -64,     0,     0,
-       0,     0,   -69,   -64,     0,     0,     0,   -64,   -69,   -70,
+       0,     0,   -65,   -65,   -65,   -65,   -65,   -56,     0,     0,
+       0,     0,   -58,   -56,     0,     0,     0,   -56,   -58,   -65,
+       0,     0,   -58,     0,     0,   -65,     0,     0,     0,   -65,
+     -63,   -63,   -63,   -63,   -63,   -69,   -69,   -69,   -69,   -69,
+       0,     0,   -70,   -70,   -70,   -70,   -70,   -63,     0,     0,
+       0,     0,   -69,   -63,     0,     0,     0,   -63,   -69,   -70,
        0,     0,   -69,     0,     0,   -70,     0,     0,     0,   -70,
-     -68,   -68,   -68,   -68,   -68,   -65,   -65,   -65,   -65,   -65,
+     -68,   -68,   -68,   -68,   -68,   -64,   -64,   -64,   -64,   -64,
        0,     0,   -67,   -67,   -67,   -67,   -67,   -68,     0,     0,
-       0,     0,   -65,   -68,     0,     0,     0,   -68,   -65,   -67,
-       0,     0,   -65,     0,     0,   -67,     0,     0,     0,   -67,
+       0,     0,   -64,   -68,     0,     0,     0,   -68,   -64,   -67,
+       0,     0,   -64,     0,     0,   -67,     0,     0,     0,   -67,
      -71,   -71,   -71,   -71,   -71,   -72,   -72,   -72,   -72,   -72,
        0,     0,   -73,   -73,   -73,   -73,   -73,   -71,     0,     0,
        0,     0,   -72,   -71,     0,     0,     0,   -71,   -72,   -73,
@@ -1146,16 +1146,16 @@ static const yytype_int16 yytable[] =
      -75,   -75,   -75,   -75,   -75,     0,     0,   -61,     0,     0,
        0,     0,   -66,   -61,     0,    -5,    -5,   -75,   -66,    -5,
       -5,    -5,    -5,   -75,   -56,   265,   -56,   -56,   -56,   -58,
-     -58,   -58,   -58,   -58,   -63,   -63,   -63,   -63,   -63,     0,
+     -58,   -58,   -58,   -58,   -65,   -65,   -65,   -65,   -65,     0,
        0,   -56,     0,     0,     0,     0,   -58,   -56,     0,    -3,
-      -3,   -63,   -58,    -3,    -3,    -3,    -3,   -63,   -64,   -64,
-     -64,   -64,   -64,   -69,   -69,   -69,   -69,   -69,   -70,   -70,
-     -70,   -70,   -70,     0,     0,   -64,     0,     0,     0,     0,
-     -69,   -64,     0,    -8,    -8,   -70,   -69,    -8,    -8,    -8,
-      -8,   -70,   -68,   -68,   -68,   -68,   -68,   -65,   -65,   -65,
-     -65,   -65,   -67,   -67,   -67,   -67,   -67,     0,     0,   -68,
-       0,     0,     0,     0,   -65,   -68,     0,   -17,   -17,   -67,
-     -65,   -17,   -17,   -17,   -17,   -67,   -71,   -71,   -71,   -71,
+      -3,   -65,   -58,    -3,    -3,    -3,    -3,   -65,   -63,   -63,
+     -63,   -63,   -63,   -69,   -69,   -69,   -69,   -69,   -70,   -70,
+     -70,   -70,   -70,     0,     0,   -63,     0,     0,     0,     0,
+     -69,   -63,     0,    -8,    -8,   -70,   -69,    -8,    -8,    -8,
+      -8,   -70,   -68,   -68,   -68,   -68,   -68,   -64,   -64,   -64,
+     -64,   -64,   -67,   -67,   -67,   -67,   -67,     0,     0,   -68,
+       0,     0,     0,     0,   -64,   -68,     0,   -17,   -17,   -67,
+     -64,   -17,   -17,   -17,   -17,   -67,   -71,   -71,   -71,   -71,
      -71,   -72,   -72,   -72,   -72,   -72,   -84,   -84,   -84,   -84,
      -84,     0,     0,   -71,     0,     0,     0,     0,   -72,   -71,
        0,     0,     0,   -84,   -72,     0,   -84,   -57,    97,   -57,
@@ -1168,15 +1168,15 @@ static const yytype_int16 yytable[] =
      -66,   -66,   -66,   -66,   -75,   -75,   -75,   -75,   -75,   -56,
       97,   -56,   -56,   -56,     0,     0,   -66,     0,     0,   -66,
        0,   -75,     0,     0,   -75,     0,   -56,     0,     0,   -56,
-     -58,   -58,   -58,   -58,   -58,   -63,   -63,   -63,   -63,   -63,
-     -64,   -64,   -64,   -64,   -64,     0,     0,   -58,     0,     0,
-     -58,     0,   -63,     0,     0,   -63,     0,   -64,     0,     0,
-     -64,   -69,   -69,   -69,   -69,   -69,   -70,   -70,   -70,   -70,
+     -58,   -58,   -58,   -58,   -58,   -65,   -65,   -65,   -65,   -65,
+     -63,   -63,   -63,   -63,   -63,     0,     0,   -58,     0,     0,
+     -58,     0,   -65,     0,     0,   -65,     0,   -63,     0,     0,
+     -63,   -69,   -69,   -69,   -69,   -69,   -70,   -70,   -70,   -70,
      -70,   -68,   -68,   -68,   -68,   -68,     0,     0,   -69,     0,
        0,   -69,     0,   -70,     0,     0,   -70,     0,   -68,     0,
-       0,   -68,   -65,   -65,   -65,   -65,   -65,   -67,   -67,   -67,
-     -67,   -67,   -71,   -71,   -71,   -71,   -71,     0,     0,   -65,
-       0,     0,   -65,     0,   -67,     0,     0,   -67,     0,   -71,
+       0,   -68,   -64,   -64,   -64,   -64,   -64,   -67,   -67,   -67,
+     -67,   -67,   -71,   -71,   -71,   -71,   -71,     0,     0,   -64,
+       0,     0,   -64,     0,   -67,     0,     0,   -67,     0,   -71,
        0,     0,   -71,   -72,   -72,   -72,   -72,   -72,   -82,   -82,
      -82,   -82,   -82,   -83,   -83,   -83,   -83,   -83,     0,     0,
      -72,     0,     0,   -72,     0,   -82,     0,     0,     0,     0,
@@ -1189,14 +1189,14 @@ static const yytype_int16 yytable[] =
      -61,   -61,   -66,   -66,   -66,   -66,   -66,   -75,   -75,   -75,
      -75,   -75,     0,     0,   -61,     0,   -16,   -16,     0,   -66,
      -16,   -16,   -16,   -16,   -75,   -56,   294,   -56,   -56,   -56,
-     -58,   -58,   -58,   -58,   -58,   -63,   -63,   -63,   -63,   -63,
+     -58,   -58,   -58,   -58,   -58,   -65,   -65,   -65,   -65,   -65,
        0,     0,   -56,     0,     0,     0,     0,   -58,     0,     0,
-       0,     0,   -63,   -64,   -64,   -64,   -64,   -64,   -69,   -69,
+       0,     0,   -65,   -63,   -63,   -63,   -63,   -63,   -69,   -69,
      -69,   -69,   -69,   -70,   -70,   -70,   -70,   -70,     0,     0,
-     -64,     0,     0,     0,     0,   -69,     0,     0,     0,     0,
-     -70,   -68,   -68,   -68,   -68,   -68,   -65,   -65,   -65,   -65,
-     -65,   -67,   -67,   -67,   -67,   -67,     0,     0,   -68,     0,
-       0,     0,     0,   -65,     0,     0,     0,     0,   -67,   -71,
+     -63,     0,     0,     0,     0,   -69,     0,     0,     0,     0,
+     -70,   -68,   -68,   -68,   -68,   -68,   -64,   -64,   -64,   -64,
+     -64,   -67,   -67,   -67,   -67,   -67,     0,     0,   -68,     0,
+       0,     0,     0,   -64,     0,     0,     0,     0,   -67,   -71,
      -71,   -71,   -71,   -71,   -72,   -72,   -72,   -72,   -72,     0,
        0,     0,     0,     0,     0,     0,   -71,     0,     0,     0,
        0,   -72
@@ -1708,7 +1708,7 @@ static const yytype_int8 yyr2[] =
        5,     5,     9,     5,     7,     2,     3,     7,     7,     2,
        3,     3,     1,     1,     4,     3,     3,     3,     3,     3,
        1,     1,     3,     1,     3,     1,     3,     1,     3,     1,
-       1,     2,     2,     4,     4,     5,     3,     5,     4,     4,
+       1,     2,     2,     4,     5,     4,     3,     5,     4,     4,
        4,     5,     5,     1,     1,     3,     3,     1,     1,     1,
        1,     1,     1,     1,     1
 };
@@ -2529,7 +2529,7 @@ yyreduce:
     listaEscopo[indiceEscopo] = escopo; 
 
     Simbolo s = criarSimbolo((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo);
-    s.escopo = listaEscopo[indiceEscopo];
+    s.escopo = 0;
     s.ehFuncao = 1;
     s.ehParametro = 0;
     s.quantidadeParams = 0;
@@ -2567,7 +2567,7 @@ yyreduce:
     listaEscopo[indiceEscopo] = escopo; 
 
     Simbolo s = criarSimbolo((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo);
-    s.escopo = listaEscopo[indiceEscopo];
+    s.escopo = 0;
     s.ehFuncao = 1;
     s.ehParametro = 0;
     s.quantidadeParams = 0;
@@ -3115,159 +3115,183 @@ yyreduce:
 #line 3116 "sintatico.tab.c"
     break;
 
-  case 63: /* unary_exp: ID '(' arg_list ')'  */
+  case 63: /* unary_exp: ARITMETIC_OP1 ID '(' ')'  */
 #line 508 "sintatico.y"
-                        {
-    (yyval.nodo) = (yyvsp[-1].nodo);
-  }
-#line 3124 "sintatico.tab.c"
-    break;
-
-  case 64: /* unary_exp: ARITMETIC_OP1 ID '(' ')'  */
-#line 511 "sintatico.y"
                              {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
   }
-#line 3134 "sintatico.tab.c"
+#line 3126 "sintatico.tab.c"
     break;
 
-  case 65: /* unary_exp: ARITMETIC_OP1 ID '(' arg_list ')'  */
-#line 516 "sintatico.y"
+  case 64: /* unary_exp: ARITMETIC_OP1 ID '(' arg_list ')'  */
+#line 513 "sintatico.y"
                                       {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, (yyvsp[-3].lexema).corpo, 2);
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3145 "sintatico.tab.c"
+#line 3137 "sintatico.tab.c"
+    break;
+
+  case 65: /* unary_exp: ID '(' arg_list ')'  */
+#line 519 "sintatico.y"
+                        {
+    int check = checkDeclarado((yyvsp[-3].lexema).corpo, 0, indiceTabela, 1);
+    if(!check){
+      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", (yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, "Undeclared function");
+      erros++;
+    }
+
+    (yyval.nodo) = (yyvsp[-1].nodo);
+  }
+#line 3151 "sintatico.tab.c"
     break;
 
   case 66: /* unary_exp: ID '(' ')'  */
-#line 522 "sintatico.y"
+#line 528 "sintatico.y"
                {
+    int check = checkDeclarado((yyvsp[-2].lexema).corpo, 0, indiceTabela, 1);
+    if(!check){
+      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", (yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, "Undeclared function");
+      erros++;
+    }
+
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
   }
-#line 3155 "sintatico.tab.c"
+#line 3167 "sintatico.tab.c"
     break;
 
   case 67: /* unary_exp: '!' ID '(' arg_list ')'  */
-#line 527 "sintatico.y"
+#line 539 "sintatico.y"
                             {
+    int check = checkDeclarado((yyvsp[-4].lexema).corpo, 0, indiceTabela, 1);
+    if(!check){
+      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", (yyvsp[-4].lexema).linha, (yyvsp[-4].lexema).coluna, "Undeclared function");
+      erros++;
+    }
+    
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, (yyvsp[-3].lexema).corpo, 2);
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3166 "sintatico.tab.c"
+#line 3184 "sintatico.tab.c"
     break;
 
   case 68: /* unary_exp: '!' ID '(' ')'  */
-#line 533 "sintatico.y"
+#line 551 "sintatico.y"
                    {
+    int check = checkDeclarado((yyvsp[-3].lexema).corpo, 0, indiceTabela, 1);
+    if(!check){
+      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", (yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, "Undeclared function");
+      erros++;
+    }
+
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo, 2);
   }
-#line 3176 "sintatico.tab.c"
+#line 3200 "sintatico.tab.c"
     break;
 
   case 69: /* unary_exp: ISSET '(' ID ')'  */
-#line 538 "sintatico.y"
+#line 562 "sintatico.y"
                      {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo, 2);
   }
-#line 3186 "sintatico.tab.c"
+#line 3210 "sintatico.tab.c"
     break;
 
   case 70: /* unary_exp: ISSET '(' set_exp ')'  */
-#line 543 "sintatico.y"
+#line 567 "sintatico.y"
                            {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3196 "sintatico.tab.c"
+#line 3220 "sintatico.tab.c"
     break;
 
   case 71: /* unary_exp: '!' ISSET '(' ID ')'  */
-#line 548 "sintatico.y"
+#line 572 "sintatico.y"
                           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo, 2);
   }
-#line 3206 "sintatico.tab.c"
+#line 3230 "sintatico.tab.c"
     break;
 
   case 72: /* unary_exp: '!' ISSET '(' set_exp ')'  */
-#line 553 "sintatico.y"
+#line 577 "sintatico.y"
                                {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "unary_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3216 "sintatico.tab.c"
+#line 3240 "sintatico.tab.c"
     break;
 
   case 73: /* primal_exp: ID  */
-#line 562 "sintatico.y"
+#line 586 "sintatico.y"
      {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "primal_exp");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 2);
   }
-#line 3226 "sintatico.tab.c"
+#line 3250 "sintatico.tab.c"
     break;
 
   case 74: /* primal_exp: const  */
-#line 567 "sintatico.y"
+#line 591 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "primal_exp");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 3236 "sintatico.tab.c"
+#line 3260 "sintatico.tab.c"
     break;
 
   case 75: /* primal_exp: '(' exp ')'  */
-#line 572 "sintatico.y"
+#line 596 "sintatico.y"
                 {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "primal_exp");
     (yyval.nodo)->filho = (yyvsp[-1].nodo);
   }
-#line 3246 "sintatico.tab.c"
+#line 3270 "sintatico.tab.c"
     break;
 
   case 76: /* arg_list: exp ',' arg_list  */
-#line 579 "sintatico.y"
+#line 603 "sintatico.y"
                    {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "arg_list");
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyvsp[-2].nodo)->proximo = (yyvsp[0].nodo);
   }
-#line 3257 "sintatico.tab.c"
+#line 3281 "sintatico.tab.c"
     break;
 
   case 77: /* arg_list: exp  */
-#line 585 "sintatico.y"
+#line 609 "sintatico.y"
         {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "arg_list");
     (yyval.nodo)->filho = (yyvsp[0].nodo);
   }
-#line 3267 "sintatico.tab.c"
+#line 3291 "sintatico.tab.c"
     break;
 
   case 78: /* type: INT_TYPE  */
-#line 592 "sintatico.y"
+#line 616 "sintatico.y"
            {
     strcpy(tipo[indiceTipo], "INT");
     indiceTipo++;
@@ -3275,11 +3299,11 @@ yyreduce:
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "INT_TYPE");
   }
-#line 3279 "sintatico.tab.c"
+#line 3303 "sintatico.tab.c"
     break;
 
   case 79: /* type: FLOAT_TYPE  */
-#line 599 "sintatico.y"
+#line 623 "sintatico.y"
                {
     strcpy(tipo[indiceTipo], "FLOAT");
     indiceTipo++;
@@ -3287,11 +3311,11 @@ yyreduce:
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "FLOAT_TYPE");
   }
-#line 3291 "sintatico.tab.c"
+#line 3315 "sintatico.tab.c"
     break;
 
   case 80: /* type: SET_TYPE  */
-#line 606 "sintatico.y"
+#line 630 "sintatico.y"
              {
     strcpy(tipo[indiceTipo], "SET");
     indiceTipo++;
@@ -3299,11 +3323,11 @@ yyreduce:
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "SET_TYPE");
   }
-#line 3303 "sintatico.tab.c"
+#line 3327 "sintatico.tab.c"
     break;
 
   case 81: /* type: ELEM_TYPE  */
-#line 613 "sintatico.y"
+#line 637 "sintatico.y"
               {
     strcpy(tipo[indiceTipo],"ELEM");
     indiceTipo++;
@@ -3311,41 +3335,41 @@ yyreduce:
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "ELEM_TYPE");
   }
-#line 3315 "sintatico.tab.c"
+#line 3339 "sintatico.tab.c"
     break;
 
   case 82: /* const: INTEGER  */
-#line 622 "sintatico.y"
+#line 646 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "CONST");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 1);
   }
-#line 3325 "sintatico.tab.c"
+#line 3349 "sintatico.tab.c"
     break;
 
   case 83: /* const: FLOAT  */
-#line 627 "sintatico.y"
+#line 651 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "CONST");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 1);
   }
-#line 3335 "sintatico.tab.c"
+#line 3359 "sintatico.tab.c"
     break;
 
   case 84: /* const: EMPTY  */
-#line 632 "sintatico.y"
+#line 656 "sintatico.y"
           {
     (yyval.nodo) = retornaNodo();
     strcpy((yyval.nodo)->val, "CONST");
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo, 1);
   }
-#line 3345 "sintatico.tab.c"
+#line 3369 "sintatico.tab.c"
     break;
 
 
-#line 3349 "sintatico.tab.c"
+#line 3373 "sintatico.tab.c"
 
       default: break;
     }
@@ -3570,7 +3594,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 638 "sintatico.y"
+#line 662 "sintatico.y"
 
 
 void yyerror(const char* msg) {

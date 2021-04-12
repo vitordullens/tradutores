@@ -14,6 +14,14 @@ Simbolo criarSimbolo(int linha, int coluna, char* corpo) {
   return s;
 }
 
+int checkDeclarado(char* corpo, int escopo, int size, int ehFuncao){
+  for(int i=0; i<=size; i++){
+    if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == escopo && tabelaSimbolos[i].ehFuncao == ehFuncao){
+      return 1;
+    }
+  }
+  return 0;
+}
 
 void printTabela(int size) {
   if (size == -1) return;
@@ -23,7 +31,7 @@ void printTabela(int size) {
   
   for(int i=0; i<=size; i++) {
     if(tabelaSimbolos[i].ehFuncao){
-      printf("| %-30s | %3d:%-8d | %-5s | %-15s | %-8d |\n", tabelaSimbolos[i].corpo, tabelaSimbolos[i].linha,tabelaSimbolos[i].coluna, tabelaSimbolos[i].tipo, "FUNC", 0);
+      printf("| %-30s | %3d:%-8d | %-5s | %-15s | %-8d |\n", tabelaSimbolos[i].corpo, tabelaSimbolos[i].linha,tabelaSimbolos[i].coluna, tabelaSimbolos[i].tipo, "FUNC", tabelaSimbolos[i].escopo);
       
       // print para ajudar visualização dos dados da funcao
       if(1){
