@@ -295,9 +295,7 @@ stmts:
     $$->proximo = $2;
   }
   | stmt {
-    $$ = retornaNodo();
-    strcpy($$->val, "stmts");
-    $$->filho = $1;
+    $$ = $1;
   }
 
 stmt:
@@ -679,14 +677,10 @@ primal_exp:
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
   }
   | const {
-    $$ = retornaNodo();
-    strcpy($$->val, "primal_exp");
-    $$->filho = $1;
+    $$ = $1;
   }
   | '(' exp ')' {
-    $$ = retornaNodo();
-    strcpy($$->val, "primal_exp");
-    $$->filho = $2;
+    $$ = $2;
   }
 
 arg_list:
