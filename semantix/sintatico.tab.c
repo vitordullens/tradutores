@@ -3141,7 +3141,7 @@ yyreduce:
                         {
     int check = checkDeclarado((yyvsp[-3].lexema).corpo, 0, indiceTabela, 1);
     if(!check){
-      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", (yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, "Undeclared function");
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, "Undeclared function", (yyvsp[-3].lexema).corpo);
       erros++;
     }
 
@@ -3155,7 +3155,7 @@ yyreduce:
                {
     int check = checkDeclarado((yyvsp[-2].lexema).corpo, 0, indiceTabela, 1);
     if(!check){
-      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", (yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, "Undeclared function");
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, "Undeclared function", (yyvsp[-2].lexema).corpo);
       erros++;
     }
 
@@ -3171,7 +3171,7 @@ yyreduce:
                             {
     int check = checkDeclarado((yyvsp[-4].lexema).corpo, 0, indiceTabela, 1);
     if(!check){
-      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", (yyvsp[-4].lexema).linha, (yyvsp[-4].lexema).coluna, "Undeclared function");
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-4].lexema).linha, (yyvsp[-4].lexema).coluna, "Undeclared function", (yyvsp[-4].lexema).corpo);
       erros++;
     }
     
@@ -3188,7 +3188,7 @@ yyreduce:
                    {
     int check = checkDeclarado((yyvsp[-3].lexema).corpo, 0, indiceTabela, 1);
     if(!check){
-      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", (yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, "Undeclared function");
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-3].lexema).linha, (yyvsp[-3].lexema).coluna, "Undeclared function", (yyvsp[-3].lexema).corpo);
       erros++;
     }
 

@@ -519,7 +519,7 @@ unary_exp:
   | ID '(' arg_list ')' {
     int check = checkDeclarado($1.corpo, 0, indiceTabela, 1);
     if(!check){
-      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function");
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
       erros++;
     }
 
@@ -528,7 +528,7 @@ unary_exp:
   | ID '(' ')' {
     int check = checkDeclarado($1.corpo, 0, indiceTabela, 1);
     if(!check){
-      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function");
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
       erros++;
     }
 
@@ -539,7 +539,7 @@ unary_exp:
   | '!' ID '(' arg_list ')' {
     int check = checkDeclarado($1.corpo, 0, indiceTabela, 1);
     if(!check){
-      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function");
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
       erros++;
     }
     
@@ -551,7 +551,7 @@ unary_exp:
   | '!' ID '(' ')' {
     int check = checkDeclarado($1.corpo, 0, indiceTabela, 1);
     if(!check){
-      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function");
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
       erros++;
     }
 
