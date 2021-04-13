@@ -65,20 +65,21 @@ extern int yydebug;
     AND = 266,                     /* AND  */
     OR = 267,                      /* OR  */
     SET_OP1 = 268,                 /* SET_OP1  */
-    INPUT = 269,                   /* INPUT  */
-    OUTPUT = 270,                  /* OUTPUT  */
-    INTEGER = 271,                 /* INTEGER  */
-    FLOAT = 272,                   /* FLOAT  */
-    STRING = 273,                  /* STRING  */
-    EMPTY = 274,                   /* EMPTY  */
-    IF = 275,                      /* IF  */
-    ELSE = 276,                    /* ELSE  */
-    THEN = 277,                    /* THEN  */
-    FOR = 278,                     /* FOR  */
-    RETURN = 279,                  /* RETURN  */
-    INFIX_OP = 280,                /* INFIX_OP  */
-    FORALL = 281,                  /* FORALL  */
-    ISSET = 282                    /* ISSET  */
+    SET_OP2 = 269,                 /* SET_OP2  */
+    INPUT = 270,                   /* INPUT  */
+    OUTPUT = 271,                  /* OUTPUT  */
+    INTEGER = 272,                 /* INTEGER  */
+    FLOAT = 273,                   /* FLOAT  */
+    STRING = 274,                  /* STRING  */
+    EMPTY = 275,                   /* EMPTY  */
+    IF = 276,                      /* IF  */
+    ELSE = 277,                    /* ELSE  */
+    THEN = 278,                    /* THEN  */
+    FOR = 279,                     /* FOR  */
+    RETURN = 280,                  /* RETURN  */
+    INFIX_OP = 281,                /* INFIX_OP  */
+    FORALL = 282,                  /* FORALL  */
+    ISSET = 283                    /* ISSET  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -96,7 +97,7 @@ union YYSTYPE
 
   struct NodoArvore* nodo;
 
-#line 100 "sintatico.tab.h"
+#line 101 "sintatico.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

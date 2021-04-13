@@ -33,7 +33,9 @@ OR "||"
 
 AND "&&"
 
-SET_OP1 add|remove|exists
+SET_OP1 add|remove
+
+SET_OP2 exists
 
 INPUT  read
 
@@ -213,6 +215,14 @@ STRING \"[^\"]*\"|\'([^'\\\n]|\\.)'
   yylval.lexema.coluna = coluna;
   coluna += yyleng;
   return SET_OP1;
+}
+
+{SET_OP2} {
+  strcpy(yylval.lexema.corpo, yytext);
+  yylval.lexema.linha = linha;
+  yylval.lexema.coluna = coluna;
+  coluna += yyleng;
+  return SET_OP2;
 }
 
 "in" {

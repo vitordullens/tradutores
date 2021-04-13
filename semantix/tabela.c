@@ -83,7 +83,7 @@ void printTabela(int size) {
       printf("| %-30s | %3d:%-8d | %-5s | %-15s | %-8d |\n", tabelaSimbolos[i].corpo, tabelaSimbolos[i].linha,tabelaSimbolos[i].coluna, tabelaSimbolos[i].tipo, "FUNC", tabelaSimbolos[i].escopo);
       
       // print para ajudar visualização dos dados da funcao
-      if(1){
+      if(0){
         printf("|%84s└ quantidade de params: %d - params: ", "", tabelaSimbolos[i].quantidadeParams);
         for(int j = tabelaSimbolos[i].quantidadeParams-1; j>0; j--){
           printf("%s %s, ", tabelaSimbolos[i].tipoParams[j], tabelaSimbolos[i].params[j]);
