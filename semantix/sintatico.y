@@ -29,6 +29,7 @@
 
   int indiceFuncao;
   int indiceParam;
+  int indiceArg;
 
   NodoArvore* raiz;
 
@@ -586,31 +587,52 @@ unary_exp:
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
       erros++;
     }
+    indiceArg = 0;
+    check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+    if(!check){
+      erros++;
+    }
 
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
   }
-  | ARITMETIC_OP1 ID '(' arg_list ')' {
+  | ARITMETIC_OP1 ID '(' {
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
       erros++;
     }
+    indiceArg = 0;
+
+  } arg_list ')' {
+    int check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+    if(!check){
+      erros++;
+    }
+    indiceArg = 0;
 
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
-    $$->filho = $4;
+    $$->filho = $5;
   }
-  | ID '(' arg_list ')' {
-    int check = checkDeclarado($1.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
-    if(!check){
-      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
-      erros++;
-    }
+  | ID '(' {
+      int check = checkDeclarado($1.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
+      if(!check){
+        printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
+        erros++;
+      }
+      indiceArg = 0;
 
-    $$ = $3;
+    } arg_list ')' {
+      int check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+      if(!check){
+        erros++;
+      }
+      indiceArg = 0;
+
+      $$ = $4;
   }
   | ID '(' ')' {
     int check = checkDeclarado($1.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
@@ -619,26 +641,47 @@ unary_exp:
       erros++;
     }
 
+    indiceArg = 0;
+    check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+    if(!check){
+      erros++;
+    }
+
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
   }
-  | '!' ID '(' arg_list ')' {
+  | '!' ID '(' {
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
       erros++;
     }
     
+    indiceArg = 0;
+
+  } arg_list ')' {
+    int check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+    if(!check){
+      erros++;
+    }
+    indiceArg = 0;
+
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
-    $$->filho = $4;
+    $$->filho = $5;
   }
   | '!' ID '(' ')' {
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
+      erros++;
+    }
+
+    indiceArg = 0;
+    check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+    if(!check){
       erros++;
     }
 
@@ -702,12 +745,16 @@ primal_exp:
 
 arg_list:
   exp ',' arg_list {
+    indiceArg++;
+
     $$ = retornaNodo();
     strcpy($$->val, "arg_list");
     $$->filho = $1;
     $1->proximo = $3;
   }
   | exp {
+    indiceArg++;
+
     $$ = retornaNodo();
     strcpy($$->val, "arg_list");
     $$->filho = $1;

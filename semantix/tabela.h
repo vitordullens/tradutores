@@ -25,5 +25,7 @@ void printTabela(int);
 int checkDeclarado(char*, int, int, int, int[], int);
 int checkDuplicado(char*, int, int);
 int checkMain(int);
+int retornaIndiceFuncao(char*, int, int, int[], int);
+int checkQuantidadeParametros(char*, int, int, int, int, int[], int, int);
 
 #endif

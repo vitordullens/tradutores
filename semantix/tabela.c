@@ -33,6 +33,24 @@ int checkDuplicado(char* corpo, int escopo, int size) {
   
 }
 
+int checkQuantidadeParametros(char* corpo, int linha, int coluna, int escopo, int size, int listaEscopo[], int indiceEscopo, int quantidadeParams) {
+  int idx = retornaIndiceFuncao(corpo, escopo, size, listaEscopo, indiceEscopo);
+  if(idx == -1) return 1;
+  if(tabelaSimbolos[idx].quantidadeParams == quantidadeParams) return 1;
+  if(tabelaSimbolos[idx].quantidadeParams > quantidadeParams) printf("%-15s %d:%-3d - %s '%s' - expected: %d , received: %d\n", "SEMANTIC ERROR", linha, coluna, "Fewer number of arguments in ", corpo, tabelaSimbolos[idx].quantidadeParams, quantidadeParams);
+  if(tabelaSimbolos[idx].quantidadeParams < quantidadeParams) printf("%-15s %d:%-3d - %s '%s' - expected: %d , received: %d\n", "SEMANTIC ERROR", linha, coluna, "Greater number of arguments in ", corpo, tabelaSimbolos[idx].quantidadeParams, quantidadeParams);
+  return 0;
+}
+
+int retornaIndiceFuncao(char* corpo, int escopo, int size, int listaEscopo[], int indiceEscopo){
+  for(int i=0; i<=size; i++){
+      if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == escopo && tabelaSimbolos[i].ehFuncao == 1){
+        return i;
+      }
+    }
+    return -1;
+}
+
 int checkDeclarado(char* corpo, int escopo, int size, int ehFuncao, int listaEscopo[], int indiceEscopo){
   if(ehFuncao){
     for(int i=0; i<=size; i++){
@@ -65,7 +83,7 @@ void printTabela(int size) {
       printf("| %-30s | %3d:%-8d | %-5s | %-15s | %-8d |\n", tabelaSimbolos[i].corpo, tabelaSimbolos[i].linha,tabelaSimbolos[i].coluna, tabelaSimbolos[i].tipo, "FUNC", tabelaSimbolos[i].escopo);
       
       // print para ajudar visualização dos dados da funcao
-      if(0){
+      if(1){
         printf("|%84s└ quantidade de params: %d - params: ", "", tabelaSimbolos[i].quantidadeParams);
         for(int j = tabelaSimbolos[i].quantidadeParams-1; j>0; j--){
           printf("%s %s, ", tabelaSimbolos[i].tipoParams[j], tabelaSimbolos[i].params[j]);
