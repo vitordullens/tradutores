@@ -13,11 +13,13 @@ struct NodoArvore {
   Simbolo* simbolo;
   char val[100];
   int isIdorConst;
-  char type[8];
+  char *tipo;
+  char *cast;
   struct NodoArvore* proximo;
 };
 
 NodoArvore* retornaNodo();
 Simbolo *criarSimboloArvore(int, int, char*, int);
+void fazCast(NodoArvore*, NodoArvore*, int*, int, int);
 
 #endif

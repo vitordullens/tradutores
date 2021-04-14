@@ -331,13 +331,17 @@ stmt:
 
 io_stmt: 
   INPUT '(' ID ')' ';' {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "io_stmt");
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
   }
@@ -390,26 +394,34 @@ return_stmt:
 
 set_stmt:
   FORALL '(' ID INFIX_OP set_exp ')' stmt {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "forall_stmt");
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
     $$->proximo = $5;
     $5->filho = $7;
   }
   | FORALL '(' ID INFIX_OP or_exp ')' stmt {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "forall_stmt");
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
     $$->proximo = $5;
@@ -425,25 +437,33 @@ exp_stmt:
 
 assignment:
   ID '=' exp {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "assignment");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
     $$->filho = $3;
   }
   | ID '=' assignment {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "assignment");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
     $$->filho = $3;
@@ -473,25 +493,33 @@ set_exp:
 
 set_aux_exp:
   ID INFIX_OP or_exp {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "set_aux_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
     $$->proximo = $3;
   }
   | ID INFIX_OP set_exp {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "set_aux_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
     $$->proximo = $3;
@@ -499,13 +527,17 @@ set_aux_exp:
 
 set_in_exp:
   or_exp INFIX_OP ID {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "set_in_exp");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
@@ -523,13 +555,17 @@ set_in_exp:
     $1->proximo = $3;
   }
   | set_exp INFIX_OP ID {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "set_in_exp");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
@@ -581,6 +617,10 @@ sum_exp:
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
     $1->proximo = $3;
+
+    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    $$->tipo = strdup($1->tipo);
+
   }
   | mul_exp {
     $$ = $1;
@@ -611,10 +651,15 @@ unary_exp:
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
   }
   | ARITMETIC_OP1 ID '(' ')' {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
       erros++;
+    }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
     }
     indiceArg = 0;
     check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
@@ -622,52 +667,68 @@ unary_exp:
       erros++;
     }
 
-    $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
   }
   | ARITMETIC_OP1 ID '(' {
-    int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
-    if(!check){
-      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
-      erros++;
-    }
     indiceArg = 0;
 
   } arg_list ')' {
-    int check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+    $$ = retornaNodo();
+    
+    int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
+    if(!(~check)){
+      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
+      erros++;
+    }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
+    
+    check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
     if(!check){
       erros++;
     }
     indiceArg = 0;
 
-    $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
     $$->filho = $5;
   }
   | ID '(' {
-      int check = checkDeclarado($1.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
-      if(!check){
-        printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
-        erros++;
-      }
       indiceArg = 0;
 
     } arg_list ')' {
-      int check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+      $$ = retornaNodo();
+      int check = checkDeclarado($1.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
+      if(!(~check)){
+        printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
+        erros++;
+      }
+      else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      }
+
+      check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
       if(!check){
         erros++;
       }
       indiceArg = 0;
 
-      $$ = $4;
+      strcpy($$->val, "unary_exp");
+      $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
+      $$->filho = $4;
   }
   | ID '(' ')' {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($1.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
       erros++;
+    }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
     }
 
     indiceArg = 0;
@@ -676,36 +737,43 @@ unary_exp:
       erros++;
     }
 
-    $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
   }
   | '!' ID '(' {
+    indiceArg = 0;
+  } arg_list ')' {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
     
-    indiceArg = 0;
-
-  } arg_list ')' {
-    int check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
+    check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
     if(!check){
       erros++;
     }
     indiceArg = 0;
 
-    $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
     $$->filho = $5;
   }
   | '!' ID '(' ')' {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
       erros++;
+    }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
     }
 
     indiceArg = 0;
@@ -714,18 +782,21 @@ unary_exp:
       erros++;
     }
 
-    $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
   }
   | ISSET '(' ID ')' {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
   }
@@ -735,13 +806,17 @@ unary_exp:
     $$->filho = $3;
   }
   | '!' ISSET '(' ID ')'  {
+    $$ = retornaNodo();
+    
     int check = checkDeclarado($4.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $4.linha, $4.coluna, "Undeclared variable", $4.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($4.linha, $4.coluna, $4.corpo, 2);
   }
@@ -755,15 +830,20 @@ unary_exp:
 
 primal_exp:
   ID {
+    $$ = retornaNodo();
+
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!check){
+    if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
       erros++;
     }
+    else{
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+    }
 
-    $$ = retornaNodo();
     strcpy($$->val, "primal_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
+
   }
   | const {
     $$ = $1;
@@ -824,16 +904,19 @@ const:
     $$ = retornaNodo();
     strcpy($$->val, "CONST");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 1);
+    $$->tipo = strdup("INT");
   }
   | FLOAT {
     $$ = retornaNodo();
     strcpy($$->val, "CONST");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 1);
+    $$->tipo = strdup("FLOAT");
   }
   | EMPTY {
     $$ = retornaNodo();
     strcpy($$->val, "CONST");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 1);
+    $$->tipo = strdup("SET");
   }
 
 %%

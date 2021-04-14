@@ -1,13 +1,26 @@
+int f(){
+    return 1;
+}
+
+int a;
+
+float fa(int a, int b){
+    return 1.0;
+}
+
 int main() {
     set s;
     s = EMPTY;
-
+    float a;
     add(1 in s);
     add(2 in s);
     add(5 in s);
     add(8 in s);
 
+    fa(s, 1);
 
+    elem b;
+    a = b+a-s;
 // Alternativamente: add(1 in add(2 in add(5 in add(8 in s))));
 
     set possibleSums;

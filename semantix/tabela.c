@@ -51,11 +51,12 @@ int retornaIndiceFuncao(char* corpo, int escopo, int size, int listaEscopo[], in
     return -1;
 }
 
+
 int checkDeclarado(char* corpo, int escopo, int size, int ehFuncao, int listaEscopo[], int indiceEscopo){
   if(ehFuncao){
     for(int i=0; i<=size; i++){
       if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == escopo && tabelaSimbolos[i].ehFuncao == ehFuncao){
-        return 1;
+        return i;
       }
     }
   }
@@ -63,13 +64,13 @@ int checkDeclarado(char* corpo, int escopo, int size, int ehFuncao, int listaEsc
     for(int j=indiceEscopo; j>=0; j--){
       for(int i =0; i<=size; i++) {
          if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == listaEscopo[j] && tabelaSimbolos[i].ehFuncao == ehFuncao){
-          return 1;
+          return i;
          }
       }
     }
 
   }
-  return 0;
+  return -1;
 }
 
 void printTabela(int size) {

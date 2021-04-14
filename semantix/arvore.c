@@ -8,6 +8,8 @@ NodoArvore* retornaNodo() {
   nodo->proximo = NULL;
   nodo->filho = NULL;
   nodo->simbolo = NULL;
+  nodo->tipo = NULL;
+  nodo->cast = NULL;
   return nodo;
 }
 
@@ -18,6 +20,38 @@ Simbolo* criarSimboloArvore(int linha, int coluna, char* corpo, int isIdOrConst)
   s->linha = linha;
   s->coluna = coluna;
   return s;
+}
+
+void fazCast(NodoArvore* esquerda, NodoArvore* direita, int* erros, int linha, int coluna) {
+  if(strcmp(esquerda->tipo, direita->tipo) == 0){
+  } else if(strcmp(esquerda->tipo, "INT") == 0 && strcmp(direita->tipo, "FLOAT") == 0) {
+    esquerda->tipo = strdup("FLOAT");
+    esquerda->cast = strdup("int2float");
+  } else if (strcmp(esquerda->tipo, "FLOAT") == 0 && strcmp(direita->tipo, "INT") == 0) {
+    direita->tipo = strdup("FLOAT");
+    direita->cast = strdup("int2float");
+  } else if(strcmp(esquerda->tipo, "ELEM") == 0 && strcmp(direita->tipo, "FLOAT") == 0) {
+    direita->tipo = strdup("ELEM");
+    direita->cast = strdup("float2elem");
+  } else if(strcmp(esquerda->tipo, "FLOAT") == 0 && strcmp(direita->tipo, "ELEM") == 0) {
+    esquerda->tipo = strdup("ELEM");
+    esquerda->cast = strdup("float2elem");
+  } else if(strcmp(esquerda->tipo, "ELEM") == 0 && strcmp(direita->tipo, "INT") == 0) {
+    direita->tipo = strdup("ELEM");
+    direita->cast = strdup("int2elem");
+  } else if(strcmp(esquerda->tipo, "INT") == 0 && strcmp(direita->tipo, "ELEM") == 0) {
+    esquerda->tipo = strdup("ELEM");
+    esquerda->cast = strdup("int2elem");
+  } else if(strcmp(esquerda->tipo, "SET") == 0 && strcmp(direita->tipo, "ELEM") == 0) {
+    esquerda->tipo = strdup("ELEM");
+    esquerda->cast = strdup("set2elem");
+  } else if(strcmp(esquerda->tipo, "ELEM") == 0 && strcmp(direita->tipo, "SET") == 0) {
+    direita->tipo = strdup("ELEM");
+    direita->cast = strdup("set2elem");
+  } else{
+    *erros += 1;
+    printf("%-15s %d:%-3d - %s -> %s and %s\n", "SEMANTIC ERROR", linha, coluna, "Incompatible types can't be casted", esquerda->tipo, direita->tipo);
+  }
 }
 
 void freeArvore(NodoArvore *nodo) {
@@ -32,6 +66,12 @@ void freeArvore(NodoArvore *nodo) {
   }
   if(nodo->filho != NULL) {
     freeArvore(nodo->filho);
+  }
+  if(nodo->tipo !=NULL){
+    free(nodo->tipo);
+  }
+  if(nodo->cast !=NULL){
+    free(nodo->cast);
   }
   free(nodo);
 
@@ -67,6 +107,14 @@ void printArvore(NodoArvore *nodo, int profundidade) {
     else {
       printf("ERRO");
     }
+  }
+
+  if(nodo->tipo != NULL) {
+    printf("——— -> %s ", nodo->tipo);
+  }
+
+  if(nodo->cast != NULL) {
+    printf("[ CAST -> %s ]", nodo->cast);
   }
 
   if(profundidade >= 1) {
