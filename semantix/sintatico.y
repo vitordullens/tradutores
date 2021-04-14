@@ -578,6 +578,9 @@ or_exp:
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
     $1->proximo = $3;
+
+    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    if($1->tipo) $$->tipo = strdup($1->tipo);
   }
   | and_exp {
     $$ = $1;
@@ -593,6 +596,9 @@ and_exp:
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
     $1->proximo = $3;
+
+    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    if($1->tipo) $$->tipo = strdup($1->tipo);
   }
   | relational_exp {
     $$ = $1;
@@ -605,6 +611,9 @@ relational_exp:
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
     $1->proximo = $3;
+
+    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    if($1->tipo) $$->tipo = strdup($1->tipo);
   }
   | sum_exp {
     $$ = $1;
@@ -619,7 +628,7 @@ sum_exp:
     $1->proximo = $3;
 
     fazCast($1, $3, &erros, $2.linha, $2.coluna);
-    $$->tipo = strdup($1->tipo);
+    if($1->tipo) $$->tipo = strdup($1->tipo);
 
   }
   | mul_exp {
@@ -633,6 +642,9 @@ mul_exp:
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 3);
     $$->filho = $1;
     $1->proximo = $3;
+
+    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    if($1->tipo) $$->tipo = strdup($1->tipo);
   }
   | unary_exp {
     $$ = $1;
@@ -840,7 +852,6 @@ primal_exp:
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
     }
-
     strcpy($$->val, "primal_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
 

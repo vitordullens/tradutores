@@ -23,8 +23,9 @@ Simbolo* criarSimboloArvore(int linha, int coluna, char* corpo, int isIdOrConst)
 }
 
 void fazCast(NodoArvore* esquerda, NodoArvore* direita, int* erros, int linha, int coluna) {
-  if(strcmp(esquerda->tipo, direita->tipo) == 0){
-  } else if(strcmp(esquerda->tipo, "INT") == 0 && strcmp(direita->tipo, "FLOAT") == 0) {
+  if(!esquerda->tipo || !direita->tipo || strcmp(esquerda->tipo, direita->tipo) == 0) return;
+  
+  if(strcmp(esquerda->tipo, "INT") == 0 && strcmp(direita->tipo, "FLOAT") == 0) {
     esquerda->tipo = strdup("FLOAT");
     esquerda->cast = strdup("int2float");
   } else if (strcmp(esquerda->tipo, "FLOAT") == 0 && strcmp(direita->tipo, "INT") == 0) {
