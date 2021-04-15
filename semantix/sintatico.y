@@ -385,7 +385,7 @@ if_else_stmt:
 return_stmt:
   RETURN exp ';' {
     $$ = retornaNodo();
-    int check = checkTipoRetorno($3.corpo, indiceTabela);
+    int check = checkTipoRetorno(indiceTabela);
     if(!(~check)) {
 
     } else {

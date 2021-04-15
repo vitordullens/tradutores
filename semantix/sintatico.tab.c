@@ -2542,7 +2542,7 @@ yyreduce:
     int check = checkDuplicado((yyvsp[-1].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, "Redeclaration of variable", (yyvsp[-1].lexema).corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     Simbolo s = criarSimbolo((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo);
@@ -2569,7 +2569,7 @@ yyreduce:
     int check = checkDuplicado((yyvsp[-1].lexema).corpo, 0, indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, "Redeclaration of function", (yyvsp[-1].lexema).corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     escopo++; 
@@ -2613,7 +2613,7 @@ yyreduce:
     int check = checkDuplicado((yyvsp[-1].lexema).corpo, 0, indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, "Redeclaration of function", (yyvsp[-1].lexema).corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     escopo++; 
@@ -2652,7 +2652,7 @@ yyreduce:
     int check = checkDuplicado((yyvsp[-2].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, "Redeclaration of variable", (yyvsp[-2].lexema).corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     Simbolo s = criarSimbolo((yyvsp[-2].lexema).linha, (yyvsp[-2].lexema).coluna, (yyvsp[-2].lexema).corpo);
@@ -2687,7 +2687,7 @@ yyreduce:
     int check = checkDuplicado((yyvsp[0].lexema).corpo, listaEscopo[indiceEscopo], indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", (yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, "Redeclaration of variable", (yyvsp[0].lexema).corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     Simbolo s = criarSimbolo((yyvsp[0].lexema).linha, (yyvsp[0].lexema).coluna, (yyvsp[0].lexema).corpo);
@@ -2915,7 +2915,7 @@ yyreduce:
 #line 386 "sintatico.y"
                  {
     (yyval.nodo) = retornaNodo();
-    int check = checkTipoRetorno((yyvsp[0].lexema).corpo, indiceTabela);
+    int check = checkTipoRetorno(indiceTabela);
     if(!(~check)) {
 
     } else {
@@ -3938,7 +3938,7 @@ int main(int argc, char * argv[]) {
     int check = checkMain(indiceTabela);
     if(!check){
       printf("%-15s - %s \n", "SEMANTIC ERROR", "The program doens't have a 'main' function");
-      erros++;
+      errosSemanticos++;
     }
 
     if (erros == 0) {

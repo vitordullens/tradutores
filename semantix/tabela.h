@@ -27,6 +27,6 @@ int checkDuplicado(char*, int, int);
 int checkMain(int);
 int retornaIndiceFuncao(char*, int, int, int[], int);
 int checkQuantidadeParametros(char*, int, int, int, int, int[], int, int);
-int checkTipoRetorno(char*, int);
+int checkTipoRetorno(int);
 
 #endif

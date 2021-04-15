@@ -23,9 +23,9 @@ int checkMain(int size){
   return 0;
 }
 
-int checkTipoRetorno(char* corpo, int size) {
+int checkTipoRetorno(int size) {
   for(int i=size; i>=0; i--) {
-    if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == 0 && tabelaSimbolos[i].ehFuncao == 0) {
+    if(tabelaSimbolos[i].escopo == 0 && tabelaSimbolos[i].ehFuncao == 1) {
       return i;
     }
   }
