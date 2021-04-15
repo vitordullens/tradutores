@@ -21,5 +21,6 @@ struct NodoArvore {
 NodoArvore* retornaNodo();
 Simbolo *criarSimboloArvore(int, int, char*, int);
 void fazCast(NodoArvore*, NodoArvore*, int*, int, int);
+void forcaCast(char*, NodoArvore*, int*, int, int);
 
 #endif

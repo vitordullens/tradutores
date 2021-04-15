@@ -382,11 +382,7 @@ if_else_stmt:
   }
 
 return_stmt:
-  RETURN ';' {
-    $$ = retornaNodo();
-    strcpy($$->val, "return_stmt");
-  }
-  | RETURN exp ';' {
+  RETURN exp ';' {
     $$ = retornaNodo();
     strcpy($$->val, "return_stmt");
     $$->filho = $2;
@@ -446,22 +442,7 @@ assignment:
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
-    }
-
-    strcpy($$->val, "assignment");
-    $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
-    $$->filho = $3;
-  }
-  | ID '=' assignment {
-    $$ = retornaNodo();
-    
-    int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!(~check)){
-      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
-      erros++;
-    }
-    else{
-      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      forcaCast($$->tipo, $3, &erros, $2.linha, $2.coluna);
     }
 
     strcpy($$->val, "assignment");
@@ -848,6 +829,7 @@ primal_exp:
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
       erros++;
+
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
