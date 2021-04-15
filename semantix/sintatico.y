@@ -492,7 +492,7 @@ set_aux_exp:
       errosSemanticos++;
     }
     else{
-      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      $$->tipo = strdup("INT");
     }
 
     strcpy($$->val, "set_aux_exp");
@@ -508,7 +508,7 @@ set_aux_exp:
       errosSemanticos++;
     }
     else{
-      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      $$->tipo = strdup("INT");
     }
 
     strcpy($$->val, "set_aux_exp");
@@ -526,7 +526,11 @@ set_in_exp:
       errosSemanticos++;
     }
     else{
-      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      if(!checkSet(tabelaSimbolos[check].tipo)) {
+        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "in only supports the type SET");
+        errosSemanticos++;
+      }
+      $$->tipo = strdup("INT");
     }
 
     strcpy($$->val, "set_in_exp");
@@ -554,7 +558,11 @@ set_in_exp:
       errosSemanticos++;
     }
     else{
-      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      if(!checkSet(tabelaSimbolos[check].tipo)) {
+        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "in only supports the type SET");
+        errosSemanticos++;
+      }
+      $$->tipo = strdup("INT");
     }
 
     strcpy($$->val, "set_in_exp");
@@ -797,7 +805,11 @@ unary_exp:
       errosSemanticos++;
     }
     else{
-      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      if(!checkSet(tabelaSimbolos[check].tipo)) {
+        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "is_set only supports the type SET");
+        errosSemanticos++;
+      }
+      $$->tipo = strdup("INT");
     }
 
     strcpy($$->val, "unary_exp");
@@ -817,7 +829,11 @@ unary_exp:
       errosSemanticos++;
     }
     else{
-      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      if(!checkSet(tabelaSimbolos[check].tipo)) {
+        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $4.linha, $4.coluna, "is_set only supports the type SET");
+        errosSemanticos++;
+      }
+      $$->tipo = strdup("INT");
     }
 
     strcpy($$->val, "unary_exp");

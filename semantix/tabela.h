@@ -28,5 +28,6 @@ int checkMain(int);
 int retornaIndiceFuncao(char*, int, int, int[], int);
 int checkQuantidadeParametros(char*, int, int, int, int, int[], int, int);
 int checkTipoRetorno(int);
+int checkSet(char *);
 
 #endif

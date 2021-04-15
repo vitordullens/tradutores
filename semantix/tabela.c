@@ -46,8 +46,13 @@ int checkQuantidadeParametros(char* corpo, int linha, int coluna, int escopo, in
   int idx = retornaIndiceFuncao(corpo, escopo, size, listaEscopo, indiceEscopo);
   if(idx == -1) return 1;
   if(tabelaSimbolos[idx].quantidadeParams == quantidadeParams) return 1;
-  if(tabelaSimbolos[idx].quantidadeParams > quantidadeParams) printf("%-15s %d:%-3d - %s '%s' - expected: %d , received: %d\n", "SEMANTIC ERROR", linha, coluna, "Fewer number of arguments in ", corpo, tabelaSimbolos[idx].quantidadeParams, quantidadeParams);
-  if(tabelaSimbolos[idx].quantidadeParams < quantidadeParams) printf("%-15s %d:%-3d - %s '%s' - expected: %d , received: %d\n", "SEMANTIC ERROR", linha, coluna, "Greater number of arguments in ", corpo, tabelaSimbolos[idx].quantidadeParams, quantidadeParams);
+  if(tabelaSimbolos[idx].quantidadeParams > quantidadeParams) printf("%-15s %d:%-3d - %s '%s' - expected: %d , received: %d\n", "SEMANTIC ERROR", linha, coluna, "Fewer number of arguments in function ", corpo, tabelaSimbolos[idx].quantidadeParams, quantidadeParams);
+  if(tabelaSimbolos[idx].quantidadeParams < quantidadeParams) printf("%-15s %d:%-3d - %s '%s' - expected: %d , received: %d\n", "SEMANTIC ERROR", linha, coluna, "Greater number of arguments in function ", corpo, tabelaSimbolos[idx].quantidadeParams, quantidadeParams);
+  return 0;
+}
+
+int checkSet(char * tipo){
+  if(strcmp(tipo, "SET") == 0) return 1;
   return 0;
 }
 
