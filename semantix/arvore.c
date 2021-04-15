@@ -23,7 +23,7 @@ Simbolo* criarSimboloArvore(int linha, int coluna, char* corpo, int isIdOrConst)
 }
 
 void forcaCast(char* tipoToken, NodoArvore* direita, int* erros, int linha, int coluna) {
-  if(!tipoToken || !direita->tipo || strcmp(tipoToken, direita->tipo) == 0) return;
+  if(!tipoToken || !direita->tipo || strcmp(tipoToken, direita->tipo) == 0 || !direita) return;
   if(strcmp(tipoToken, "INT") == 0 && strcmp(direita->tipo, "FLOAT") == 0) {
     free(direita->tipo);
     direita->tipo = strdup("INT");
@@ -71,7 +71,7 @@ void forcaCast(char* tipoToken, NodoArvore* direita, int* erros, int linha, int 
 }
 
 void fazCast(NodoArvore* esquerda, NodoArvore* direita, int* erros, int linha, int coluna) {
-  if(!esquerda->tipo || !direita->tipo || strcmp(esquerda->tipo, direita->tipo) == 0) return;
+  if(!esquerda->tipo || !direita->tipo || strcmp(esquerda->tipo, direita->tipo) == 0 || !direita || !esquerda) return;
   
   if(strcmp(esquerda->tipo, "INT") == 0 && strcmp(direita->tipo, "FLOAT") == 0) {
     free(esquerda->tipo);

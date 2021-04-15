@@ -34,6 +34,7 @@
   NodoArvore* raiz;
 
   int erros = 0;
+  int errosSemanticos = 0;
 %}
 
 %union {
@@ -131,7 +132,7 @@ var_declaration:
     int check = checkDuplicado($2.corpo, listaEscopo[indiceEscopo], indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Redeclaration of variable", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
@@ -155,7 +156,7 @@ function_declaration:
     int check = checkDuplicado($2.corpo, 0, indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Redeclaration of function", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     escopo++; 
@@ -188,7 +189,7 @@ function_declaration:
     int check = checkDuplicado($2.corpo, 0, indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Redeclaration of function", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     escopo++; 
@@ -218,7 +219,7 @@ params_list:
     int check = checkDuplicado($2.corpo, listaEscopo[indiceEscopo], indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Redeclaration of variable", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
@@ -248,7 +249,7 @@ params_list:
     int check = checkDuplicado($2.corpo, listaEscopo[indiceEscopo], indiceTabela);
     if(check){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Redeclaration of variable", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
 
     Simbolo s = criarSimbolo($2.linha, $2.coluna, $2.corpo);
@@ -336,7 +337,7 @@ io_stmt:
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -384,6 +385,15 @@ if_else_stmt:
 return_stmt:
   RETURN exp ';' {
     $$ = retornaNodo();
+    int check = checkTipoRetorno($3.corpo, indiceTabela);
+    if(!(~check)) {
+
+    } else {
+      $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      forcaCast($$->tipo, $2, &errosSemanticos, $1.linha, $1.coluna);
+    }
+
+
     strcpy($$->val, "return_stmt");
     $$->filho = $2;
   }
@@ -395,7 +405,7 @@ set_stmt:
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -412,7 +422,7 @@ set_stmt:
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -438,11 +448,11 @@ assignment:
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
-      forcaCast($$->tipo, $3, &erros, $2.linha, $2.coluna);
+      forcaCast($$->tipo, $3, &errosSemanticos, $2.linha, $2.coluna);
     }
 
     strcpy($$->val, "assignment");
@@ -479,7 +489,7 @@ set_aux_exp:
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -495,7 +505,7 @@ set_aux_exp:
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -513,7 +523,7 @@ set_in_exp:
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -541,7 +551,7 @@ set_in_exp:
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -560,7 +570,7 @@ or_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
     if($1->tipo) $$->tipo = strdup($1->tipo);
   }
   | and_exp {
@@ -578,7 +588,7 @@ and_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
     if($1->tipo) $$->tipo = strdup($1->tipo);
   }
   | relational_exp {
@@ -593,7 +603,7 @@ relational_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
     if($1->tipo) $$->tipo = strdup($1->tipo);
   }
   | sum_exp {
@@ -608,7 +618,7 @@ sum_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
     if($1->tipo) $$->tipo = strdup($1->tipo);
 
   }
@@ -624,7 +634,7 @@ mul_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &erros, $2.linha, $2.coluna);
+    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
     if($1->tipo) $$->tipo = strdup($1->tipo);
   }
   | unary_exp {
@@ -649,7 +659,7 @@ unary_exp:
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -657,7 +667,7 @@ unary_exp:
     indiceArg = 0;
     check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
     if(!check){
-      erros++;
+      errosSemanticos++;
     }
 
     strcpy($$->val, "unary_exp");
@@ -672,7 +682,7 @@ unary_exp:
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -680,7 +690,7 @@ unary_exp:
     
     check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
     if(!check){
-      erros++;
+      errosSemanticos++;
     }
     indiceArg = 0;
 
@@ -696,7 +706,7 @@ unary_exp:
       int check = checkDeclarado($1.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
       if(!(~check)){
         printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
-        erros++;
+        errosSemanticos++;
       }
       else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -704,7 +714,7 @@ unary_exp:
 
       check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
       if(!check){
-        erros++;
+        errosSemanticos++;
       }
       indiceArg = 0;
 
@@ -718,7 +728,7 @@ unary_exp:
     int check = checkDeclarado($1.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared function", $1.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -727,7 +737,7 @@ unary_exp:
     indiceArg = 0;
     check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
     if(!check){
-      erros++;
+      errosSemanticos++;
     }
 
     strcpy($$->val, "unary_exp");
@@ -741,7 +751,7 @@ unary_exp:
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -749,7 +759,7 @@ unary_exp:
     
     check = checkQuantidadeParametros($1.corpo, $1.linha, $1.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
     if(!check){
-      erros++;
+      errosSemanticos++;
     }
     indiceArg = 0;
 
@@ -763,7 +773,7 @@ unary_exp:
     int check = checkDeclarado($2.corpo, 0, indiceTabela, 1, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "Undeclared function", $2.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -772,7 +782,7 @@ unary_exp:
     indiceArg = 0;
     check = checkQuantidadeParametros($2.corpo, $2.linha, $2.coluna, 0, indiceTabela, listaEscopo, indiceEscopo, indiceArg);
     if(!check){
-      erros++;
+      errosSemanticos++;
     }
 
     strcpy($$->val, "unary_exp");
@@ -784,7 +794,7 @@ unary_exp:
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -804,7 +814,7 @@ unary_exp:
     int check = checkDeclarado($4.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $4.linha, $4.coluna, "Undeclared variable", $4.corpo);
-      erros++;
+      errosSemanticos++;
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
@@ -828,7 +838,7 @@ primal_exp:
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
     if(!(~check)){
       printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
-      erros++;
+      errosSemanticos++;
 
     }
     else{
@@ -937,7 +947,7 @@ int main(int argc, char * argv[]) {
     int check = checkMain(indiceTabela);
     if(!check){
       printf("%-15s - %s \n", "SEMANTIC ERROR", "The program doens't have a 'main' function");
-      erros++;
+      errosSemanticos++;
     }
 
     if (erros == 0) {
@@ -946,6 +956,8 @@ int main(int argc, char * argv[]) {
     }
 
     printTabela(indiceTabela);
+
+    erros = erros + errosSemanticos;
 
     if (erros >= 1) {
       if(erros == 1) {

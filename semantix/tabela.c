@@ -23,6 +23,15 @@ int checkMain(int size){
   return 0;
 }
 
+int checkTipoRetorno(char* corpo, int size) {
+  for(int i=size; i>=0; i--) {
+    if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == 0 && tabelaSimbolos[i].ehFuncao == 0) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 int checkDuplicado(char* corpo, int escopo, int size) {
   for(int i=0; i<=size; i++){
     if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == escopo){
