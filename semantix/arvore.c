@@ -161,6 +161,7 @@ void printArvore(NodoArvore *nodo, int profundidade) {
     else if(nodo->simbolo->isIdOrConst == 3) {
       printf("——— [ operador -> %s ]", nodo->simbolo->corpo);
     }
+    else if(nodo->simbolo->isIdOrConst == 4) {}
     else {
       printf("ERRO");
     }

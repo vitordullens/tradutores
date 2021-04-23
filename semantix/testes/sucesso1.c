@@ -8,7 +8,9 @@ int main() {
 
     float a;
 
-    if ((remove(1 in add(1 in s))) == EMPTY) {
+    if(a) {}
+
+    if (remove(1 in add(1 in s)) == EMPTY) {
         return 0;
     }
 

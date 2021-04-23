@@ -288,6 +288,11 @@ brackets_stmt:
     indiceEscopo--;
     $$ = $3;
   }
+  | '{' '}' {
+    $$ = retornaNodo();
+    strcpy($$->val, "empty_brackets");
+    $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, "empty", 4);
+  }
   | error {}
 
 stmts:
@@ -399,24 +404,7 @@ return_stmt:
   }
 
 set_stmt:
-  FORALL '(' ID INFIX_OP set_exp ')' stmt {
-    $$ = retornaNodo();
-    
-    int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!(~check)){
-      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      errosSemanticos++;
-    }
-    else{
-      $$->tipo = strdup(tabelaSimbolos[check].tipo);
-    }
-
-    strcpy($$->val, "forall_stmt");
-    $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
-    $$->proximo = $5;
-    $5->filho = $7;
-  }
-  | FORALL '(' ID INFIX_OP or_exp ')' stmt {
+  FORALL '(' ID INFIX_OP or_exp ')' stmt {
     $$ = retornaNodo();
     
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
@@ -464,9 +452,6 @@ exp:
   or_exp {
     $$ = $1;
   }
-  | set_exp {
-    $$ = $1;
-  }
 
 set_exp:
   SET_OP1 '(' set_in_exp ')' {
@@ -484,22 +469,6 @@ set_exp:
 
 set_aux_exp:
   ID INFIX_OP or_exp {
-    $$ = retornaNodo();
-    
-    int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!(~check)){
-      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $1.linha, $1.coluna, "Undeclared variable", $1.corpo);
-      errosSemanticos++;
-    }
-    else{
-      $$->tipo = strdup("INT");
-    }
-
-    strcpy($$->val, "set_aux_exp");
-    $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);
-    $$->proximo = $3;
-  }
-  | ID INFIX_OP set_exp {
     $$ = retornaNodo();
     
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
@@ -542,32 +511,6 @@ set_in_exp:
     strcpy($$->val, "set_in_exp");
     $$->filho = $1;
     $1->proximo = $3;
-  }
-  | set_exp INFIX_OP set_exp {
-    $$ = retornaNodo();
-    strcpy($$->val, "set_in_exp");
-    $$->filho = $1;
-    $1->proximo = $3;
-  }
-  | set_exp INFIX_OP ID {
-    $$ = retornaNodo();
-    
-    int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!(~check)){
-      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      errosSemanticos++;
-    }
-    else{
-      if(!checkSet(tabelaSimbolos[check].tipo)) {
-        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "in only supports the type SET");
-        errosSemanticos++;
-      }
-      $$->tipo = strdup("INT");
-    }
-
-    strcpy($$->val, "set_in_exp");
-    $$->filho = $1;
-    $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
   }
 
 or_exp:
@@ -869,6 +812,9 @@ primal_exp:
   }
   | '(' exp ')' {
     $$ = $2;
+  }
+  | set_exp {
+    $$ = $1;
   }
 
 arg_list:
