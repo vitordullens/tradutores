@@ -406,7 +406,7 @@ return_stmt:
   }
 
 set_stmt:
-  FORALL '(' ID INFIX_OP or_exp ')' stmt {
+  FORALL '(' ID INFIX_OP set_exp ')' stmt {
     $$ = retornaNodo();
     
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
@@ -461,16 +461,19 @@ set_exp:
     strcpy($$->val, "set_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
     $$->filho = $3;
+    $$->tipo = strdup("SET");
   }
   | SET_OP2 '(' set_aux_exp ')' {
     $$ = retornaNodo();
     strcpy($$->val, "set_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
     $$->filho = $3;
+    $$->tipo = strdup("INT");
+
   }
 
 set_aux_exp:
-  ID INFIX_OP or_exp {
+  ID INFIX_OP set_exp {
     $$ = retornaNodo();
     
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
@@ -498,7 +501,7 @@ set_in_exp:
     }
     else{
       if(!checkSet(tabelaSimbolos[check].tipo)) {
-        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "in only supports the type SET");
+        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "'in' right operator only supports the type SET");
         errosSemanticos++;
       }
       $$->tipo = strdup("INT");
@@ -510,6 +513,13 @@ set_in_exp:
   }
   | or_exp INFIX_OP set_exp {
     $$ = retornaNodo();
+
+    if(!checkSet($3->tipo)) {
+        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "'in' right operator only supports the type SET");
+        errosSemanticos++;
+    }
+    $$->tipo = strdup("INT");
+
     strcpy($$->val, "set_in_exp");
     $$->filho = $1;
     $1->proximo = $3;
@@ -571,8 +581,14 @@ sum_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
-    if($1->tipo) $$->tipo = strdup($1->tipo);
+    if(checkSet($1->tipo) || checkSet($3->tipo)) {
+        printf("%-15s %d:%-3d - '%s' %s\n", "SEMANTIC ERROR", $2.linha, $2.coluna, $2.corpo, "operator do not supports the type SET");
+        errosSemanticos++;
+    }
+    else{
+      fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
+      if($1->tipo) $$->tipo = strdup($1->tipo);
+    }
 
   }
   | mul_exp {
@@ -587,8 +603,15 @@ mul_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
-    if($1->tipo) $$->tipo = strdup($1->tipo);
+    if(checkSet($1->tipo) || checkSet($3->tipo)) {
+        printf("%-15s %d:%-3d - '%s' %s\n", "SEMANTIC ERROR", $2.linha, $2.coluna, $2.corpo, "operator do not supports the type SET");
+        errosSemanticos++;
+    } 
+    else {
+      fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
+      if($1->tipo) $$->tipo = strdup($1->tipo);
+    }
+
   }
   | unary_exp {
     $$ = $1;
@@ -769,6 +792,7 @@ unary_exp:
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->filho = $3;
+    $$->tipo = strdup("INT");
   }
   | '!' ISSET '(' ID ')'  {
     $$ = retornaNodo();
@@ -789,6 +813,7 @@ unary_exp:
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->filho = $4;
+    $$->tipo = strdup("INT");
   }
 
 
