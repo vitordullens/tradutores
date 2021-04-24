@@ -51,8 +51,19 @@ int checkQuantidadeParametros(char* corpo, int linha, int coluna, int escopo, in
   return 0;
 }
 
+char* checkTipoParametros(Simbolo func, char* tipoArg, int size, int listaEscopo[], int indiceEscopo, int indiceArg){
+  int idx = retornaIndiceFuncao(func.corpo, 0, size, listaEscopo, indiceEscopo);
+  if(idx == -1) return "Erro";
+  return tabelaSimbolos[idx].tipoParams[indiceArg];
+}
+
 int checkSet(char * tipo){
   if(strcmp(tipo, "SET") == 0) return 1;
+  return 0;
+}
+
+int checkErro(char* str) {
+  if(strcmp(str, "Erro") == 0) return 1;
   return 0;
 }
 

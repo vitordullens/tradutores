@@ -31,6 +31,8 @@
   int indiceParam;
   int indiceArg;
 
+  Simbolo prevFuncao;
+
   NodoArvore* raiz;
 
   int erros = 0;
@@ -626,6 +628,9 @@ unary_exp:
   }
   | ARITMETIC_OP1 ID '(' {
     indiceArg = 0;
+    strcpy(prevFuncao.corpo, $2.corpo); 
+    prevFuncao.linha = $2.linha;
+    prevFuncao.coluna = $2.coluna;
 
   } arg_list ')' {
     $$ = retornaNodo();
@@ -651,6 +656,9 @@ unary_exp:
   }
   | ID '(' {
       indiceArg = 0;
+      strcpy(prevFuncao.corpo, $1.corpo); 
+      prevFuncao.linha = $1.linha;
+      prevFuncao.coluna = $1.coluna;
 
     } arg_list ')' {
       $$ = retornaNodo();
@@ -696,6 +704,9 @@ unary_exp:
   }
   | '!' ID '(' {
     indiceArg = 0;
+    strcpy(prevFuncao.corpo, $2.corpo); 
+    prevFuncao.linha = $2.linha;
+    prevFuncao.coluna = $2.coluna;
   } arg_list ')' {
     $$ = retornaNodo();
     
@@ -817,6 +828,14 @@ arg_list:
     strcpy($$->val, "arg_list");
     $$->filho = $1;
     $1->proximo = $3;
+
+    char tipoParametro[10];
+    strcpy(tipoParametro, checkTipoParametros(prevFuncao, $1->tipo,indiceTabela, listaEscopo, indiceEscopo, indiceArg-1));
+
+    if(!checkErro(tipoParametro)) {
+      forcaCast(tipoParametro, $1, &errosSemanticos, prevFuncao.linha, prevFuncao.coluna);
+    }
+
   }
   | exp {
     indiceArg++;
@@ -824,6 +843,15 @@ arg_list:
     $$ = retornaNodo();
     strcpy($$->val, "arg_list");
     $$->filho = $1;
+
+    char tipoParametro[10];
+    strcpy(tipoParametro, checkTipoParametros(prevFuncao, $1->tipo,indiceTabela, listaEscopo, indiceEscopo, indiceArg-1));
+
+    if(!checkErro(tipoParametro)) {
+      forcaCast(tipoParametro, $1, &errosSemanticos, prevFuncao.linha, prevFuncao.coluna);
+    }
+
+    
   }
 
 type:

@@ -66,7 +66,7 @@ void forcaCast(char* tipoToken, NodoArvore* direita, int* erros, int linha, int 
   }
   else {
     *erros += 1;
-    printf("%-15s %d:%-3d - %s -> %s and %s\n", "SEMANTIC ERROR", linha, coluna, "Incompatible types can't be casted", tipoToken, direita->tipo);
+    printf("%-15s %d:%-3d - %s -> %s to %s\n", "SEMANTIC ERROR", linha, coluna, "Incompatible types can't be casted", direita->tipo, tipoToken);
   }
 }
 

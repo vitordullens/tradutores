@@ -29,5 +29,6 @@ int retornaIndiceFuncao(char*, int, int, int[], int);
 int checkQuantidadeParametros(char*, int, int, int, int, int[], int, int);
 int checkTipoRetorno(int);
 int checkSet(char *);
-
+char* checkTipoParametros(Simbolo, char*, int, int[], int, int);
+int checkErro(char*); 
 #endif
