@@ -406,7 +406,7 @@ return_stmt:
   }
 
 set_stmt:
-  FORALL '(' ID INFIX_OP set_exp ')' stmt {
+  FORALL '(' ID INFIX_OP or_exp ')' stmt {
     $$ = retornaNodo();
     
     int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
