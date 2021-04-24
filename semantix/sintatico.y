@@ -473,7 +473,7 @@ set_exp:
   }
 
 set_aux_exp:
-  ID INFIX_OP set_exp {
+  ID INFIX_OP or_exp {
     $$ = retornaNodo();
     
     int check = checkDeclarado($1.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
