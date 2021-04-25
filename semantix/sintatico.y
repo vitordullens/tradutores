@@ -491,32 +491,12 @@ set_aux_exp:
   }
 
 set_in_exp:
-  or_exp INFIX_OP ID {
+  or_exp INFIX_OP unary_exp {
     $$ = retornaNodo();
     
-    int check = checkDeclarado($3.corpo, listaEscopo[indiceEscopo], indiceTabela, 0, listaEscopo, indiceEscopo);
-    if(!(~check)){
-      printf("%-15s %d:%-3d - %s '%s'\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "Undeclared variable", $3.corpo);
-      errosSemanticos++;
-    }
-    else{
-      if(!checkSet(tabelaSimbolos[check].tipo)) {
-        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $3.linha, $3.coluna, "'in' right operator only supports the type SET");
-        errosSemanticos++;
-      }
-      $$->tipo = strdup("INT");
-    }
-
-    strcpy($$->val, "set_in_exp");
-    $$->filho = $1;
-    $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 2);
-  }
-  | or_exp INFIX_OP set_exp {
-    $$ = retornaNodo();
-
     if(!checkSet($3->tipo)) {
-        printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "'in' right operator only supports the type SET");
-        errosSemanticos++;
+      printf("%-15s %d:%-3d - %s\n", "SEMANTIC ERROR", $2.linha, $2.coluna, "'in' right operator only supports the type SET");
+      errosSemanticos++;
     }
     $$->tipo = strdup("INT");
 

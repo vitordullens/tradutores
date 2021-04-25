@@ -1,5 +1,6 @@
-int f(int a, int x) {
-    return 1;
+set f(int a, int x) {
+    set s;
+    return s;
 }
 
 int main() {
@@ -9,8 +10,9 @@ int main() {
     float a;
 
     if(a) {}
+    if(1 in f(x, a)){}
 
-    if (remove(1 in add(1 in s)) == EMPTY) {
+    if (remove(1 in add(1 in s))) {
         return 0;
     }
 
