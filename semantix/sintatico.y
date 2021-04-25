@@ -564,8 +564,14 @@ relational_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
-    if($1->tipo) $$->tipo = strdup("INT");
+    if(checkSet($1->tipo) || checkSet($3->tipo)) {
+        printf("%-15s %d:%-3d - '%s' %s\n", "SEMANTIC ERROR", $2.linha, $2.coluna, $2.corpo, "operator do not supports the type SET");
+        errosSemanticos++;
+    }
+    else{
+      fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
+      if($1->tipo) $$->tipo = strdup("INT");
+    }
   }
   | sum_exp {
     $$ = $1;
