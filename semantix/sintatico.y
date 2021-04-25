@@ -468,7 +468,7 @@ set_exp:
     strcpy($$->val, "set_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
     $$->filho = $3;
-    $$->tipo = strdup("INT");
+    $$->tipo = strdup("ELEM");
 
   }
 
@@ -534,7 +534,7 @@ or_exp:
     $1->proximo = $3;
 
     fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
-    if($1->tipo) $$->tipo = strdup($1->tipo);
+    if($1->tipo) $$->tipo = strdup("INT");
   }
   | and_exp {
     $$ = $1;
@@ -552,7 +552,7 @@ and_exp:
     $1->proximo = $3;
 
     fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
-    if($1->tipo) $$->tipo = strdup($1->tipo);
+    if($1->tipo) $$->tipo = strdup("INT");
   }
   | relational_exp {
     $$ = $1;
@@ -567,7 +567,7 @@ relational_exp:
     $1->proximo = $3;
 
     fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
-    if($1->tipo) $$->tipo = strdup($1->tipo);
+    if($1->tipo) $$->tipo = strdup("INT");
   }
   | sum_exp {
     $$ = $1;
