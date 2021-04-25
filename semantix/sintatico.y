@@ -533,7 +533,6 @@ or_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
     if($1->tipo) $$->tipo = strdup("INT");
   }
   | and_exp {
@@ -551,7 +550,6 @@ and_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
     if($1->tipo) $$->tipo = strdup("INT");
   }
   | relational_exp {
