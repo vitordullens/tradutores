@@ -1,6 +1,12 @@
 set f(int a, int x) {
     set s;
     return s;
+
+    forall(a in s) {
+        int b;
+        a = b + 1;
+        x = 1.1;
+    }
 }
 
 int main() {

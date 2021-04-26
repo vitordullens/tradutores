@@ -14,13 +14,16 @@ int main() {
   add(1 in s);
 
   remove(1 in s);
-  remove((exists (el in s)) in s);
+  remove(exists (el in s) in s);
 
-  if(s == s) {
+  if(a == a) {
     for(a = 1; a < 1.2; a = a + b) {
       a = b;
+      y(a, a);
     }
   }
+
+  if(x()) {}
   el = 1;
   return el;
 }
