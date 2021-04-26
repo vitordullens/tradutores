@@ -117,24 +117,13 @@ void fazCast(NodoArvore* esquerda, NodoArvore* direita, int* erros, int linha, i
 }
 
 void freeArvore(NodoArvore *nodo) {
-  if(nodo == NULL) {
-    return;
-  }
-  if(nodo->simbolo != NULL) {
-    free(nodo->simbolo);
-  }
-  if(nodo->tipo !=NULL){
-    free(nodo->tipo);
-  }
-  if(nodo->cast !=NULL){
-    free(nodo->cast);
-  }
-  if(nodo->proximo != NULL){
-    freeArvore(nodo->proximo);
-  }
-  if(nodo->filho != NULL) {
-    freeArvore(nodo->filho);
-  }
+  if(nodo == NULL) return;
+  free(nodo->simbolo);
+  free(nodo->tipo);
+
+  free(nodo->cast);
+  freeArvore(nodo->proximo);
+  freeArvore(nodo->filho);
   free(nodo);
 
 }

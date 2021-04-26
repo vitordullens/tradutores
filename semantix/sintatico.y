@@ -622,12 +622,16 @@ unary_exp:
     $$ = $1;
   }
   | '!' primal_exp {
-    $$ = $2;
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
+    $$->filho = $2;
   }
   | ARITMETIC_OP1 primal_exp {
-    $$ = $2;
+    $$ = retornaNodo();
+    strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
+    $$->filho = $2;
   }
   | ARITMETIC_OP1 ID '(' ')' {
     $$ = retornaNodo();
