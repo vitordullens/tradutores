@@ -33,6 +33,7 @@ int checkTipoRetorno(int size) {
 }
 
 int checkDuplicado(char* corpo, int escopo, int size) {
+  if(!corpo) return 0;
   for(int i=0; i<=size; i++){
     if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == escopo){
       return 1;
@@ -58,16 +59,19 @@ char* checkTipoParametros(Simbolo func, char* tipoArg, int size, int listaEscopo
 }
 
 int checkSet(char * tipo){
+  if(!tipo) return 0;
   if(strcmp(tipo, "SET") == 0) return 1;
   return 0;
 }
 
 int checkErro(char* str) {
+  if(!str) return 0;
   if(strcmp(str, "Erro") == 0) return 1;
   return 0;
 }
 
 int retornaIndiceFuncao(char* corpo, int escopo, int size, int listaEscopo[], int indiceEscopo){
+  if(!corpo) return -1;
   for(int i=0; i<=size; i++){
       if(strcmp(tabelaSimbolos[i].corpo, corpo) == 0 && tabelaSimbolos[i].escopo == escopo && tabelaSimbolos[i].ehFuncao == 1){
         return i;

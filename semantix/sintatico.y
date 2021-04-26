@@ -19,7 +19,7 @@
   extern Simbolo tabelaSimbolos[100000];
   int indiceTabela = -1;
 
-  char tipo[100000][100];
+  char tipo[100000][8];
   int indiceTipo = 0;
 
   int listaEscopo[100];
@@ -63,8 +63,8 @@
 %type <nodo> return_stmt
 %type <nodo> set_stmt
 %type <nodo> exp_stmt
-%type <nodo> assignment
-%type <nodo> exp
+%type <nodo> assignment assignment_or_null
+%type <nodo> exp exp_or_null
 %type <nodo> set_exp
 %type <nodo> set_aux_exp
 %type <nodo> set_in_exp
@@ -365,13 +365,29 @@ io_stmt:
   }
 
 for_stmt:
-  FOR '(' assignment ';' exp ';' assignment ')' stmt {
+  FOR '(' assignment_or_null ';' exp_or_null ';' assignment_or_null ')' stmt {
     $$ = retornaNodo();
     strcpy($$->val, "for_stmt");
     $$->filho = $3;
     $3->proximo = $5;
     $5->proximo = $7;
     $7->proximo = $9;
+  }
+
+assignment_or_null:
+  assignment { $$ = $1; }
+  | %empty {
+    $$ = retornaNodo();
+    strcpy($$->val, "empty_assignment");
+    $$->simbolo = criarSimboloArvore(1, 1, "empty", 4);
+  }
+
+exp_or_null:
+  exp { $$ = $1; }
+  | %empty {
+    $$ = retornaNodo();
+    strcpy($$->val, "empty_exp");
+    $$->simbolo = criarSimboloArvore(1, 1, "empty", 4);
   }
 
 if_else_stmt:

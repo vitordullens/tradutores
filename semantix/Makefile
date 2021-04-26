@@ -1,5 +1,5 @@
 all:
-	bison -d sintatico.y
+	bison -d -g sintatico.y
 	flex lexico.l
 	gcc -g sintatico.tab.c lex.yy.c tabela.c arvore.c -Wall -ll
 
