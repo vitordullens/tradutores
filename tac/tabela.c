@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "tabela.h"
+#include <ctype.h>
 
 Simbolo tabelaSimbolos[10000];
 
@@ -100,6 +101,13 @@ int checkDeclarado(char* corpo, int escopo, int size, int ehFuncao, int listaEsc
 
   }
   return -1;
+}
+
+char* lowerCase(char* str) {
+  for(int i = 0; str[i]; i++){
+    str[i] = tolower(str[i]);
+  }
+  return str;
 }
 
 void printTabela(int size) {

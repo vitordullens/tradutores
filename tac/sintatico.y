@@ -150,15 +150,16 @@ var_declaration:
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
 
-    // if(!check) {
-    //   snprintf(tabelaTac, 110, "%s %s_%d", s.tipo, s.corpo, s.escopo);
-    // }
+    if(!check) {
+      snprintf(tabelaTac, 110, "%s %s_%d", lowerCase(s.tipo), s.corpo, s.escopo);
+    }
 
     $$ = retornaNodo();
     strcpy($$->val, "var_declaration");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
-    // $$->tac->tabela = 1;
+    $$->tac.tabela = 1;
+    $$->tac.instrucao = strdup(tabelaTac);
   }
 
 function_declaration:
@@ -971,7 +972,6 @@ int main(int argc, char * argv[]) {
 
     if (erros == 0) {
       printArvore(raiz, 0);
-      freeArvore(raiz);
     }
 
     printTabela(indiceTabela);
@@ -987,9 +987,10 @@ int main(int argc, char * argv[]) {
       }
     }
     else {
-      escreveTac();
+      escreveTac(raiz);
     }
 
+    freeArvore(raiz);
 
     fclose(yyin);
     yylex_destroy();

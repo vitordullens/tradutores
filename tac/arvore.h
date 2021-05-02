@@ -2,7 +2,13 @@
 #define ARVORE
 
 #include "tabela.h"
-#include "tac.h"
+
+typedef struct tac tac;
+
+struct tac {
+  int tabela;
+  char* instrucao;
+};
 
 typedef struct NodoArvore NodoArvore;
 
@@ -16,6 +22,7 @@ struct NodoArvore {
   int isIdorConst;
   char *tipo;
   char *cast;
+  struct tac tac;
   struct NodoArvore* proximo;
 };
 

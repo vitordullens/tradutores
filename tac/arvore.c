@@ -10,6 +10,8 @@ NodoArvore* retornaNodo() {
   nodo->simbolo = NULL;
   nodo->tipo = NULL;
   nodo->cast = NULL;
+  nodo->tac.tabela = 0;
+  nodo->tac.instrucao = NULL;
   return nodo;
 }
 

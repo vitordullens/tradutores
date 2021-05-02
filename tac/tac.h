@@ -1,13 +1,9 @@
 #ifndef TAC
 #define TAC
 
-typedef struct tac tac;
+#include "arvore.h"
 
-struct tac {
-  int tabela;
-  char* instrucao;
-};
 
-void escreveTac();
+void escreveTac(NodoArvore*);
 
 #endif

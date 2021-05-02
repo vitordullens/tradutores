@@ -4,15 +4,31 @@
 #include "tac.h"
 #include "arvore.h"
 
+FILE *fp;
+
 void escreveTabela(NodoArvore *nodo) {
    if (nodo == NULL) {
     return;
   }
+
+  if(nodo->tac.tabela == 1){
+     if(nodo->tac.instrucao) {
+        fprintf(fp, "%s\n", nodo->tac.instrucao);
+        free(nodo->tac.instrucao);
+     }
+  }
+
+  if(nodo->filho){
+    escreveTabela(nodo->filho);
+  }
+  if(nodo->proximo) {
+    escreveTabela(nodo->proximo);
+  }
 }
 
 void escreveTac(NodoArvore *nodo){
-   FILE *fp;
    fp = fopen("output_tac/output.tac", "w");
-   fprintf(fp, "This is testing for fprintf....\n");
+   fprintf(fp, ".table\n");
+   escreveTabela(nodo);
    fclose(fp);
 }

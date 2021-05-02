@@ -31,4 +31,5 @@ int checkTipoRetorno(int);
 int checkSet(char *);
 char* checkTipoParametros(Simbolo, char*, int, int[], int, int);
 int checkErro(char*); 
+char* lowerCase(char*);
 #endif
