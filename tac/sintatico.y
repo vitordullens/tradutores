@@ -39,7 +39,7 @@
   int erros = 0;
   int errosSemanticos = 0;
 
-  char tabelaTac[110];
+  char codigoTac[110];
 %}
 
 %union {
@@ -151,7 +151,7 @@ var_declaration:
     tabelaSimbolos[indiceTabela] = s;
 
     if(!check) {
-      snprintf(tabelaTac, 110, "%s %s_%d", lowerCase(s.tipo), s.corpo, s.escopo);
+      snprintf(codigoTac, 110, "%s %s_%d", lowerCase(s.tipo), s.corpo, s.escopo);
     }
 
     $$ = retornaNodo();
@@ -159,7 +159,7 @@ var_declaration:
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
     $$->tac.tabela = 1;
-    $$->tac.instrucao = strdup(tabelaTac);
+    $$->tac.instrucao = strdup(codigoTac);
   }
 
 function_declaration:

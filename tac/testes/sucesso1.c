@@ -1,6 +1,6 @@
 int x;
 int y;
-int main() {
+int main(int z, int k) {
     int x;
     x = 9;
     int y;

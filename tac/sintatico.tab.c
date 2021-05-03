@@ -104,7 +104,7 @@
   int erros = 0;
   int errosSemanticos = 0;
 
-  char tabelaTac[110];
+  char codigoTac[110];
 
 #line 110 "sintatico.tab.c"
 
@@ -2713,7 +2713,7 @@ yyreduce:
     tabelaSimbolos[indiceTabela] = s;
 
     if(!check) {
-      snprintf(tabelaTac, 110, "%s %s_%d", lowerCase(s.tipo), s.corpo, s.escopo);
+      snprintf(codigoTac, 110, "%s %s_%d", lowerCase(s.tipo), s.corpo, s.escopo);
     }
 
     (yyval.nodo) = retornaNodo();
@@ -2721,7 +2721,7 @@ yyreduce:
     (yyval.nodo)->filho = (yyvsp[-2].nodo);
     (yyval.nodo)->simbolo = criarSimboloArvore((yyvsp[-1].lexema).linha, (yyvsp[-1].lexema).coluna, (yyvsp[-1].lexema).corpo, 2);
     (yyval.nodo)->tac.tabela = 1;
-    (yyval.nodo)->tac.instrucao = strdup(tabelaTac);
+    (yyval.nodo)->tac.instrucao = strdup(codigoTac);
   }
 #line 2727 "sintatico.tab.c"
     break;

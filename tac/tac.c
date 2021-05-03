@@ -11,15 +11,15 @@ void escreveTabela(NodoArvore *nodo) {
     return;
   }
 
-  if(nodo->tac.tabela == 1){
-     if(nodo->tac.instrucao) {
-        fprintf(fp, "%s\n", nodo->tac.instrucao);
-        free(nodo->tac.instrucao);
-     }
-  }
-
   if(nodo->filho){
     escreveTabela(nodo->filho);
+  }
+
+  if(nodo->tac.tabela == 1){
+     if(nodo->tac.instrucao) {
+        fprintf(fp, "\t%s\n", nodo->tac.instrucao);
+        free(nodo->tac.instrucao);
+     }
   }
   if(nodo->proximo) {
     escreveTabela(nodo->proximo);
@@ -30,5 +30,6 @@ void escreveTac(NodoArvore *nodo){
    fp = fopen("output_tac/output.tac", "w");
    fprintf(fp, ".table\n");
    escreveTabela(nodo);
+   fprintf(fp, ".code\n");
    fclose(fp);
 }
