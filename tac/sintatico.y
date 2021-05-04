@@ -541,7 +541,7 @@ or_exp:
 
     if($1->tipo){
       $$->tipo = strdup("INT");
-      $$->tac = criarTac("or", $1->tac->arg1, $3->tac->arg2, getFreeRegTemp(), 3);
+      $$->tac = criarTac("or", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
     } 
   }
   | and_exp {
