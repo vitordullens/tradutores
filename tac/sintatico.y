@@ -39,7 +39,8 @@
   int erros = 0;
   int errosSemanticos = 0;
 
-  char codigoTac[110];
+  int stringIdx = 0;
+  char codigoTac[1100];
 %}
 
 %union {
@@ -151,7 +152,7 @@ var_declaration:
     tabelaSimbolos[indiceTabela] = s;
 
     if(!check) {
-      snprintf(codigoTac, 110, "%s %s_%d", lowerCase(s.tipo), s.corpo, s.escopo);
+      snprintf(codigoTac, 1100, "%s %s_%d", lowerCase(s.tipo), s.corpo, s.escopo);
     }
 
     $$ = retornaNodo();
@@ -367,6 +368,16 @@ io_stmt:
     $$ = retornaNodo();
     strcpy($$->val, "io_stmt");
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 1);
+
+    snprintf(codigoTac, 1100, "string_%d", stringIdx);
+    if(strcmp($1.corpo, "writeln") == 0) $$->tac = criarTac("println", codigoTac, NULL, NULL, 1);
+    if(strcmp($1.corpo, "write") == 0) $$->tac = criarTac("print", codigoTac, NULL, NULL, 1);
+
+    snprintf(codigoTac, 1100, "char string_%d [] = %s ", stringIdx, $3.corpo);
+    $$->tac->tabela = 1;
+    $$->tac->instrucao = strdup(codigoTac);
+
+    stringIdx++;
   }
   | OUTPUT '(' exp ')' ';' {
     $$ = retornaNodo();

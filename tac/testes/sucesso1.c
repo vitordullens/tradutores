@@ -1,5 +1,7 @@
 int x;
 int main() {
+    write("TESTE");
+    writeln("TESTE2");
     int y;
     x= x || x;
     {
