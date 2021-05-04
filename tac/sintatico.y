@@ -469,6 +469,7 @@ assignment:
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
       forcaCast($$->tipo, $3, &errosSemanticos, $2.linha, $2.coluna);
+      $$->tac = criarTac("mov", $3->tac->res, NULL, variavel_escopo(tabelaSimbolos[check].corpo, tabelaSimbolos[check].escopo), 2);
     }
 
     strcpy($$->val, "assignment");

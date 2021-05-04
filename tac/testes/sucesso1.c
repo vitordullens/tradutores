@@ -1,12 +1,10 @@
 int x;
-int y;
-int z;
 int main() {
-    int x;
+    int y;
     x= x || x;
     {
         int x;
-        x = x || x;
+        y = (x || x) || (y || y);
     }
     x = x || x;
 }
