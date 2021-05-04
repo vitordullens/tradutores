@@ -3,11 +3,16 @@
 
 #include "tabela.h"
 
-typedef struct tac tac;
+typedef struct Tac Tac;
 
-struct tac {
+struct Tac {
   int tabela;
   char* instrucao;
+  char* op;
+  char* arg1;
+  char* arg2;
+  char* res;
+  int nargs;
 };
 
 typedef struct NodoArvore NodoArvore;
@@ -22,7 +27,7 @@ struct NodoArvore {
   int isIdorConst;
   char *tipo;
   char *cast;
-  struct tac tac;
+  struct Tac *tac;
   struct NodoArvore* proximo;
 };
 

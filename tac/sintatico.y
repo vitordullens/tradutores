@@ -158,8 +158,9 @@ var_declaration:
     strcpy($$->val, "var_declaration");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
-    $$->tac.tabela = 1;
-    $$->tac.instrucao = strdup(codigoTac);
+    $$->tac = criarTac(NULL, NULL, NULL, NULL, -1);
+    $$->tac->tabela = 1;
+    $$->tac->instrucao = strdup(codigoTac);
   }
 
 function_declaration:
@@ -538,7 +539,10 @@ or_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    if($1->tipo) $$->tipo = strdup("INT");
+    if($1->tipo){
+      $$->tipo = strdup("INT");
+      $$->tac = criarTac("or", $1->tac->arg1, $3->tac->arg2, getFreeRegTemp(), 3);
+    } 
   }
   | and_exp {
     $$ = $1;
@@ -843,6 +847,7 @@ primal_exp:
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      $$->tac = criarTac(NULL, NULL, NULL, variavel_escopo(tabelaSimbolos[check].corpo, tabelaSimbolos[check].escopo), -1);
     }
     strcpy($$->val, "primal_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 2);

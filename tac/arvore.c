@@ -1,4 +1,5 @@
 #include "arvore.h"
+#include "tac.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,8 +11,7 @@ NodoArvore* retornaNodo() {
   nodo->simbolo = NULL;
   nodo->tipo = NULL;
   nodo->cast = NULL;
-  nodo->tac.tabela = 0;
-  nodo->tac.instrucao = NULL;
+  nodo->tac = NULL;
   return nodo;
 }
 
