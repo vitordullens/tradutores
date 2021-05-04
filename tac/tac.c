@@ -83,6 +83,9 @@ void escreveCode(NodoArvore *nodo) {
          free(nodo->tac->arg2);
          free(nodo->tac->res);
    }
+   if(nodo->tac->nargs == -1) {
+      free(nodo->tac->res);
+   }
    free(nodo->tac);
   } 
   if(nodo->proximo) {
