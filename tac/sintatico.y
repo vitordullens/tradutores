@@ -597,7 +597,8 @@ or_exp:
     $1->proximo = $3;
 
     if($1->tipo){
-      $$->tipo = strdup("INT");
+      fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
+      $$->tipo = strdup($1->tipo);
 
       if(!errosSemanticos) {
         char* aux;
@@ -637,8 +638,9 @@ and_exp:
     $1->proximo = $3;
 
     if($1->tipo) {
-      $$->tipo = strdup("INT");
-
+      fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
+      $$->tipo = strdup($1->tipo);
+      
       if(!errosSemanticos) {
         char* aux;
         if($1->cast) {

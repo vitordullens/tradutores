@@ -11,7 +11,7 @@ b:
 	return 0
 main:
 	println string_0
-	mov x_0, 0
+	mov x_0, 1
 	not $0, x_0
 	inttofl $1, $0
 	mov y_3, $1
@@ -24,13 +24,14 @@ main:
 	inttofl $7, 2
 	add $8, 7.2, $7
 	add $9, $6, $8
-	inttofl $10, 1
+	inttofl $10, 2
 	add $11, $9, $10
 	fltoint $12, $11
 	mov x_0, $12
 	println x_0
 	or $13, x_0, x_0
 	or $14, y_3, y_3
-	or $15, $13, $14
-	inttofl $16, $15
+	inttofl $15, $13
+	or $16, $15, $14
 	mov y_3, $16
+	println y_3

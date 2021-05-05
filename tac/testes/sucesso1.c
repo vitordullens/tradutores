@@ -9,14 +9,15 @@ int b() {
 int main() {
     writeln("TESTE2");
     float y;
-    x = 0;
+    x = 1;
     y = !x;
     writeln(y);
-    x = -(1.2 + 1) * 5 + (7.2 + 2) + 1;
+    x = -(1.2 + 1) * 5 + (7.2 + 2) + 2;
     writeln(x);
     {
         y = (x || x) || (y || y);
     }
+    writeln(y);
     return y;
 }
 
