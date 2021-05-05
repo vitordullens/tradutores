@@ -791,13 +791,19 @@ unary_exp:
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
+    $$->tipo = strdup($2->tipo);
     $$->filho = $2;
+    if(!errosSemanticos) $$->tac = criarTac("not", $2->tac->res, NULL, getFreeRegTemp(), 2);
   }
   | ARITMETIC_OP1 primal_exp {
     $$ = retornaNodo();
     strcpy($$->val, "unary_exp");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 3);
+    $$->tipo = strdup($2->tipo);
     $$->filho = $2;
+    if(!errosSemanticos) {
+      if(strcmp($1.corpo, "-") == 0) $$->tac = criarTac("minus", $2->tac->res, NULL, getFreeRegTemp(), 2);
+    } 
   }
   | ARITMETIC_OP1 ID '(' ')' {
     $$ = retornaNodo();
