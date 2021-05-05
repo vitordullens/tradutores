@@ -7,6 +7,7 @@ int main() {
     {
         y = (x || x) || (y || y);
     }
+    return y;
 }
 
 // int f(int a, int b) {

@@ -21,3 +21,5 @@
 	or $12, $10, $11
 	inttofl $13, $12
 	mov y_1, $13
+	fltoint $14, y_1
+	return $14

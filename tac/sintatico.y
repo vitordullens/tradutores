@@ -160,8 +160,10 @@ var_declaration:
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
     $$->tac = criarTac(NULL, NULL, NULL, NULL, -1);
-    $$->tac->tabela = 1;
-    $$->tac->instrucao = strdup(codigoTac);
+    if(strcmp(s.tipo, "elem") != 0 && strcmp(s.tipo, "set") != 0 ){
+      $$->tac->tabela = 1;
+      $$->tac->instrucao = strdup(codigoTac);
+    }
   }
 
 function_declaration:
@@ -440,6 +442,21 @@ return_stmt:
     } else {
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
       forcaCast($$->tipo, $2, &errosSemanticos, $1.linha, $1.coluna);
+
+      if(!errosSemanticos){
+
+        char* aux;
+        if($2->cast) {
+          aux = strdup(getFreeRegTemp());
+          $$->tac = criarTac("return", aux, NULL, NULL, 1);
+          if(strcmp($2->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $2->tac->res, NULL, aux, 2);
+          if(strcmp($2->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $2->tac->res, NULL, aux, 2);
+          free(aux);
+        } 
+        else {
+          $$->tac = criarTac("return", $2->tac->res, NULL, NULL, 1);
+        }
+      }
     }
 
 
