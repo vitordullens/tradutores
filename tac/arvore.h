@@ -13,6 +13,7 @@ struct Tac {
   char* arg2;
   char* res;
   int nargs;
+  struct Tac *cast;
 };
 
 typedef struct NodoArvore NodoArvore;

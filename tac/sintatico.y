@@ -359,6 +359,8 @@ io_stmt:
     }
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
+      if(strcmp($$->tipo, "FLOAT") == 0) $$->tac = criarTac("scanf", variavel_escopo(tabelaSimbolos[check].corpo, tabelaSimbolos[check].escopo), NULL, NULL, 1);
+      if(strcmp($$->tipo, "INT") == 0) $$->tac = criarTac("scani", variavel_escopo(tabelaSimbolos[check].corpo, tabelaSimbolos[check].escopo), NULL, NULL, 1);
     }
 
     strcpy($$->val, "io_stmt");
@@ -383,6 +385,9 @@ io_stmt:
     $$ = retornaNodo();
     strcpy($$->val, "io_stmt");
     $$->filho = $3;
+
+    if(strcmp($1.corpo, "writeln") == 0) $$->tac = criarTac("println", $3->tac->res, NULL, NULL, 1);
+    if(strcmp($1.corpo, "write") == 0) $$->tac = criarTac("print", $3->tac->res, NULL, NULL, 1);
   }
 
 for_stmt:
@@ -480,7 +485,18 @@ assignment:
     else{
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
       forcaCast($$->tipo, $3, &errosSemanticos, $2.linha, $2.coluna);
-      $$->tac = criarTac("mov", $3->tac->res, NULL, variavel_escopo(tabelaSimbolos[check].corpo, tabelaSimbolos[check].escopo), 2);
+
+      char* aux;
+      if($3->cast) {
+        aux = strdup(getFreeRegTemp());
+        $$->tac = criarTac("mov", aux, NULL, variavel_escopo(tabelaSimbolos[check].corpo, tabelaSimbolos[check].escopo), 2);
+        if(strcmp($3->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $3->tac->res, NULL, aux, 2);
+        if(strcmp($3->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $3->tac->res, NULL, aux, 2);
+        free(aux);
+      } 
+      else {
+        $$->tac = criarTac("mov", $3->tac->res, NULL, variavel_escopo(tabelaSimbolos[check].corpo, tabelaSimbolos[check].escopo), 2);
+      }
     }
 
     strcpy($$->val, "assignment");
@@ -553,7 +569,25 @@ or_exp:
 
     if($1->tipo){
       $$->tipo = strdup("INT");
-      $$->tac = criarTac("or", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
+
+      char* aux;
+      if($1->cast) {
+        aux = strdup(getFreeRegTemp());
+        $$->tac = criarTac("or", aux, $3->tac->res, getFreeRegTemp(), 3);
+        if(strcmp($1->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $1->tac->res, NULL, aux, 2);
+        if(strcmp($1->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $1->tac->res, NULL, aux, 2);
+        free(aux);
+      }
+      else if($3->cast){
+        aux = strdup(getFreeRegTemp());
+        $$->tac = criarTac("or", $1->tac->res, aux, getFreeRegTemp(), 3);
+        if(strcmp($3->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $3->tac->res, NULL, aux, 2);
+        if(strcmp($3->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $3->tac->res, NULL, aux, 2);
+        free(aux);
+      } 
+      else {
+        $$->tac = criarTac("or", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
+      }
     } 
   }
   | and_exp {
@@ -571,7 +605,29 @@ and_exp:
     $$->filho = $1;
     $1->proximo = $3;
 
-    if($1->tipo) $$->tipo = strdup("INT");
+    if($1->tipo) {
+      $$->tipo = strdup("INT");
+
+            char* aux;
+      if($1->cast) {
+        aux = strdup(getFreeRegTemp());
+        $$->tac = criarTac("or", aux, $3->tac->res, getFreeRegTemp(), 3);
+        if(strcmp($1->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $1->tac->res, NULL, aux, 2);
+        if(strcmp($1->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $1->tac->res, NULL, aux, 2);
+        free(aux);
+      }
+      else if($3->cast){
+        aux = strdup(getFreeRegTemp());
+        $$->tac = criarTac("or", $1->tac->res, aux, getFreeRegTemp(), 3);
+        if(strcmp($3->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $3->tac->res, NULL, aux, 2);
+        if(strcmp($3->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $3->tac->res, NULL, aux, 2);
+        free(aux);
+      } 
+      else {
+        $$->tac = criarTac("and", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
+      }
+    
+    }
   }
   | relational_exp {
     $$ = $1;
@@ -612,7 +668,32 @@ sum_exp:
     }
     else{
       fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
-      if($1->tipo) $$->tipo = strdup($1->tipo);
+      if($1->tipo) {
+        $$->tipo = strdup($1->tipo);
+
+        char* aux;
+        if($1->cast) {
+          aux = strdup(getFreeRegTemp());
+          if(strcmp($2.corpo, "+") == 0) $$->tac = criarTac("add", aux, $3->tac->res, getFreeRegTemp(), 3);
+          if(strcmp($2.corpo, "-") == 0) $$->tac = criarTac("sub", aux, $3->tac->res, getFreeRegTemp(), 3);
+          if(strcmp($1->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $1->tac->res, NULL, aux, 2);
+          if(strcmp($1->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $1->tac->res, NULL, aux, 2);
+          free(aux);
+        }
+        else if($3->cast){
+          aux = strdup(getFreeRegTemp());
+          if(strcmp($2.corpo, "+") == 0) $$->tac = criarTac("add", $1->tac->res, aux, getFreeRegTemp(), 3);
+          if(strcmp($2.corpo, "-") == 0) $$->tac = criarTac("sub", $1->tac->res, aux, getFreeRegTemp(), 3);
+          if(strcmp($3->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $3->tac->res, NULL, aux, 2);
+          if(strcmp($3->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $3->tac->res, NULL, aux, 2);
+          free(aux);
+        } 
+        else {
+          if(strcmp($2.corpo, "+") == 0) $$->tac = criarTac("add", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
+          if(strcmp($2.corpo, "-") == 0) $$->tac = criarTac("sub", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
+        }
+      
+      }
     }
 
   }
@@ -634,7 +715,31 @@ mul_exp:
     } 
     else {
       fazCast($1, $3, &errosSemanticos, $2.linha, $2.coluna);
-      if($1->tipo) $$->tipo = strdup($1->tipo);
+      if($1->tipo){
+        $$->tipo = strdup($1->tipo);
+
+        char* aux;
+        if($1->cast) {
+          aux = strdup(getFreeRegTemp());
+          if(strcmp($2.corpo, "*") == 0) $$->tac = criarTac("mul", aux, $3->tac->res, getFreeRegTemp(), 3);
+          if(strcmp($2.corpo, "/") == 0) $$->tac = criarTac("div", aux, $3->tac->res, getFreeRegTemp(), 3);
+          if(strcmp($1->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $1->tac->res, NULL, aux, 2);
+          if(strcmp($1->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $1->tac->res, NULL, aux, 2);
+          free(aux);
+        }
+        else if($3->cast){
+          aux = strdup(getFreeRegTemp());
+          if(strcmp($2.corpo, "*") == 0) $$->tac = criarTac("mul", $1->tac->res, aux, getFreeRegTemp(), 3);
+          if(strcmp($2.corpo, "/") == 0) $$->tac = criarTac("div", $1->tac->res, aux, getFreeRegTemp(), 3);
+          if(strcmp($3->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $3->tac->res, NULL, aux, 2);
+          if(strcmp($3->cast, "float2int") == 0) $$->tac->cast = criarTac("fltoint", $3->tac->res, NULL, aux, 2);
+          free(aux);
+        } 
+        else {
+          if(strcmp($2.corpo, "*") == 0) $$->tac = criarTac("mul", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
+          if(strcmp($2.corpo, "/") == 0) $$->tac = criarTac("div", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
+        }
+      } 
     }
 
   }
@@ -945,18 +1050,24 @@ const:
     strcpy($$->val, "CONST");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 1);
     $$->tipo = strdup("INT");
+
+    $$->tac = criarTac(NULL, NULL, NULL, $1.corpo, -1);
   }
   | FLOAT {
     $$ = retornaNodo();
     strcpy($$->val, "CONST");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 1);
     $$->tipo = strdup("FLOAT");
+
+    $$->tac = criarTac(NULL, NULL, NULL, $1.corpo, -1);
   }
   | EMPTY {
     $$ = retornaNodo();
     strcpy($$->val, "CONST");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, $1.corpo, 1);
     $$->tipo = strdup("SET");
+
+    $$->tac = criarTac(NULL, NULL, NULL, $1.corpo, -1);
   }
 
 %%

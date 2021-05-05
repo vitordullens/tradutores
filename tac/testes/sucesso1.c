@@ -1,12 +1,23 @@
 int x;
 int main() {
-    write("TESTE");
     writeln("TESTE2");
-    int y;
-    x= x || x;
+    float y;
+    x = (1.2 + 1) * 5 + (7.2 + 2);
+    writeln(x);
     {
-        int x;
         y = (x || x) || (y || y);
     }
-    x = x || x;
 }
+
+// int f(int a, int b) {
+//     return a + b;
+// }
+
+// int g(int a, int b){
+//     return a * b;
+// }
+
+// int main(){
+//     f(1, 2);
+//     g(2, 3);
+// }

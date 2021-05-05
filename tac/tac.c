@@ -19,6 +19,7 @@ Tac* criarTac(char* op, char* arg1, char* arg2, char* res, int nargs){
    t->nargs = nargs;
    t->instrucao = NULL;
    t->tabela = 0;
+   t->cast = NULL;
    return t;
 }
 
@@ -65,6 +66,12 @@ void escreveCode(NodoArvore *nodo) {
   }
 
   if(nodo->tac) {
+   if(nodo->tac->cast){
+      fprintf(fp, "\t%s %s, %s\n", nodo->tac->cast->op, nodo->tac->cast->res, nodo->tac->cast->arg1);;
+      free(nodo->tac->cast->op);
+      free(nodo->tac->cast->arg1);
+      free(nodo->tac->cast->res);
+   }
    if(nodo->tac->nargs == 1){
          fprintf(fp, "\t%s %s\n", nodo->tac->op, nodo->tac->arg1);
          free(nodo->tac->op);
