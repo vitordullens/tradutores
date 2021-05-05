@@ -11,11 +11,13 @@
 	inttofl $4, 2
 	add $5, 7.2, $4
 	add $6, $3, $5
-	fltoint $7, $6
-	mov x_0, $7
+	inttofl $7, 1
+	add $8, $6, $7
+	fltoint $9, $8
+	mov x_0, $9
 	println x_0
-	or $8, x_0, x_0
-	or $9, y_1, y_1
-	or $10, $8, $9
-	inttofl $11, $10
-	mov y_1, $11
+	or $10, x_0, x_0
+	or $11, y_1, y_1
+	or $12, $10, $11
+	inttofl $13, $12
+	mov y_1, $13

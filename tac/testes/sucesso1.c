@@ -2,7 +2,7 @@ int x;
 int main() {
     writeln("TESTE2");
     float y;
-    x = (1.2 + 1) * 5 + (7.2 + 2);
+    x = (1.2 + 1) * 5 + (7.2 + 2) + 1;
     writeln(x);
     {
         y = (x || x) || (y || y);

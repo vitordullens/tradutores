@@ -71,6 +71,7 @@ void escreveCode(NodoArvore *nodo) {
       free(nodo->tac->cast->op);
       free(nodo->tac->cast->arg1);
       free(nodo->tac->cast->res);
+      free(nodo->tac->cast);
    }
    if(nodo->tac->nargs == 1){
          fprintf(fp, "\t%s %s\n", nodo->tac->op, nodo->tac->arg1);
