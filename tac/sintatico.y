@@ -199,6 +199,10 @@ function_declaration:
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
     $1->proximo = $5;
     $5->proximo = $7;
+
+    if(!errosSemanticos) {
+      $$->tac = criarTac($2.corpo, NULL, NULL, NULL, 0);
+    }
   }
   | type ID  '('{ 
     int check = checkDuplicado($2.corpo, 0, indiceTabela);
@@ -221,12 +225,18 @@ function_declaration:
     strcpy(s.tipo, tipo[indiceTipo]);
     indiceTabela++;
     tabelaSimbolos[indiceTabela] = s;
+
   } ')' brackets_stmt {
     $$ = retornaNodo();
     strcpy($$->val, "function_declaration");
     $$->filho = $1;
     $$->simbolo = criarSimboloArvore($2.linha, $2.coluna, $2.corpo, 2);
     $1->proximo = $6;
+
+    
+    if(!errosSemanticos) {
+      $$->tac = criarTac($2.corpo, NULL, NULL, NULL, 0);
+    }
   }
 
 params_list:
@@ -443,7 +453,7 @@ return_stmt:
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
       forcaCast($$->tipo, $2, &errosSemanticos, $1.linha, $1.coluna);
 
-      if(!errosSemanticos){
+      if(!errosSemanticos && strcmp(tabelaSimbolos[check].corpo, "main") != 0){
 
         char* aux;
         if($2->cast) {

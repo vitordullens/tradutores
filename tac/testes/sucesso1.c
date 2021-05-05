@@ -1,4 +1,7 @@
 int x;
+int b() {
+    x = 1;
+}
 int main() {
     writeln("TESTE2");
     float y;

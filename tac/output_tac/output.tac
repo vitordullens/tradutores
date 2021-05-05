@@ -1,8 +1,12 @@
 .table
 	int x_0
 	char string_0 [] = "TESTE2" 
-	float y_1
+	float y_2
 .code
+b:
+	mov x_0, 1
+return 0
+main:
 	println string_0
 	inttofl $0, 1
 	add $1, 1.2, $0
@@ -17,9 +21,7 @@
 	mov x_0, $9
 	println x_0
 	or $10, x_0, x_0
-	or $11, y_1, y_1
+	or $11, y_2, y_2
 	or $12, $10, $11
 	inttofl $13, $12
-	mov y_1, $13
-	fltoint $14, y_1
-	return $14
+	mov y_2, $13

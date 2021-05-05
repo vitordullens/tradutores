@@ -9,6 +9,7 @@ FILE *fp;
 int regTemp = 0;
 char v[110];
 char temp[10];
+int flagReturn0 = 0;
 
 Tac* criarTac(char* op, char* arg1, char* arg2, char* res, int nargs){
    Tac* t = (Tac*) malloc(sizeof(Tac));
@@ -62,7 +63,15 @@ void escreveCode(NodoArvore *nodo) {
   }
 
   if(nodo->filho){
-    escreveCode(nodo->filho);
+     if(nodo->tac){
+         if(nodo->tac->nargs == 0) {
+            if(flagReturn0) fprintf(fp, "\treturn 0\n");
+            fprintf(fp, "%s:\n", nodo->tac->op);
+            free(nodo->tac->op);
+            flagReturn0 = 1;
+         }
+     }
+      escreveCode(nodo->filho);
   }
 
   if(nodo->tac) {
@@ -74,22 +83,22 @@ void escreveCode(NodoArvore *nodo) {
       free(nodo->tac->cast);
    }
    if(nodo->tac->nargs == 1){
-         fprintf(fp, "\t%s %s\n", nodo->tac->op, nodo->tac->arg1);
-         free(nodo->tac->op);
-         free(nodo->tac->arg1);
+      fprintf(fp, "\t%s %s\n", nodo->tac->op, nodo->tac->arg1);
+      free(nodo->tac->op);
+      free(nodo->tac->arg1);
    }
    if(nodo->tac->nargs == 2){
-         fprintf(fp, "\t%s %s, %s\n", nodo->tac->op, nodo->tac->res, nodo->tac->arg1);
-         free(nodo->tac->op);
-         free(nodo->tac->arg1);
-         free(nodo->tac->res);
+      fprintf(fp, "\t%s %s, %s\n", nodo->tac->op, nodo->tac->res, nodo->tac->arg1);
+      free(nodo->tac->op);
+      free(nodo->tac->arg1);
+      free(nodo->tac->res);
    }
    if(nodo->tac->nargs == 3){
-         fprintf(fp, "\t%s %s, %s, %s\n", nodo->tac->op, nodo->tac->res, nodo->tac->arg1, nodo->tac->arg2);
-         free(nodo->tac->op);
-         free(nodo->tac->arg1);
-         free(nodo->tac->arg2);
-         free(nodo->tac->res);
+      fprintf(fp, "\t%s %s, %s, %s\n", nodo->tac->op, nodo->tac->res, nodo->tac->arg1, nodo->tac->arg2);
+      free(nodo->tac->op);
+      free(nodo->tac->arg1);
+      free(nodo->tac->arg2);
+      free(nodo->tac->res);
    }
    if(nodo->tac->nargs == -1) {
       free(nodo->tac->res);
