@@ -2,6 +2,7 @@
 	int x_0
 	char string_0 [] = "TESTE2" 
 	float y_3
+	float z_3
 .code
 c:
 	mov x_0, 2
@@ -35,3 +36,10 @@ main:
 	or $16, $15, $14
 	mov y_3, $16
 	println y_3
+	mov x_0, 2
+	mov z_3, 2.2
+	inttofl $17, x_0
+	slt $18, $17, z_3
+	fltoint $19, $18
+	mov x_0, $19
+	println x_0

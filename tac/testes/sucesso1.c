@@ -18,6 +18,11 @@ int main() {
         y = (x || x) || (y || y);
     }
     writeln(y);
+    float z;
+    x = 2;
+    z = 2.2;
+    x = z > x;
+    writeln(x);
     return y;
 }
 
