@@ -1,8 +1,12 @@
 .table
-	int a_1
-	char string_0 [] = "if" 
-	char string_1 [] = "else if" 
-	char string_2 [] = "else" 
+	int x_0
+	char string_0 [] = "TESTE2" 
+	char string_1 = 'n' 
+	float y_1
+	char string_2 [] = "Digite um numero do tipo float: " 
+	char string_3 [] = "Seu numero multiplicado por 2 e somado 2 eh igual a " 
+	int x_2
+	float z_1
 .code
 ///////// funcoes predefinidas
 write:
@@ -22,46 +26,55 @@ writeln:
 
 /////////
 main:
-	mov a_1, 1
-	seq $0, a_1, 1
-	brz end_if_0, $0
-	add $1, 1, 2
-	mul $2, $1, 7
-	mov a_1, $2
-	println a_1
-	mov a_1, 7
-	jump end_if_else_0
-end_if_0:
-	or $3, 2, 3
-	mov a_1, $3
-	println a_1
-	slt $4, 2, a_1
-	mov a_1, $4
-end_if_else_0:
-	seq $5, a_1, 0
-	brz end_if_2, $5
 	mov $1021, &string_0
-	param 2
+	param 6
 	param $1021
 	call writeln, 2
-	jump end_if_else_2
-end_if_2:
-	seq $6, a_1, 0
-	not $6, $6
-	brz end_if_1, $6
-	mov $1021, &string_1
-	param 7
-	param $1021
-	call writeln, 2
-	jump end_if_else_1
-end_if_1:
+	println string_1
 	mov $1021, &string_2
-	param 4
+	param 32
 	param $1021
-	call writeln, 2
-end_if_else_1:
-end_if_else_2:
-	println a_1
+	call write, 2
+	scanf y_1
+	mov $1021, &string_3
+	param 52
+	param $1021
+	call write, 2
+	inttofl $0, 2
+	mul $1, y_1, $0
+	inttofl $2, 2
+	add $3, $1, $2
+	println $3
+	mov x_0, 1
+	inttofl $4, 1
+	add $5, 1.2, $4
+	minus $6, $5
+	inttofl $7, 5
+	mul $8, $6, $7
+	inttofl $9, 2
+	add $10, 7.2, $9
+	add $11, $8, $10
+	inttofl $12, 2
+	add $13, $11, $12
+	fltoint $14, $13
+	mov x_0, $14
+	brz end_if_0, x_0
+	mov x_2, 1
+	or $15, x_2, x_2
+	or $16, y_1, y_1
+	inttofl $17, $15
+	or $18, $17, $16
+	mov y_1, $18
+end_if_0:
+	println y_1
+	mov x_0, 2
+	mov z_1, 2.2
+	inttofl $19, x_0
+	seq $20, z_1, $19
+	not $20, $20
+	fltoint $21, $20
+	mov x_0, $21
+	println x_0
 	jump END
 
 
