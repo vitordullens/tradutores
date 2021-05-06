@@ -24,14 +24,17 @@ main:
 	not $0, $0
 	brz end_if_0, $0
 	add $1, 1, 2
-	mov a_1, $1
-	mov a_1, 4
+	mul $2, $1, 7
+	mov a_1, $2
 	println a_1
-	mov a_1, 1
+	mov a_1, 7
 	jump end_if_else_0
 end_if_0:
-	mov a_1, 2
+	or $3, 2, 3
+	mov a_1, $3
 	println a_1
+	slt $4, 2, a_1
+	mov a_1, $4
 end_if_else_0:
 	println a_1
 	jump END
