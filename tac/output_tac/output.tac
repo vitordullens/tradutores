@@ -21,17 +21,15 @@ writeln:
 main:
 	mov a_1, 1
 	seq $0, a_1, 1
+	not $0, $0
 	brz end_if_0, $0
 	add $1, 1, 2
 	mov a_1, $1
 	mov a_1, 4
-	print a_1
 	println a_1
+	mov a_1, 1
 	jump end_if_else_0
 end_if_0:
-	add $2, 1, 1
-	add $3, $2, 1
-	mov a_1, $3
 	mov a_1, 2
 	println a_1
 end_if_else_0:
