@@ -327,7 +327,7 @@ stmts:
     $$ = retornaNodo();
     strcpy($$->val, "stmts");
     $$->filho = $1;
-    $1->proximo = $2;
+    $$->proximo = $2;
   }
   | stmt {
     $$ = $1;
@@ -466,8 +466,12 @@ if_else_stmt:
     $$ = retornaNodo();
     strcpy($$->val, "if_else_stmt");
     $$->filho = $3;
-    $3->proximo = $5;
-    $5->proximo = $7;
+    NodoArvore* n = $3;
+    while(n->proximo) n = n->proximo;
+    n->proximo = $5;
+    n = $5;
+    while(n->proximo) n = n->proximo;
+    n->proximo = $7;
 
     // snprintf(codigoTac, 1100, "end_if_else_%d", ifIdx);
     // $$->tac = criarTac(codigoTac, NULL, NULL, NULL, -2);
