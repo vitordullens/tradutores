@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "tac.h"
 #include "arvore.h"
+#include "funcoesTac.c"
 
 FILE *fp;
 
@@ -95,6 +96,10 @@ void escreveCode(NodoArvore *nodo) {
    }
    if(nodo->tac->nargs == 3){
       fprintf(fp, "\t%s %s, %s, %s\n", nodo->tac->op, nodo->tac->res, nodo->tac->arg1, nodo->tac->arg2);
+      if(nodo->tac->instrucao) {
+         fprintf(fp, "\t%s\n", nodo->tac->instrucao);
+         free(nodo->tac->instrucao);
+      }
       free(nodo->tac->op);
       free(nodo->tac->arg1);
       free(nodo->tac->arg2);
@@ -115,6 +120,10 @@ void escreveTac(NodoArvore *nodo){
    fprintf(fp, ".table\n");
    escreveTabela(nodo);
    fprintf(fp, ".code\n");
+   fprintf(fp, "///////// funcoes predefinidas\n");
+   fprintf(fp, "%s", PRINTAR);
+   fprintf(fp, "\n/////////\n");
    escreveCode(nodo);
+   fprintf(fp, "\n\nEND: nop\n");
    fclose(fp);
 }

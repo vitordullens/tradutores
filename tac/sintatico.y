@@ -382,12 +382,30 @@ io_stmt:
     $$ = retornaNodo();
     strcpy($$->val, "io_stmt");
     $$->simbolo = criarSimboloArvore($3.linha, $3.coluna, $3.corpo, 1);
+    
+    if(strcmp($1.corpo, "writeln") == 0){
+      int tamanhoString = (int)strlen($3.corpo) - 2;
+      snprintf(codigoTac, 1100, "string_%d", stringIdx);
+      if(tamanhoString == 1) $$->tac = criarTac("println", codigoTac, NULL, NULL, 1);
+      else {
+        snprintf(codigoTac, 1100, "&string_%d\n\tparam %d\n\tparam $1021\n\tcall writeln, 2", stringIdx, tamanhoString);
+        $$->tac = criarTac("mov", codigoTac, NULL, "$1021", 2);
+      }
 
-    snprintf(codigoTac, 1100, "string_%d", stringIdx);
-    if(strcmp($1.corpo, "writeln") == 0) $$->tac = criarTac("println", codigoTac, NULL, NULL, 1);
-    if(strcmp($1.corpo, "write") == 0) $$->tac = criarTac("print", codigoTac, NULL, NULL, 1);
+    } 
+    if(strcmp($1.corpo, "write") == 0){
+      int tamanhoString = (int)strlen($3.corpo) - 2;
+      snprintf(codigoTac, 1100, "string_%d", stringIdx);
+      if(tamanhoString == 1) $$->tac = criarTac("print", codigoTac, NULL, NULL, 1);
+      else {
+        snprintf(codigoTac, 1100, "&string_%d\n\tparam %d\n\tparam $1021\n\tcall write, 2", stringIdx, tamanhoString);
+        $$->tac = criarTac("mov", codigoTac, NULL, "$1021", 2);
+      }
+      
+    } 
 
-    snprintf(codigoTac, 1100, "char string_%d [] = %s ", stringIdx, $3.corpo);
+    if($3.corpo[0] == 39) snprintf(codigoTac, 1100, "char string_%d = %s ", stringIdx, $3.corpo);
+    else snprintf(codigoTac, 1100, "char string_%d [] = %s ", stringIdx, $3.corpo);
     $$->tac->tabela = 1;
     $$->tac->instrucao = strdup(codigoTac);
 
@@ -453,10 +471,13 @@ return_stmt:
       $$->tipo = strdup(tabelaSimbolos[check].tipo);
       forcaCast($$->tipo, $2, &errosSemanticos, $1.linha, $1.coluna);
 
-      if(!errosSemanticos && strcmp(tabelaSimbolos[check].corpo, "main") != 0){
+      if(!errosSemanticos){
 
         char* aux;
-        if($2->cast) {
+        if(strcmp(tabelaSimbolos[check].corpo, "main") == 0) {
+          $$->tac = criarTac("jump", "END", NULL, NULL, 1);
+        }
+        else if($2->cast) {
           aux = strdup(getFreeRegTemp());
           $$->tac = criarTac("return", aux, NULL, NULL, 1);
           if(strcmp($2->cast, "int2float") == 0) $$->tac->cast = criarTac("inttofl", $2->tac->res, NULL, aux, 2);
@@ -689,7 +710,14 @@ relational_exp:
           char* aux;
           if($1->cast) {
             aux = strdup(getFreeRegTemp());
-            if(strcmp($2.corpo, "!=") == 0) $$->tac = criarTac("seq", aux, $3->tac->res, getFreeRegTemp(), 3);
+            if(strcmp($2.corpo, "!=") == 0) {
+              char* aux2;
+              aux2 = strdup(getFreeRegTemp());
+              $$->tac = criarTac("seq", aux, $3->tac->res, aux2, 3);
+              sprintf(codigoTac, "not %s, %s", aux2, aux2);
+              $$->tac->instrucao = strdup(codigoTac);
+              free(aux2);
+            } 
             if(strcmp($2.corpo, "==") == 0) $$->tac = criarTac("seq", aux, $3->tac->res, getFreeRegTemp(), 3);
             if(strcmp($2.corpo, "<") == 0) $$->tac = criarTac("slt", aux, $3->tac->res, getFreeRegTemp(), 3);
             if(strcmp($2.corpo, "<=") == 0) $$->tac = criarTac("sleq", $1->tac->res, aux, getFreeRegTemp(), 3);
@@ -701,7 +729,14 @@ relational_exp:
           }
           else if($3->cast){
             aux = strdup(getFreeRegTemp());
-            if(strcmp($2.corpo, "!=") == 0) $$->tac = criarTac("seq", $1->tac->res, aux, getFreeRegTemp(), 3);
+            if(strcmp($2.corpo, "!=") == 0){
+              char* aux2;
+              aux2 = strdup(getFreeRegTemp());
+              $$->tac = criarTac("seq", $1->tac->res, aux, aux2, 3);
+              sprintf(codigoTac, "not %s, %s", aux2, aux2);
+              $$->tac->instrucao = strdup(codigoTac);
+              free(aux2);
+            }
             if(strcmp($2.corpo, "==") == 0) $$->tac = criarTac("seq", $1->tac->res, aux, getFreeRegTemp(), 3);
             if(strcmp($2.corpo, "<") == 0) $$->tac = criarTac("slt", $1->tac->res, aux, getFreeRegTemp(), 3);
             if(strcmp($2.corpo, "<=") == 0) $$->tac = criarTac("sleq", $1->tac->res, aux, getFreeRegTemp(), 3);
@@ -712,7 +747,14 @@ relational_exp:
             free(aux);
           } 
           else {
-            if(strcmp($2.corpo, "!=") == 0) $$->tac = criarTac("seq", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
+            if(strcmp($2.corpo, "!=") == 0) {
+              char* aux2;
+              aux2 = strdup(getFreeRegTemp());
+              $$->tac = criarTac("seq", $1->tac->res, $3->tac->res, aux2, 3);
+              sprintf(codigoTac, "not %s, %s", aux2, aux2);
+              $$->tac->instrucao = strdup(codigoTac);
+              free(aux2);
+            } 
             if(strcmp($2.corpo, "==") == 0) $$->tac = criarTac("seq", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
             if(strcmp($2.corpo, "<") == 0) $$->tac = criarTac("slt", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
             if(strcmp($2.corpo, "<=") == 0) $$->tac = criarTac("sleq", $1->tac->res, $3->tac->res, getFreeRegTemp(), 3);
