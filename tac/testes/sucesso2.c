@@ -1,15 +1,25 @@
 int main() {
     int a;
-    bez $0, aq
-    if(a) {
-      int a;
-      a = 1;
-      return 1;
-      jump fim
-    } 
-    aq: 
-    else {
-
+    a = 1;
+    {
+      a = 2;
+      a = 3;
     }
-    fim:
+    // bez $0, aq
+    if(a == 1) {
+      a = 1 + 2;
+      a = 4;
+      write(a);
+      writeln(a);
+
+      // jump fim
+    } 
+    else {
+      a = 2;
+      writeln(a);
+    }
+    writeln(a);
+    return 1;
+    // }
+    // fim:
 }

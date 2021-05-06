@@ -12,6 +12,7 @@ NodoArvore* retornaNodo() {
   nodo->tipo = NULL;
   nodo->cast = NULL;
   nodo->tac = NULL;
+  nodo->tac2 = NULL;
   return nodo;
 }
 

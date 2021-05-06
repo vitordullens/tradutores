@@ -105,11 +105,22 @@ void escreveCode(NodoArvore *nodo) {
       free(nodo->tac->arg2);
       free(nodo->tac->res);
    }
+   if(nodo->tac2) {
+      fprintf(fp, "\t%s %s, %s\n", nodo->tac2->op, nodo->tac2->res, nodo->tac2->arg1);
+      free(nodo->tac2->op);
+      free(nodo->tac2->arg1);
+      free(nodo->tac2->res);
+   }
    if(nodo->tac->nargs == -1) {
       free(nodo->tac->res);
    }
+   if(nodo->tac->nargs == -2){
+      fprintf(fp, "%s:\n", nodo->tac->op);
+      free(nodo->tac->op);
+   }
    free(nodo->tac);
-  } 
+   free(nodo->tac2);
+  }
   if(nodo->proximo) {
     escreveCode(nodo->proximo);
   }

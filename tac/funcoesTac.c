@@ -1,4 +1,3 @@
-
 const char* PRINTAR = 
 "write:\n"
 "\tmov $1023, 0\n"
@@ -13,5 +12,4 @@ const char* PRINTAR =
 "writeln:\n"
 "\tcall write, 2\n"
 "\tprintln\n"
-"\treturn\n"
-;
+"\treturn\n";

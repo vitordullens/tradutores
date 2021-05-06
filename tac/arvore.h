@@ -29,6 +29,7 @@ struct NodoArvore {
   char *tipo;
   char *cast;
   struct Tac *tac;
+  struct Tac *tac2;
   struct NodoArvore* proximo;
 };
 

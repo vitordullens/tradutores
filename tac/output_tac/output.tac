@@ -55,12 +55,14 @@ main:
 	fltoint $15, $14
 	mov x_0, $15
 	println x_0
+	brz end_if_0, x_0
 	mov x_2, 1
 	or $16, x_2, x_2
 	or $17, y_1, y_1
 	inttofl $18, $16
 	or $19, $18, $17
 	mov y_1, $19
+end_if_0:
 	println y_1
 	mov x_0, 2
 	mov z_1, 2.2

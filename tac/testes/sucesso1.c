@@ -9,7 +9,7 @@ int main() {
     writeln((y!=y) != y);
     x = -(1.2 + 1) * 5 + (7.2 + 2) + 2;
     writeln(x);
-    {
+    if(x){
         int x;
         x = 1;
         y = (x || x) || (y || y);

@@ -41,6 +41,8 @@
 
   int stringIdx = 0;
   char codigoTac[1100];
+
+  int ifIdx = 0;
 %}
 
 %union {
@@ -325,7 +327,7 @@ stmts:
     $$ = retornaNodo();
     strcpy($$->val, "stmts");
     $$->filho = $1;
-    $$->proximo = $2;
+    $1->proximo = $2;
   }
   | stmt {
     $$ = $1;
@@ -452,6 +454,13 @@ if_else_stmt:
     strcpy($$->val, "if_else_stmt");
     $$->filho = $3;
     $3->proximo = $5;
+
+    snprintf(codigoTac, 1100, "end_if_%d", ifIdx);
+    $$->tac = criarTac(codigoTac, NULL, NULL, NULL, -2);
+    if($3->tac) {
+      $3->tac2 = criarTac("brz", $3->tac->res, NULL, codigoTac, 2);
+    }
+    ifIdx++;
   }
   | IF '(' exp ')' stmt ELSE stmt {
     $$ = retornaNodo();
@@ -459,6 +468,13 @@ if_else_stmt:
     $$->filho = $3;
     $3->proximo = $5;
     $5->proximo = $7;
+
+    // snprintf(codigoTac, 1100, "end_if_else_%d", ifIdx);
+    // $$->tac = criarTac(codigoTac, NULL, NULL, NULL, -2);
+    // $3->tac2 = criarTac("brz", $3->tac->res, NULL, codigoTac, 2);
+    // snprintf(codigoTac, 1100, "jump end_if_else_%d", ifIdx);
+    // $$->tac->instrucao = strdup(codigoTac);
+    // ifIdx++;
   }
 
 return_stmt:
