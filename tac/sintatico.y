@@ -320,7 +320,6 @@ brackets_stmt:
     strcpy($$->val, "empty_brackets");
     $$->simbolo = criarSimboloArvore($1.linha, $1.coluna, "empty", 4);
   }
-  | error {}
 
 stmts:
   stmt stmts {
@@ -332,6 +331,8 @@ stmts:
   | stmt {
     $$ = $1;
   }
+  | error stmts {}
+  | error {}
 
 stmt:
   for_stmt {
@@ -467,6 +468,7 @@ if_else_stmt:
     strcpy($$->val, "if_else_stmt");
     $$->filho = $3;
     NodoArvore* n = $3;
+
     while(n->proximo) n = n->proximo;
     n->proximo = $5;
     n = $5;

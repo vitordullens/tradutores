@@ -138,7 +138,7 @@ void escreveTac(NodoArvore *nodo){
    fprintf(fp, ".table\n");
    escreveTabela(nodo);
    fprintf(fp, ".code\n");
-   fprintf(fp, "///////// funcoes predefinidas\n");
+   fprintf(fp, "///////// funcoes predefinidas\n\n");
    fprintf(fp, "%s", PRINTAR);
    fprintf(fp, "\n/////////\n");
    escreveCode(nodo);
