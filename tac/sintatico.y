@@ -473,12 +473,24 @@ if_else_stmt:
     while(n->proximo) n = n->proximo;
     n->proximo = $7;
 
-    // snprintf(codigoTac, 1100, "end_if_else_%d", ifIdx);
-    // $$->tac = criarTac(codigoTac, NULL, NULL, NULL, -2);
-    // $3->tac2 = criarTac("brz", $3->tac->res, NULL, codigoTac, 2);
-    // snprintf(codigoTac, 1100, "jump end_if_else_%d", ifIdx);
-    // $$->tac->instrucao = strdup(codigoTac);
-    // ifIdx++;
+    snprintf(codigoTac, 1100, "end_if_else_%d", ifIdx);
+    $$->tac = criarTac(codigoTac, NULL, NULL, NULL, -2);
+    if($3->tac) {
+      snprintf(codigoTac, 1100, "end_if_%d", ifIdx);
+      $3->tac2 = criarTac("brz", $3->tac->res, NULL, codigoTac, 2);
+    }
+    n = $5;
+    while(n->proximo != $7) n = n->proximo;
+    if(n->tac){
+      snprintf(codigoTac, 1100, "end_if_else_%d\nend_if_%d:", ifIdx, ifIdx);
+      n->tac2 = criarTac("jump", codigoTac, NULL, NULL, 1);
+    }
+    else{
+      n->tac = criarTac(NULL, NULL, NULL, NULL, -1);
+      snprintf(codigoTac, 1100, "end_if_else_%d\nend_if_%d:", ifIdx, ifIdx);
+      n->tac2 = criarTac("jump", codigoTac, NULL, NULL, 1);
+    }
+    ifIdx++;
   }
 
 return_stmt:
