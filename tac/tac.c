@@ -117,6 +117,10 @@ void escreveCode(NodoArvore *nodo) {
          free(nodo->tac2->arg1);
          free(nodo->tac2->res);
       }
+      if(nodo->tac2->nargs == -1) {
+         fprintf(fp, "%s:\n", nodo->tac2->op);
+         free(nodo->tac2->op);
+      }
    }
    if(nodo->tac->nargs == -1) {
       free(nodo->tac->res);

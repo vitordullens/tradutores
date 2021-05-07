@@ -39,10 +39,11 @@
   int erros = 0;
   int errosSemanticos = 0;
 
-  int stringIdx = 0;
   char codigoTac[1100];
-
   int ifIdx = 0;
+  int forIdx = 0;
+  int stringIdx = 0;
+
 %}
 
 %union {
@@ -399,7 +400,7 @@ io_stmt:
     if(strcmp($1.corpo, "write") == 0){
       int tamanhoString = (int)strlen($3.corpo) - 2;
       snprintf(codigoTac, 1100, "string_%d", stringIdx);
-      if(tamanhoString == 1) $$->tac = criarTac("print", codigoTac, NULL, NULL, 1);
+      if(tamanhoString <= 2) $$->tac = criarTac("print", codigoTac, NULL, NULL, 1);
       else {
         snprintf(codigoTac, 1100, "&string_%d\n\tparam %d\n\tparam $1021\n\tcall write, 2", stringIdx, tamanhoString);
         $$->tac = criarTac("mov", codigoTac, NULL, "$1021", 2);
@@ -431,6 +432,27 @@ for_stmt:
     $3->proximo = $5;
     $5->proximo = $7;
     $7->proximo = $9;
+
+    snprintf(codigoTac, 1100, "end_for_%d", forIdx);
+    $$->tac = criarTac(codigoTac, NULL, NULL, NULL, -2);
+    NodoArvore* n = $3;
+    while(n->proximo != $5) n = n->proximo;
+    if(n->tac){
+      snprintf(codigoTac, 1100, "for_%d", forIdx);
+      n->tac2 = criarTac(codigoTac, NULL, NULL, NULL, -1);
+    }
+    if($5->tac) {
+      snprintf(codigoTac, 1100, "end_for_%d", forIdx);
+      $5->tac2 = criarTac("brz", $5->tac->res, NULL, codigoTac, 2);
+    }
+    n = $9;
+    while(n->proximo) n = n->proximo;
+    snprintf(codigoTac, 1100, "for_%d", forIdx);
+    if(n->tac){
+      n->tac2 = criarTac("jump", codigoTac, NULL, NULL, 1);
+    }
+
+    forIdx++;
   }
 
 assignment_or_null:

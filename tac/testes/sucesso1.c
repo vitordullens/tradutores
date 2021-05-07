@@ -20,5 +20,11 @@ int main() {
     z = 2.2;
     x = z != x;
     writeln(x);
+    int a;
+    for(a = 0; a < 5; a = a + 1) {
+        write(a);
+        if(a == 4) write('\n');
+        else write('-');
+    }
     return y;
 }
